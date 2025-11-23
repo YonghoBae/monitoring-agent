@@ -1,4 +1,4 @@
-package io.ohgnoy.monitoring_agent;
+package io.ohgnoy.monitoring.agent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
