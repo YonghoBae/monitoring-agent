@@ -1,10 +1,10 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.service;
 
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Service
@@ -44,4 +44,3 @@ public class DiscordNotificationService {
                 .toBodilessEntity();
     }
 }
-

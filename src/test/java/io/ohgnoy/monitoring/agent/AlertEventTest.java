@@ -1,5 +1,6 @@
 package io.ohgnoy.monitoring.agent;
 
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

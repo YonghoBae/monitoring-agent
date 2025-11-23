@@ -1,5 +1,7 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.service;
 
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
+import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

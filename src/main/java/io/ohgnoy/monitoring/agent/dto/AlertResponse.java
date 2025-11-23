@@ -1,4 +1,6 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.dto;
+
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 
 import java.time.LocalDateTime;
 

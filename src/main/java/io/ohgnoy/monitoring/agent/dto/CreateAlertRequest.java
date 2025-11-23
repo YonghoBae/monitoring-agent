@@ -1,4 +1,4 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.dto;
 
 public class CreateAlertRequest {
     private String level;

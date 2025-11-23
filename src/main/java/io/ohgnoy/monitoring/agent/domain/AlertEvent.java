@@ -1,4 +1,4 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

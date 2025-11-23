@@ -1,5 +1,7 @@
 package io.ohgnoy.monitoring.agent;
 
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
+import io.ohgnoy.monitoring.agent.service.AlertVectorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

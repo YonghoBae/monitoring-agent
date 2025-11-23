@@ -1,5 +1,6 @@
-package io.ohgnoy.monitoring.agent;
+package io.ohgnoy.monitoring.agent.service;
 
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;

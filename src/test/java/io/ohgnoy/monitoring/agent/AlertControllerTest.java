@@ -1,7 +1,12 @@
 package io.ohgnoy.monitoring.agent;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ohgnoy.monitoring.agent.controller.AlertController;
+import io.ohgnoy.monitoring.agent.domain.AlertEvent;
+import io.ohgnoy.monitoring.agent.service.AlertService;
+import io.ohgnoy.monitoring.agent.service.AlertVectorService;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.ai.document.Document;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
