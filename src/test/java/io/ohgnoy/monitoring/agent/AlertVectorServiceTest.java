@@ -12,8 +12,10 @@ import org.springframework.ai.vectorstore.VectorStore;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -44,8 +46,9 @@ class AlertVectorServiceTest {
         List<Document> docs = captor.getValue();
         assertThat(docs).hasSize(1);
         Document doc = docs.get(0);
-        assertThat(doc.getId()).isEqualTo("99");
+        assertThatCode(() -> UUID.fromString(doc.getId())).doesNotThrowAnyException();
         assertThat(doc.getText()).isEqualTo("database down");
+        assertThat(doc.getMetadata()).containsEntry("alertId", "99");
         assertThat(doc.getMetadata()).containsEntry("level", "ERROR");
         assertThat(doc.getMetadata()).containsEntry("createdAt", createdAt.toString());
     }

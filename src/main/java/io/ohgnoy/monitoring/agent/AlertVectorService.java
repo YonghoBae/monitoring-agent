@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class AlertVectorService {
@@ -17,6 +18,7 @@ public class AlertVectorService {
         this.vectorStore = vectorStore;
     }
 
+    private static final String METADATA_ALERT_ID = "alertId";
     private static final String METADATA_LEVEL = "level";
     private static final String METADATA_CREATED_AT = "createdAt";
 
@@ -25,9 +27,10 @@ public class AlertVectorService {
      */
     public void indexAlert(AlertEvent alert) {
         Document doc = new Document(
-                String.valueOf(alert.getId()),              // id
+                UUID.randomUUID().toString(),               // id
                 alert.getMessage(),                         // content
                 Map.of(
+                        METADATA_ALERT_ID, alert.getId().toString(),
                         METADATA_LEVEL, alert.getLevel(),
                         METADATA_CREATED_AT, alert.getCreatedAt().toString()
                 )                                           // metadata
