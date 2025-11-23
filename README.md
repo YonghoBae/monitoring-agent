@@ -29,8 +29,11 @@
 | 유사 알림 | `VectorStore.similaritySearch` 결과 반환 | Ollama/PGVector 미응답 → 예외 전파 |
 
 ## 개발/테스트
-1. 데이터베이스 설정: `application.properties`에서 PostgreSQL 연결 정보를 맞춤.
-2. 벡터 스토어/Ollama: `spring.ai.ollama` 설정을 로컬 실행 환경에 맞춰 조정.
+1. `.env` 또는 배포 환경에 다음과 같은 환경 변수를 설정합니다.
+   - `MONITORING_AGENT_DB_URL`, `MONITORING_AGENT_DB_USERNAME`, `MONITORING_AGENT_DB_PASSWORD`
+   - `DISCORD_WEBHOOK_URL`
+   - `MONITORING_AGENT_VERTEX_ENABLED`, `OLLAMA_BASE_URL`, `OLLAMA_EMBEDDING_MODEL` 등
+2. `application.yml`은 위 환경 변수를 읽어 실제 값을 주입하므로, 민감 정보가 코드에 남지 않습니다.
 3. 테스트 실행: `./gradlew test -Dspring.test.aot.enabled=false`
 
 ## 앞으로 개선할 점

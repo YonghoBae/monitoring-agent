@@ -19,23 +19,27 @@ public class DiscordNotificationService {
         this.webhookUrl = webhookUrl;
     }
 
-    public void sendAlert(AlertEvent alert) {
+    public void sendAlert(AlertEvent alert, String agentAnalysis) {
         String content = """
                 🔔 *Monitoring Alert*
                 • Level: `%s`
                 • Message: %s
                 • Time: %s
                 • ID: %s
+
+                🤖 *Agent Analysis*
+                %s
                 """.formatted(
                 alert.getLevel(),
                 alert.getMessage(),
                 alert.getCreatedAt(),
-                alert.getId()
+                alert.getId(),
+                agentAnalysis == null || agentAnalysis.isBlank()
+                        ? "_분석 결과를 생성하지 못했습니다._"
+                        : agentAnalysis
         );
 
-        Map<String, Object> payload = Map.of(
-                "content", content
-        );
+        Map<String, Object> payload = Map.of("content", content);
 
         restClient.post()
                 .uri(webhookUrl)
@@ -43,4 +47,10 @@ public class DiscordNotificationService {
                 .retrieve()
                 .toBodilessEntity();
     }
+
+    // 필요하면 옛 인터페이스 유지용 헬퍼
+    public void sendAlert(AlertEvent alert) {
+        sendAlert(alert, null);
+    }
 }
+

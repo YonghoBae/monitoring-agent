@@ -5,6 +5,7 @@ import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
 import io.ohgnoy.monitoring.agent.service.AlertService;
 import io.ohgnoy.monitoring.agent.service.AlertVectorService;
 import io.ohgnoy.monitoring.agent.service.DiscordNotificationService;
+import io.ohgnoy.monitoring.agent.service.MonitoringAgentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ class AlertServiceTest {
     @Mock
     private DiscordNotificationService discordNotificationService;
 
+    @Mock
+    private MonitoringAgentService monitoringAgentService;
+
     @InjectMocks
     private AlertService alertService;
 
@@ -50,6 +54,8 @@ class AlertServiceTest {
                     return actual;
                 });
 
+        when(monitoringAgentService.buildAgentAnalysis(any(AlertEvent.class))).thenReturn("analysis");
+
         // when
         AlertEvent result = alertService.createAlert("ERROR", "database down");
 
@@ -61,8 +67,9 @@ class AlertServiceTest {
 
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(result);
-        verify(discordNotificationService).sendAlert(result);
-        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService);
+        verify(monitoringAgentService).buildAgentAnalysis(result);
+        verify(discordNotificationService).sendAlert(result, "analysis");
+        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService, monitoringAgentService);
     }
 
     @Test
@@ -82,8 +89,9 @@ class AlertServiceTest {
         // then
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(result);
-        verify(discordNotificationService, never()).sendAlert(any());
-        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService);
+        verify(discordNotificationService, never()).sendAlert(any(), any());
+        verify(monitoringAgentService, never()).buildAgentAnalysis(any());
+        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService, monitoringAgentService);
     }
 
     @Test
@@ -100,7 +108,7 @@ class AlertServiceTest {
         // then
         assertThat(result).isSameAs(events);
         verify(alertEventRepository).findTop20ByResolvedFalseOrderByCreatedAtDesc();
-        verifyNoInteractions(alertVectorService, discordNotificationService);
+        verifyNoInteractions(alertVectorService, discordNotificationService, monitoringAgentService);
     }
 
     private static void setId(AlertEvent alertEvent, Long id) {

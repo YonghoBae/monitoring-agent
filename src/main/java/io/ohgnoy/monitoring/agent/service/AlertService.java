@@ -13,29 +13,30 @@ public class AlertService {
     private final AlertEventRepository alertEventRepository;
     private final AlertVectorService alertVectorService;
     private final DiscordNotificationService discordNotificationService;
+    private final MonitoringAgentService monitoringAgentService;
 
     public AlertService(AlertEventRepository alertEventRepository,
                         AlertVectorService alertVectorService,
-                        DiscordNotificationService discordNotificationService) {
+                        DiscordNotificationService discordNotificationService,
+                        MonitoringAgentService monitoringAgentService) {
         this.alertEventRepository = alertEventRepository;
         this.alertVectorService = alertVectorService;
         this.discordNotificationService = discordNotificationService;
+        this.monitoringAgentService = monitoringAgentService;
     }
 
     @Transactional
     public AlertEvent createAlert(String level, String message) {
-        // 1) 도메인 객체 생성
         AlertEvent alert = new AlertEvent(level, message);
-
-        // 2) RDB 저장
         AlertEvent saved = alertEventRepository.save(alert);
 
-        // 3) 벡터 스토어 인덱싱
+        // 1) 벡터 인덱싱
         alertVectorService.indexAlert(saved);
 
-        // 4) 심각도에 따라 Discord 전송 (원하면 조건 더 추가 가능)
+        // 2) 심각한 알람만 에이전트 분석 + 디스코드 전송
         if (shouldNotify(level)) {
-            discordNotificationService.sendAlert(saved);
+            String analysis = monitoringAgentService.buildAgentAnalysis(saved);
+            discordNotificationService.sendAlert(saved, analysis);
         }
 
         return saved;
@@ -47,11 +48,9 @@ public class AlertService {
     }
 
     private boolean shouldNotify(String level) {
-        if (level == null) {
-            return false;
-        }
+        if (level == null) return false;
         String upper = level.toUpperCase();
-        // 필요하면 INFO/WARN도 포함해서 조정
         return "ERROR".equals(upper) || "CRITICAL".equals(upper);
     }
 }
+
