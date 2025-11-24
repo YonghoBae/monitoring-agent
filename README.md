@@ -29,11 +29,11 @@
 | 유사 알림 | `VectorStore.similaritySearch` 결과 반환 | Ollama/PGVector 미응답 → 예외 전파 |
 
 ## 개발/테스트
-1. `.env` 또는 배포 환경에 다음과 같은 환경 변수를 설정합니다.
-   - `MONITORING_AGENT_DB_URL`, `MONITORING_AGENT_DB_USERNAME`, `MONITORING_AGENT_DB_PASSWORD`
-   - `DISCORD_WEBHOOK_URL`
-   - `MONITORING_AGENT_VERTEX_ENABLED`, `OLLAMA_BASE_URL`, `OLLAMA_EMBEDDING_MODEL` 등
-2. `application.yml`은 위 환경 변수를 읽어 실제 값을 주입하므로, 민감 정보가 코드에 남지 않습니다.
+1. `src/main/resources/application.yml.sample`을 복사해 `application.yml`을 만들고(파일은 `.gitignore` 처리됨) 그 안에 실제 값을 채워 넣습니다.
+   - DB 접속 정보, Discord Webhook URL
+   - Google GenAI `api-key`/`project-id`/`location`과 기본 모델
+   - 필요하면 Ollama URL, 임베딩 모델 등도 여기서 수정합니다.
+2. 환경 변수로 덮어쓰고 싶다면 Spring Boot 표준 방식(`SPRING_AI_GOOGLE_GENAI_APIKEY` 등)을 그대로 사용할 수 있습니다.
 3. 테스트 실행: `./gradlew test -Dspring.test.aot.enabled=false`
 
 ## 앞으로 개선할 점

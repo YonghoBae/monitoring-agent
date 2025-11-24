@@ -1,0 +1,65 @@
+# ============================
+#  PostgreSQL 데이터베이스 설정
+# ============================
+spring:
+  datasource:
+    url: ${MONITORING_AGENT_DB_URL:jdbc:postgresql://localhost:5432/monitoring_agent}
+    username: ${MONITORING_AGENT_DB_USERNAME:monitoring_user}
+    password: ${MONITORING_AGENT_DB_PASSWORD:change-me}
+    driver-class-name: org.postgresql.Driver
+
+  # ============================
+  #  JPA 설정
+  # ============================
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # ============================
+  #  Spring AI 설정
+  # ============================
+  ai:
+
+    # ----- PGVector 스키마 자동 생성 -----
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+
+    # ----- Ollama 설정 (로컬 테스트용) -----
+    ollama:
+      base-url: ${SPRING_AI_OLLAMA_BASE_URL:http://localhost:11434}
+      embedding:
+        options:
+          model: ${SPRING_AI_OLLAMA_EMBEDDING_OPTIONS_MODEL:all-minilm}
+
+    # =====================================
+    #  Gemini (Google GenAI API 키)
+    # =====================================
+    google:
+      genai:
+        api-key: ${SPRING_AI_GOOGLE_GENAI_APIKEY:}
+        project-id: ${SPRING_AI_GOOGLE_GENAI_PROJECT_ID:}
+        location: ${SPRING_AI_GOOGLE_GENAI_LOCATION:asia-northeast1}
+        chat:
+          options:
+            model: ${SPRING_AI_GOOGLE_GENAI_MODEL:gemini-1.5-flash}
+
+  # ============================
+  #  Spring Security 기본 계정
+  # ============================
+  security:
+    user:
+      name: ${MONITORING_AGENT_ADMIN_USERNAME:test}
+      password: ${MONITORING_AGENT_ADMIN_PASSWORD:test1234}
+
+# ============================
+#  Discord Webhook
+# ============================
+discord:
+  webhook:
+    url: ${DISCORD_WEBHOOK_URL:https://discord.example/webhook}

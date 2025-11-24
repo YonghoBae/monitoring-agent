@@ -17,20 +17,17 @@ public class MonitoringAgentService {
 
     private final ChatModel chatModel;
     private final AlertVectorService alertVectorService;
-    private final boolean vertexEnabled;
 
     public MonitoringAgentService(
-            @Qualifier("vertexAiGeminiChat") @Nullable ChatModel chatModel,
-            AlertVectorService alertVectorService,
-            @Value("${monitoring-agent.vertex-enabled:false}") boolean vertexEnabled
+            @Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
+            AlertVectorService alertVectorService
     ) {
         this.chatModel = chatModel;
         this.alertVectorService = alertVectorService;
-        this.vertexEnabled = vertexEnabled && chatModel != null;
     }
 
     public String buildAgentAnalysis(AlertEvent alert) {
-        if (!vertexEnabled) {
+        if (chatModel == null) {
             return "에이전트 분석 기능이 비활성화되어 기본 메시지만 전송합니다.";
         }
 
