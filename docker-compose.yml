@@ -1,0 +1,74 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: monitoring-agent-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - agent-internal
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  monitoring-agent-db:
+    image: pgvector/pgvector:pg16
+    container_name: monitoring-agent-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: monitoring_agent
+      POSTGRES_USER: monitoring_user
+      POSTGRES_PASSWORD: ${MONITORING_AGENT_DB_PASSWORD:-change-me}
+    volumes:
+      - monitoring-agent-db-data:/var/lib/postgresql/data
+    networks:
+      - agent-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  monitoring-agent-app:
+    build: .
+    container_name: monitoring-agent-app
+    restart: unless-stopped
+    depends_on:
+      ollama:
+        condition: service_started
+      monitoring-agent-db:
+        condition: service_healthy
+    ports:
+      - "8081:8080"
+    networks:
+      - agent-internal
+      - monitoring-net
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://monitoring-agent-db:5432/monitoring_agent
+      SPRING_DATASOURCE_USERNAME: monitoring_user
+      SPRING_DATASOURCE_PASSWORD: ${MONITORING_AGENT_DB_PASSWORD:-change-me}
+      MONITORING_AGENT_DB_URL: jdbc:postgresql://monitoring-agent-db:5432/monitoring_agent
+      MONITORING_AGENT_DB_USERNAME: monitoring_user
+      MONITORING_AGENT_DB_PASSWORD: ${MONITORING_AGENT_DB_PASSWORD:-change-me}
+      MONITORING_AGENT_ADMIN_USERNAME: ${MONITORING_AGENT_ADMIN_USERNAME:-admin}
+      MONITORING_AGENT_ADMIN_PASSWORD: ${MONITORING_AGENT_ADMIN_PASSWORD:-admin1234}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-https://discord.example/webhook}
+      SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
+      SPRING_AI_GOOGLE_GENAI_API_KEY: ${SPRING_AI_GOOGLE_GENAI_APIKEY:-}
+      PROMETHEUS_URL: http://prometheus:9090
+      LOKI_URL: http://loki:3100
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+
+volumes:
+  monitoring-agent-db-data:
+  ollama-data:
+
+networks:
+  agent-internal:
+  monitoring-net:
+    external: true
+    name: monitoring-net
