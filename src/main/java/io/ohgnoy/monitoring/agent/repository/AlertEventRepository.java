@@ -9,4 +9,7 @@ public interface AlertEventRepository extends JpaRepository<AlertEvent, Long> {
 
     List<AlertEvent> findTop20ByResolvedFalseOrderByCreatedAtDesc();
 
+    List<AlertEvent> findByAlertNameAndLabelsJsonAndResolvedFalse(
+            String alertName, String labelsJson);
+
 }

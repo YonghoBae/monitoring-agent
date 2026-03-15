@@ -6,9 +6,12 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AlertVectorService {
@@ -22,19 +25,31 @@ public class AlertVectorService {
     private static final String METADATA_ALERT_ID = "alertId";
     private static final String METADATA_LEVEL = "level";
     private static final String METADATA_CREATED_AT = "createdAt";
+    private static final String METADATA_ALERT_NAME = "alertName";
 
     /**
      * 알람 엔티티를 PgVector에 임베딩/인덱싱한다.
      */
     public void indexAlert(AlertEvent alert) {
+        String content = Stream.of(alert.getAlertName(), alert.getMessage(), alert.getAnnotationSummary())
+                .filter(s -> s != null && !s.isBlank())
+                .collect(Collectors.joining(" | "));
+        if (content.isBlank()) {
+            content = alert.getMessage();
+        }
+
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put(METADATA_ALERT_ID, alert.getId().toString());
+        metadata.put(METADATA_LEVEL, alert.getLevel());
+        metadata.put(METADATA_CREATED_AT, alert.getCreatedAt().toString());
+        if (alert.getAlertName() != null) {
+            metadata.put(METADATA_ALERT_NAME, alert.getAlertName());
+        }
+
         Document doc = new Document(
-                UUID.randomUUID().toString(),               // id
-                alert.getMessage(),                         // content
-                Map.of(
-                        METADATA_ALERT_ID, alert.getId().toString(),
-                        METADATA_LEVEL, alert.getLevel(),
-                        METADATA_CREATED_AT, alert.getCreatedAt().toString()
-                )                                           // metadata
+                UUID.randomUUID().toString(),
+                content,
+                metadata
         );
         vectorStore.add(List.of(doc));
     }

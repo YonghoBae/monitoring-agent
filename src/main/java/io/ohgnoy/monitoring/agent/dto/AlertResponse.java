@@ -10,6 +10,10 @@ public class AlertResponse {
     private String message;
     private LocalDateTime createdAt;
     private boolean resolved;
+    private String alertName;
+    private String annotationSummary;
+    private LocalDateTime startsAt;
+    private LocalDateTime resolvedAt;
 
     public AlertResponse(AlertEvent alert) {
         this.id = alert.getId();
@@ -17,6 +21,10 @@ public class AlertResponse {
         this.message = alert.getMessage();
         this.createdAt = alert.getCreatedAt();
         this.resolved = alert.isResolved();
+        this.alertName = alert.getAlertName();
+        this.annotationSummary = alert.getAnnotationSummary();
+        this.startsAt = alert.getStartsAt();
+        this.resolvedAt = alert.getResolvedAt();
     }
 
     public Long getId() {
@@ -37,5 +45,21 @@ public class AlertResponse {
 
     public boolean isResolved() {
         return resolved;
+    }
+
+    public String getAlertName() {
+        return alertName;
+    }
+
+    public String getAnnotationSummary() {
+        return annotationSummary;
+    }
+
+    public LocalDateTime getStartsAt() {
+        return startsAt;
+    }
+
+    public LocalDateTime getResolvedAt() {
+        return resolvedAt;
     }
 }
