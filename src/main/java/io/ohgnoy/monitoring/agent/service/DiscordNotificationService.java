@@ -2,6 +2,7 @@ package io.ohgnoy.monitoring.agent.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
+import io.ohgnoy.monitoring.agent.dto.CommandResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,13 +19,16 @@ public class DiscordNotificationService {
     private final RestClient restClient;
     private final String webhookUrl;
     private final ObjectMapper objectMapper;
+    private final PendingApprovalStore pendingApprovalStore;
 
     public DiscordNotificationService(RestClient.Builder builder,
                                       @Value("${discord.webhook.url}") String webhookUrl,
-                                      ObjectMapper objectMapper) {
+                                      ObjectMapper objectMapper,
+                                      PendingApprovalStore pendingApprovalStore) {
         this.restClient = builder.build();
         this.webhookUrl = webhookUrl;
         this.objectMapper = objectMapper;
+        this.pendingApprovalStore = pendingApprovalStore;
     }
 
     public void sendAlert(AlertEvent alert,
@@ -59,6 +63,61 @@ public class DiscordNotificationService {
                         ? "_분석 결과를 생성하지 못했습니다._"
                         : agentAnalysis
         );
+
+        sendToDiscord(content);
+
+        // NEEDS_APPROVAL인 경우 승인 대기 저장
+        if (recommendation != null
+                && recommendation.category() == ActionRecommendation.Category.NEEDS_APPROVAL
+                && recommendation.command() != null) {
+            String resolvedCommand = resolveCommand(recommendation.command(), alert);
+            if (resolvedCommand != null) {
+                pendingApprovalStore.store(resolvedCommand, alert.getId());
+                log.info("승인 대기 저장: command='{}', alertId={}", resolvedCommand, alert.getId());
+            }
+        }
+    }
+
+    public void sendAutoExecuted(AlertEvent alert,
+                                 String agentAnalysis,
+                                 VerificationResult verification,
+                                 ActionRecommendation recommendation,
+                                 String executedCommand,
+                                 CommandResult result) {
+        String verificationLine = verification != null
+                ? "🔍 **검증**: " + verification.toPromptLine()
+                : "🔍 **검증**: -";
+
+        String statusLine = result.isSuccess()
+                ? "✅ **자동 실행 완료**"
+                : "❌ **자동 실행 실패** (exit " + result.exitCode() + ")";
+        String output = (result.isSuccess() ? result.output() : result.errorOutput());
+
+        String content = """
+                🔔 **Monitoring Alert** — AUTO 처리
+                • Level: `%s`  |  Alert: `%s`
+                • %s
+                • Time: `%s`  |  ID: `%s`
+
+                🤖 **Agent Analysis**
+                %s
+
+                %s: `%s`
+                ```
+                %s
+                ```
+                """.formatted(
+                alert.getLevel(),
+                alert.getAlertName() != null ? alert.getAlertName() : alert.getMessage(),
+                verificationLine,
+                alert.getCreatedAt(),
+                alert.getId(),
+                agentAnalysis == null || agentAnalysis.isBlank()
+                        ? "_분석 결과를 생성하지 못했습니다._"
+                        : agentAnalysis,
+                statusLine,
+                executedCommand,
+                output == null ? "" : output.trim());
 
         sendToDiscord(content);
     }
