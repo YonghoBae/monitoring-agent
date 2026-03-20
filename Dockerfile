@@ -11,8 +11,10 @@ RUN chmod +x gradlew
 COPY src src
 RUN ./gradlew bootJar -x test
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 WORKDIR /app
+
+RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
 
 # Copy the built jar from the builder image
 COPY --from=builder /app/build/libs/*.jar app.jar
