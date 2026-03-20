@@ -1,0 +1,87 @@
+# ============================
+#  application.yml 템플릿
+#  민감 정보는 모두 플레이스홀더로 대체됨
+#  실제 값은 application.yml에 작성 (gitignore 처리됨)
+# ============================
+
+# ============================
+#  PostgreSQL 데이터베이스 설정
+# ============================
+spring:
+  datasource:
+    url: jdbc:postgresql://monitoring-agent-db:5432/monitoring_agent
+    username: monitoring_user
+    password: "YOUR_DB_PASSWORD"       # '@' 있는 문자열은 반드시 따옴표 필요
+    driver-class-name: org.postgresql.Driver
+
+  # ============================
+  #  JPA 설정
+  # ============================
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # ============================
+  #  Spring AI 설정
+  # ============================
+  ai:
+    retry:
+      max-attempts: 1
+      on-client-errors: false
+
+    # ----- PGVector 스키마 자동 생성 -----
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+
+    # ----- Ollama 설정 (임베딩 전용: all-minilm) -----
+    ollama:
+      base-url: http://172.17.0.1:11434
+      embedding:
+        options:
+          model: all-minilm
+
+    # =====================================
+    #  Gemini (Google GenAI API 키)
+    #  환경변수 SPRING_AI_GOOGLE_GENAI_API_KEY 로 주입
+    # =====================================
+    google:
+      genai:
+        api-key: ${SPRING_AI_GOOGLE_GENAI_API_KEY:-}
+        chat:
+          options:
+            model: gemini-2.5-flash
+
+  # ============================
+  #  Spring Security 기본 계정
+  # ============================
+  security:
+    user:
+      name: YOUR_ADMIN_USER
+      password: YOUR_ADMIN_PASSWORD
+
+# ============================
+#  Discord Webhook
+# ============================
+discord:
+  webhook:
+    url: ${DISCORD_WEBHOOK_URL}   # 환경변수로 주입 (docker-compose의 DISCORD_WEBHOOK_URL)
+  bot:
+    # token: 환경변수 DISCORD_BOT_TOKEN 으로만 설정 (미설정 시 Bot 비활성화)
+    channel-id: ${DISCORD_BOT_CHANNEL_ID:}
+    allowed-role-id: ${DISCORD_BOT_ALLOWED_ROLE_ID:}
+    approval-ttl-minutes: 30
+
+# ============================
+#  외부 서비스 URL
+# ============================
+prometheus:
+  url: ${PROMETHEUS_URL:http://prometheus:9090}
+
+loki:
+  url: ${LOKI_URL:http://loki:3100}

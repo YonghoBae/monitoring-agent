@@ -1,11 +1,9 @@
 package io.ohgnoy.monitoring.agent;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
-import io.ohgnoy.monitoring.agent.service.AlertService;
-import io.ohgnoy.monitoring.agent.service.AlertVectorService;
-import io.ohgnoy.monitoring.agent.service.DiscordNotificationService;
-import io.ohgnoy.monitoring.agent.service.MonitoringAgentService;
+import io.ohgnoy.monitoring.agent.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +33,18 @@ class AlertServiceTest {
     @Mock
     private MonitoringAgentService monitoringAgentService;
 
+    @Mock
+    private AlertVerifier alertVerifier;
+
+    @Mock
+    private AlertPlaybook alertPlaybook;
+
+    @Mock
+    private CommandExecutorService commandExecutorService;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
     @InjectMocks
     private AlertService alertService;
 
@@ -44,8 +54,8 @@ class AlertServiceTest {
     }
 
     @Test
-    @DisplayName("createAlert - ERROR 레벨이면 저장 + 벡터 인덱싱 + 디스코드 전송까지 수행한다")
-    void createAlert_error_persistsIndexesAndNotifiesDiscord() {
+    @DisplayName("createAlert - ERROR 레벨이면 저장 + 벡터 인덱싱 + 에이전트 파이프라인 수행한다")
+    void createAlert_error_runsAgentPipelineAndNotifiesDiscord() {
         // given
         when(alertEventRepository.save(any(AlertEvent.class)))
                 .thenAnswer(invocation -> {
@@ -54,7 +64,13 @@ class AlertServiceTest {
                     return actual;
                 });
 
-        when(monitoringAgentService.buildAgentAnalysis(any(AlertEvent.class))).thenReturn("analysis");
+        VerificationResult verification = VerificationResult.unknown();
+        ActionRecommendation recommendation = new ActionRecommendation(
+                "컨테이너 재시작", ActionRecommendation.Category.NEEDS_APPROVAL, "docker restart test");
+
+        when(alertVerifier.verify(any(AlertEvent.class))).thenReturn(verification);
+        when(alertPlaybook.lookup(any())).thenReturn(recommendation);
+        when(monitoringAgentService.buildAgentAnalysis(any(), any(), any())).thenReturn("analysis");
 
         // when
         AlertEvent result = alertService.createAlert("ERROR", "database down");
@@ -67,9 +83,43 @@ class AlertServiceTest {
 
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(result);
-        verify(monitoringAgentService).buildAgentAnalysis(result);
-        verify(discordNotificationService).sendAlert(result, "analysis");
-        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService, monitoringAgentService);
+        verify(alertVerifier).verify(result);
+        verify(alertPlaybook).lookup(any());
+        verify(monitoringAgentService).buildAgentAnalysis(eq(result), any(), any());
+        verify(discordNotificationService).sendAlert(eq(result), eq("analysis"), any(), any());
+        verify(commandExecutorService, never()).execute(any());
+    }
+
+    @Test
+    @DisplayName("createAlert - AUTO 카테고리면 명령어를 즉시 실행하고 sendAutoExecuted를 호출한다")
+    void createAlert_autoCategory_executesCommandImmediately() {
+        // given
+        when(alertEventRepository.save(any(AlertEvent.class)))
+                .thenAnswer(invocation -> {
+                    AlertEvent actual = invocation.getArgument(0);
+                    setId(actual, 99L);
+                    return actual;
+                });
+
+        VerificationResult verification = VerificationResult.confirmed("1", "now");
+        ActionRecommendation recommendation = new ActionRecommendation(
+                "컨테이너 재시작", ActionRecommendation.Category.AUTO, "docker restart test-container");
+
+        when(alertVerifier.verify(any())).thenReturn(verification);
+        when(alertPlaybook.lookup(any())).thenReturn(recommendation);
+        when(monitoringAgentService.buildAgentAnalysis(any(), any(), any())).thenReturn("analysis");
+
+        io.ohgnoy.monitoring.agent.dto.CommandResult cmdResult =
+                new io.ohgnoy.monitoring.agent.dto.CommandResult(0, "test-container\n", "");
+        when(commandExecutorService.execute(any())).thenReturn(cmdResult);
+
+        // when
+        AlertEvent result = alertService.createAlert("CRITICAL", "container restarting");
+
+        // then
+        verify(commandExecutorService).execute("docker restart test-container");
+        verify(discordNotificationService).sendAutoExecuted(eq(result), eq("analysis"), any(), any(), eq("docker restart test-container"), any());
+        verify(discordNotificationService, never()).sendAlert(any(), any(), any(), any());
     }
 
     @Test
@@ -89,9 +139,9 @@ class AlertServiceTest {
         // then
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(result);
-        verify(discordNotificationService, never()).sendAlert(any(), any());
-        verify(monitoringAgentService, never()).buildAgentAnalysis(any());
-        verifyNoMoreInteractions(alertEventRepository, alertVectorService, discordNotificationService, monitoringAgentService);
+        verify(discordNotificationService, never()).sendAlert(any(), any(), any(), any());
+        verify(monitoringAgentService, never()).buildAgentAnalysis(any(), any(), any());
+        verifyNoInteractions(alertVerifier, alertPlaybook, commandExecutorService);
     }
 
     @Test
