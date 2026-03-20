@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import io.ohgnoy.monitoring.agent.dto.AlertmanagerAlert;
 import io.ohgnoy.monitoring.agent.dto.AlertmanagerWebhookPayload;
+import io.ohgnoy.monitoring.agent.dto.CommandResult;
 import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ public class AlertService {
     private final MonitoringAgentService monitoringAgentService;
     private final AlertVerifier alertVerifier;
     private final AlertPlaybook alertPlaybook;
+    private final CommandExecutorService commandExecutorService;
     private final ObjectMapper objectMapper;
 
     public AlertService(AlertEventRepository alertEventRepository,
@@ -34,6 +36,7 @@ public class AlertService {
                         MonitoringAgentService monitoringAgentService,
                         AlertVerifier alertVerifier,
                         AlertPlaybook alertPlaybook,
+                        CommandExecutorService commandExecutorService,
                         ObjectMapper objectMapper) {
         this.alertEventRepository = alertEventRepository;
         this.alertVectorService = alertVectorService;
@@ -41,6 +44,7 @@ public class AlertService {
         this.monitoringAgentService = monitoringAgentService;
         this.alertVerifier = alertVerifier;
         this.alertPlaybook = alertPlaybook;
+        this.commandExecutorService = commandExecutorService;
         this.objectMapper = objectMapper;
     }
 
@@ -116,9 +120,31 @@ public class AlertService {
         String analysis = monitoringAgentService.buildAgentAnalysis(alert, verification, recommendation);
         alert.setAnalysisResult(analysis);
 
-        // Step 4: Authorize — notify Discord with full context
+        // Step 4: Authorize — AUTO는 즉시 실행, 나머지는 Discord 알림 전송
         log.info("[Pipeline] Step4 Authorize — category={}", recommendation.category());
-        discordNotificationService.sendAlert(alert, analysis, verification, recommendation);
+        if (recommendation.category() == ActionRecommendation.Category.AUTO
+                && recommendation.command() != null) {
+            String cmd = resolveLabels(recommendation.command(), alert);
+            log.info("[Pipeline] AUTO 실행: '{}'", cmd);
+            CommandResult result = commandExecutorService.execute(cmd);
+            discordNotificationService.sendAutoExecuted(alert, analysis, verification, recommendation, cmd, result);
+        } else {
+            discordNotificationService.sendAlert(alert, analysis, verification, recommendation);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private String resolveLabels(String command, AlertEvent alert) {
+        if (command == null || alert.getLabelsJson() == null || alert.getLabelsJson().isBlank()) {
+            return command;
+        }
+        try {
+            Map<String, String> labels = objectMapper.readValue(alert.getLabelsJson(), Map.class);
+            for (Map.Entry<String, String> e : labels.entrySet()) {
+                command = command.replace("{" + e.getKey() + "}", e.getValue());
+            }
+        } catch (Exception ignored) {}
+        return command;
     }
 
     private void resolveMatchingAlerts(AlertmanagerAlert alert) {

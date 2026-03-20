@@ -38,7 +38,7 @@ public class AlertPlaybook {
             Map.entry("GPUUtilizationStuckHigh",
                     new ActionRecommendation("GPU 작업 목록 확인", READ_ONLY, null)),
             Map.entry("GPUDcgmExporterDown",
-                    new ActionRecommendation("dcgm-exporter 재시작", NEEDS_APPROVAL, "docker restart dcgm-exporter")),
+                    new ActionRecommendation("dcgm-exporter 재시작", AUTO, "docker restart dcgm-exporter")),
 
             // Apollo
             Map.entry("ApolloGameHighFrameLatency",
