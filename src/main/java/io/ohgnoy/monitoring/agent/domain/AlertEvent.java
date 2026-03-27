@@ -52,6 +52,22 @@ public class AlertEvent {
     @Column(name = "verification_status", length = 32)
     private String verificationStatus;
 
+    // ReAct 루프 추론 과정 전체 (도구 호출 + 관찰 결과)
+    @Column(name = "reasoning_chain", columnDefinition = "TEXT")
+    private String reasoningChain;
+
+    // ReAct 루프에서 도구를 호출한 총 횟수
+    @Column(name = "agent_iterations")
+    private int agentIterations;
+
+    // Reflection 결과 (SUFFICIENT or INSUFFICIENT: ...)
+    @Column(name = "reflection_result", columnDefinition = "TEXT")
+    private String reflectionResult;
+
+    // 피드백 수신 후 연결된 ResolutionRecord ID
+    @Column(name = "resolution_record_id")
+    private Long resolutionRecordId;
+
     protected AlertEvent() {
     }
 
@@ -143,6 +159,18 @@ public class AlertEvent {
     public void setVerificationStatus(String verificationStatus) {
         this.verificationStatus = verificationStatus;
     }
+
+    public String getReasoningChain() { return reasoningChain; }
+    public void setReasoningChain(String reasoningChain) { this.reasoningChain = reasoningChain; }
+
+    public int getAgentIterations() { return agentIterations; }
+    public void setAgentIterations(int agentIterations) { this.agentIterations = agentIterations; }
+
+    public String getReflectionResult() { return reflectionResult; }
+    public void setReflectionResult(String reflectionResult) { this.reflectionResult = reflectionResult; }
+
+    public Long getResolutionRecordId() { return resolutionRecordId; }
+    public void setResolutionRecordId(Long resolutionRecordId) { this.resolutionRecordId = resolutionRecordId; }
 
     public void resolve() {
         this.resolved = true;
