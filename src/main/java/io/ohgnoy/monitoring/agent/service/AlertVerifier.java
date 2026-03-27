@@ -29,6 +29,41 @@ public class AlertVerifier {
     }
 
     /**
+     * AgentTools에서 직접 호출하기 위한 오버로드
+     */
+    public VerificationResult verify(String alertName, String labelsJson) {
+        if (alertName == null || alertName.isBlank()) {
+            return VerificationResult.unknown();
+        }
+        try {
+            String response = restClient.get()
+                    .uri("/api/v1/alerts")
+                    .retrieve()
+                    .body(String.class);
+
+            JsonNode alerts = objectMapper.readTree(response)
+                    .path("data").path("alerts");
+
+            Map<String, String> labels = parseLabels(labelsJson);
+
+            for (JsonNode firing : alerts) {
+                JsonNode firingLabels = firing.path("labels");
+                if (!alertName.equals(firingLabels.path("alertname").asText())) continue;
+                if (!keyLabelsMatch(labels, firingLabels)) continue;
+
+                return VerificationResult.confirmed(
+                        firing.path("value").asText("N/A"),
+                        firing.path("activeAt").asText("N/A")
+                );
+            }
+            return VerificationResult.stale();
+        } catch (Exception e) {
+            log.warn("알람 검증 실패 [{}]: {}", alertName, e.getMessage());
+            return VerificationResult.unknown();
+        }
+    }
+
+    /**
      * Prometheus /api/v1/alerts 에서 현재 firing 중인 알람과 대조해 검증한다.
      * - CONFIRMED : 지금도 동일 조건으로 firing 중
      * - STALE     : 조건이 해소돼 firing 목록에 없음

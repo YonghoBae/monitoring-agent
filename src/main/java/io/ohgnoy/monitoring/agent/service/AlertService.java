@@ -7,11 +7,15 @@ import io.ohgnoy.monitoring.agent.dto.AlertmanagerAlert;
 import io.ohgnoy.monitoring.agent.dto.AlertmanagerWebhookPayload;
 import io.ohgnoy.monitoring.agent.dto.CommandResult;
 import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
+import io.ohgnoy.monitoring.agent.service.agent.AgentResult;
+import io.ohgnoy.monitoring.agent.service.agent.OrchestratorAgent;
+import io.ohgnoy.monitoring.agent.service.agent.ReActAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,10 +25,13 @@ public class AlertService {
 
     private static final Logger log = LoggerFactory.getLogger(AlertService.class);
 
+    private static final int ORCHESTRATOR_THRESHOLD = 3; // 동시 알람 N개 이상 시 Orchestrator 발동
+
     private final AlertEventRepository alertEventRepository;
     private final AlertVectorService alertVectorService;
     private final DiscordNotificationService discordNotificationService;
-    private final MonitoringAgentService monitoringAgentService;
+    private final ReActAgent reActAgent;
+    private final OrchestratorAgent orchestratorAgent;
     private final AlertVerifier alertVerifier;
     private final AlertPlaybook alertPlaybook;
     private final CommandExecutorService commandExecutorService;
@@ -33,7 +40,8 @@ public class AlertService {
     public AlertService(AlertEventRepository alertEventRepository,
                         AlertVectorService alertVectorService,
                         DiscordNotificationService discordNotificationService,
-                        MonitoringAgentService monitoringAgentService,
+                        ReActAgent reActAgent,
+                        OrchestratorAgent orchestratorAgent,
                         AlertVerifier alertVerifier,
                         AlertPlaybook alertPlaybook,
                         CommandExecutorService commandExecutorService,
@@ -41,7 +49,8 @@ public class AlertService {
         this.alertEventRepository = alertEventRepository;
         this.alertVectorService = alertVectorService;
         this.discordNotificationService = discordNotificationService;
-        this.monitoringAgentService = monitoringAgentService;
+        this.reActAgent = reActAgent;
+        this.orchestratorAgent = orchestratorAgent;
         this.alertVerifier = alertVerifier;
         this.alertPlaybook = alertPlaybook;
         this.commandExecutorService = commandExecutorService;
@@ -98,38 +107,61 @@ public class AlertService {
     }
 
     /**
-     * 4단계 에이전트 파이프라인
+     * ReAct 에이전트 파이프라인
      *
      * 1. Verify     — 알람이 실제로 유효한가? (Prometheus 재확인)
-     * 2. Investigate — 어떤 상황인가? (메트릭 + 로그 수집)
-     * 3. Resolve    — 어떻게 해결하나? (Gemini 분석, Playbook 기반 권장 조치 포함)
-     * 4. Authorize  — 자동 처리 vs 사용자 승인 필요 여부 결정 후 Discord 전송
+     * 2. ReAct      — Gemini가 도구를 스스로 선택하며 반복 추론
+     *                 (verify_alert / query_prometheus / query_loki / search_rag / web_search)
+     * 3. Authorize  — Playbook safety ceiling 적용 후 실행 또는 Discord 전송
+     *
+     * NOTE: 이 메서드는 @Transactional 메서드 내부에서 호출되므로 Gemini API 호출
+     * 기간 동안 DB 커넥션이 유지된다. 커넥션 풀 여유가 있는 소규모 환경에서는
+     * 문제없으나, 확장 시 @Async + 별도 트랜잭션으로 분리 필요.
      */
     private void runAgentPipeline(AlertEvent alert) {
         // Step 1: Verify
-        log.info("[Pipeline] Step1 Verify — alertId={}, alertName={}", alert.getId(), alert.getAlertName());
+        log.info("[Agent] Step1 Verify — alertId={}, alertName={}", alert.getId(), alert.getAlertName());
         VerificationResult verification = alertVerifier.verify(alert);
         alert.setVerificationStatus(verification.status().name());
-        log.info("[Pipeline] Verification result: {}", verification.status());
+        log.info("[Agent] Verification: {}", verification.status());
 
-        // Step 2: Investigate (context collection happens inside MonitoringAgentService)
-        // Step 3: Resolve — Gemini analysis with verification context
+        // Step 2: Playbook lookup (safety ceiling)
         ActionRecommendation recommendation = alertPlaybook.lookup(alert.getAlertName());
-        log.info("[Pipeline] Step3 Resolve — recommendation={} ({})", recommendation.description(), recommendation.category());
+        log.info("[Agent] Playbook: {} ({})", recommendation.description(), recommendation.category());
 
-        String analysis = monitoringAgentService.buildAgentAnalysis(alert, verification, recommendation);
-        alert.setAnalysisResult(analysis);
+        // Step 3: 동시 알람 확인 → Orchestrator 또는 단일 ReAct 실행
+        List<AlertEvent> recentConcurrent = alertEventRepository
+                .findTop20ByResolvedFalseOrderByCreatedAtDesc()
+                .stream()
+                .filter(a -> !a.getId().equals(alert.getId()))
+                .filter(a -> a.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(5)))
+                .toList();
 
-        // Step 4: Authorize — AUTO는 즉시 실행, 나머지는 Discord 알림 전송
-        log.info("[Pipeline] Step4 Authorize — category={}", recommendation.category());
+        AgentResult agentResult;
+        if (recentConcurrent.size() >= ORCHESTRATOR_THRESHOLD) {
+            log.info("[Agent] OrchestratorAgent 발동 — 동시 알람 {}개", recentConcurrent.size());
+            agentResult = orchestratorAgent.orchestrate(alert, recentConcurrent);
+        } else {
+            agentResult = reActAgent.run(alert, recommendation);
+        }
+
+        // 추론 결과 저장
+        alert.setAnalysisResult(agentResult.conclusion());
+        alert.setReasoningChain(agentResult.reasoningChain());
+        alert.setAgentIterations(agentResult.iterationCount());
+        alert.setReflectionResult(agentResult.reflectionResult());
+        log.info("[Agent] ReAct 완료 — alertId={}, toolCalls={}", alert.getId(), agentResult.iterationCount());
+
+        // Step 4: Authorize — AUTO는 즉시 실행, 나머지는 Discord 전송
+        log.info("[Agent] Step4 Authorize — category={}", recommendation.category());
         if (recommendation.category() == ActionRecommendation.Category.AUTO
                 && recommendation.command() != null) {
             String cmd = resolveLabels(recommendation.command(), alert);
-            log.info("[Pipeline] AUTO 실행: '{}'", cmd);
+            log.info("[Agent] AUTO 실행: '{}'", cmd);
             CommandResult result = commandExecutorService.execute(cmd);
-            discordNotificationService.sendAutoExecuted(alert, analysis, verification, recommendation, cmd, result);
+            discordNotificationService.sendAutoExecuted(alert, agentResult.conclusion(), verification, recommendation, cmd, result);
         } else {
-            discordNotificationService.sendAlert(alert, analysis, verification, recommendation);
+            discordNotificationService.sendAlert(alert, agentResult.conclusion(), verification, recommendation);
         }
     }
 
