@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /app
 
 # Copy Gradle wrapper & build files first to leverage layer caching
@@ -11,7 +11,7 @@ RUN chmod +x gradlew
 COPY src src
 RUN ./gradlew bootJar -x test
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
