@@ -21,14 +21,21 @@ public class DiscordNotificationService {
     private final ObjectMapper objectMapper;
     private final PendingApprovalStore pendingApprovalStore;
 
+    private final String botChannelId;
+    private final ConversationSessionStore conversationSessionStore;
+
     public DiscordNotificationService(RestClient.Builder builder,
                                       @Value("${discord.webhook.url}") String webhookUrl,
+                                      @Value("${discord.bot.channel-id:}") String botChannelId,
                                       ObjectMapper objectMapper,
-                                      PendingApprovalStore pendingApprovalStore) {
+                                      PendingApprovalStore pendingApprovalStore,
+                                      ConversationSessionStore conversationSessionStore) {
         this.restClient = builder.build();
         this.webhookUrl = webhookUrl;
+        this.botChannelId = botChannelId;
         this.objectMapper = objectMapper;
         this.pendingApprovalStore = pendingApprovalStore;
+        this.conversationSessionStore = conversationSessionStore;
     }
 
     public void sendAlert(AlertEvent alert,
@@ -75,6 +82,14 @@ public class DiscordNotificationService {
                 pendingApprovalStore.store(resolvedCommand, alert.getId());
                 log.info("승인 대기 저장: command='{}', alertId={}", resolvedCommand, alert.getId());
             }
+        }
+
+        // AUTO가 아닌 알림은 대화 세션 생성 (운영자가 후속 질문 가능하도록)
+        if (!botChannelId.isBlank()
+                && recommendation != null
+                && recommendation.category() != ActionRecommendation.Category.AUTO) {
+            conversationSessionStore.getOrCreate(botChannelId, alert.getId());
+            log.info("대화 세션 생성: channelId={}, alertId={}", botChannelId, alert.getId());
         }
     }
 

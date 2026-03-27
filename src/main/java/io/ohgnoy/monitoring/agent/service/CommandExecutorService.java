@@ -20,19 +20,20 @@ public class CommandExecutorService {
     private static final Pattern ALLOWED_CONTAINER_NAME =
             Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9_.\\-]*$");
 
-    public CommandResult execute(String command) {
+    public boolean isAllowed(String command) {
         String[] parts = command.trim().split("\\s+");
+        return parts.length == 3
+                && "docker".equals(parts[0])
+                && "restart".equals(parts[1])
+                && ALLOWED_CONTAINER_NAME.matcher(parts[2]).matches();
+    }
 
-        if (parts.length != 3
-                || !"docker".equals(parts[0])
-                || !"restart".equals(parts[1])) {
+    public CommandResult execute(String command) {
+        if (!isAllowed(command)) {
             return new CommandResult(-1, "", "허용되지 않는 명령어 형식: " + command);
         }
 
-        String containerName = parts[2];
-        if (!ALLOWED_CONTAINER_NAME.matcher(containerName).matches()) {
-            return new CommandResult(-1, "", "허용되지 않는 컨테이너 이름: " + containerName);
-        }
+        String containerName = command.trim().split("\\s+")[2];
 
         log.info("Executing: docker restart {}", containerName);
         try {
