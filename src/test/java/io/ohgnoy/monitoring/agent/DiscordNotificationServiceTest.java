@@ -39,6 +39,9 @@ class DiscordNotificationServiceTest {
     @Mock
     private PendingApprovalStore pendingApprovalStore;
 
+    @Mock
+    private ConversationSessionStore conversationSessionStore;
+
     private DiscordNotificationService discordNotificationService;
 
     private static final String WEBHOOK_URL = "https://discord.com/api/webhooks/test";
@@ -55,7 +58,8 @@ class DiscordNotificationServiceTest {
         when(responseSpec.toBodilessEntity()).thenReturn(null);
 
         discordNotificationService = new DiscordNotificationService(
-                restClientBuilder, WEBHOOK_URL, new ObjectMapper(), pendingApprovalStore);
+                restClientBuilder, WEBHOOK_URL, "", new ObjectMapper(),
+                pendingApprovalStore, conversationSessionStore);
     }
 
     @Test
