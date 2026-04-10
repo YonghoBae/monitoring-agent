@@ -1,0 +1,311 @@
+{
+  "scenarios": [
+    {
+      "id": "S1",
+      "description": "HostHighCpuLoad — CPU 급등 원인 파악, 재시작 없는 권고",
+      "alert": {
+        "level": "WARNING",
+        "alertName": "HostHighCpuLoad",
+        "message": "Host CPU load average > 80% for 5 minutes",
+        "labelsJson": "{\"instance\":\"prod-server-01\",\"job\":\"node-exporter\"}",
+        "annotationSummary": "CPU utilization critical on prod-server-01",
+        "annotationDescription": "5분 이상 CPU 로드 80% 초과"
+      },
+      "mocks": {
+        "ragResults": [],
+        "verifyAlert": {
+          "alertName": "HostHighCpuLoad",
+          "value": "85.3",
+          "timestamp": "2025-01-15T03:42:00Z"
+        },
+        "prometheusResponses": [
+          {
+            "keyword": "cpu",
+            "responses": [
+              "03:00~03:40 정상 범위(35~48%), 03:42부터 급등 → 현재 85.3%",
+              "java(pid 1823): 38.2%, python(pid 2341): 29.7%, node(pid 1204): 11.3%"
+            ]
+          }
+        ],
+        "lokiResponse": null
+      },
+      "simulation": {
+        "toolCalls": [
+          { "tool": "search_rag",        "query": "HostHighCpuLoad CPU 과부하 원인" },
+          { "tool": "verify_alert",      "alertName": "HostHighCpuLoad", "labelsJson": "{\"instance\":\"prod-server-01\",\"job\":\"node-exporter\"}" },
+          { "tool": "query_prometheus",  "promql": "100-(avg(irate(node_cpu_seconds_total{mode='idle',instance='prod-server-01'}[5m]))*100)", "timeRange": "30" },
+          { "tool": "query_prometheus",  "promql": "topk(5, rate(process_cpu_seconds_total{instance='prod-server-01'}[5m]))*100", "timeRange": "10" }
+        ],
+        "conclusion": "근본 원인: java(pid 1823), python(pid 2341) 두 프로세스가 전체 CPU의 68%를 점유하며 발생한 과부하.\n상황 분석: 03:42부터 급등 시작, 과거 유사 사례 없음. java는 ml-service, python은 data-pipeline 컨테이너로 추정되며 두 작업이 동시에 집중된 상황.\n즉시 조치: (1) jstack으로 java 스레드 덤프 확인 — 데드락 또는 무한 루프 여부 파악 (2) data-pipeline 실행 중인 작업 확인 및 필요 시 일시 중단 (3) 부하 지속 시 두 작업 실행 시간대 분리 검토.\n심각도: WARNING 유지 — 서비스 중단은 없으나 지속되면 CRITICAL 상승 가능.",
+        "recommendation": { "description": "CPU 사용률 상위 프로세스 확인", "category": "READ_ONLY", "command": null },
+        "reflectionResult": "SUFFICIENT",
+        "judgeResponse": "Factuality: 8/10\nPrometheus에서 CPU 사용률과 상위 프로세스를 직접 조회해 결론을 뒷받침했다.\n\nTool Use: 9/10\nsearch_rag → verify_alert → prometheus×2 순서가 효율적이며 불필요한 호출이 없다.\n\nActionability: 8/10\njstack 덤프 확인 등 즉시 실행 가능한 항목이 명확하다.\n\nHallucination Risk: 8/10\n모든 결론이 수집된 메트릭 데이터로 뒷받침되며 추측성 주장이 없다."
+      },
+      "expectedCriteria": {
+        "shouldUsePrometheus": true,
+        "shouldUseLoki": false,
+        "shouldRecommendRestartApproval": false,
+        "shouldNotRecommendRestart": true,
+        "shouldSuggestMemoryInvestigation": false,
+        "shouldCheckSessionCount": false,
+        "maxToolCalls": 6,
+        "minJudgeScore": 6
+      }
+    },
+    {
+      "id": "S2",
+      "description": "ContainerOOMKilled — 과거 사례 참조 후 재시작 + 메모리 조사 권고",
+      "alert": {
+        "level": "ERROR",
+        "alertName": "ContainerOOMKilled",
+        "message": "Container ml-service was killed due to out-of-memory",
+        "labelsJson": "{\"container\":\"ml-service\",\"instance\":\"prod-server-01\"}",
+        "annotationSummary": "OOM kill detected",
+        "annotationDescription": "컨테이너가 메모리 한도 초과로 강제 종료됨"
+      },
+      "mocks": {
+        "ragResults": [
+          {
+            "text": "ContainerOOMKilled ml-service — 메모리 한도 512MiB 초과로 강제 종료. 대용량 배치 작업 처리 중 발생.",
+            "type": "alert",
+            "outcome": "메모리 한도 768MiB 상향 후 해결"
+          }
+        ],
+        "verifyAlert": {
+          "alertName": "ContainerOOMKilled",
+          "value": "1",
+          "timestamp": "2025-01-15T04:15:22Z"
+        },
+        "prometheusResponses": [
+          {
+            "keyword": "memory",
+            "responses": [
+              "03:30 67% → 04:00 89% → 04:10 97% → 04:15 100% (OOM)"
+            ]
+          }
+        ],
+        "lokiResponse": {
+          "keyword": "ml-service",
+          "lines": [
+            "2025-01-15T04:15:20Z OOMKilled: memory limit 512MiB exceeded",
+            "2025-01-15T04:14:58Z Processing batch job #1847 (input_size: 8.2GB, chunk_size: 512MB)",
+            "2025-01-15T04:13:30Z Batch job #1847 started"
+          ]
+        }
+      },
+      "simulation": {
+        "toolCalls": [
+          { "tool": "search_rag",       "query": "ContainerOOMKilled ml-service 메모리" },
+          { "tool": "verify_alert",     "alertName": "ContainerOOMKilled", "labelsJson": "{\"container\":\"ml-service\",\"instance\":\"prod-server-01\"}" },
+          { "tool": "query_loki",       "container": "ml-service", "timeRange": "30" },
+          { "tool": "query_prometheus", "promql": "container_memory_usage_bytes{name='ml-service'}/container_spec_memory_limit_bytes{name='ml-service'}*100", "timeRange": "60" }
+        ],
+        "conclusion": "근본 원인: 대용량 배치 작업(입력 8.2GB) 처리 중 메모리 한도 512MiB 초과로 강제 종료.\n상황 분석: 2주 전과 동일한 패턴. 45분간 메모리가 점진적으로 증가한 후 한도 도달. 당시 768MiB로 임시 상향했으나 원래 설정으로 복구되면서 재발. 현재 컨테이너 다운 상태.\n즉시 조치: (1) docker restart ml-service [승인 필요] (2) 재시작 후 메모리 한도 1GiB로 상향 (3) 배치 입력 크기 제한 또는 청크 단위 처리 개선.\n심각도: ERROR — ml-service 다운으로 즉시 재시작 필요.",
+        "recommendation": { "description": "ml-service 컨테이너 재시작", "category": "NEEDS_APPROVAL", "command": "docker restart ml-service" },
+        "reflectionResult": "SUFFICIENT",
+        "judgeResponse": "Factuality: 9/10\n로그에서 OOM 발생을 직접 확인하고 메모리 사용량 추이로 원인을 데이터로 뒷받침했다.\n\nTool Use: 9/10\nsearch_rag로 과거 사례를 먼저 확인하고, 로그와 메트릭을 조합해 원인을 확정했다.\n\nActionability: 9/10\n재시작 명령이 구체적이며, 근본 해결책(메모리 상향, 청크 처리)까지 포함되어 있다.\n\nHallucination Risk: 9/10\n과거 사례와의 비교가 명확하며 모든 주장이 데이터로 검증됐다."
+      },
+      "expectedCriteria": {
+        "shouldUsePrometheus": true,
+        "shouldUseLoki": false,
+        "shouldRecommendRestartApproval": true,
+        "shouldNotRecommendRestart": false,
+        "shouldSuggestMemoryInvestigation": true,
+        "shouldCheckSessionCount": false,
+        "maxToolCalls": 5,
+        "minJudgeScore": 6
+      }
+    },
+    {
+      "id": "S3",
+      "description": "GPUHighTemperature — 부하 원인 확인 및 쿨링 권고",
+      "alert": {
+        "level": "WARNING",
+        "alertName": "GPUHighTemperature",
+        "message": "GPU temperature exceeds 85°C",
+        "labelsJson": "{\"instance\":\"gpu-server-01\",\"gpu\":\"0\"}",
+        "annotationSummary": "GPU overheating alert",
+        "annotationDescription": "GPU 0번 온도 85도 초과"
+      },
+      "mocks": {
+        "ragResults": [
+          {
+            "text": "GPUHighTemperature gpu-server-01 GPU 0번 87°C — 모델 학습 병렬화로 부하 집중. 냉각 팬 속도 정상 확인 후 자연 해소.",
+            "type": "alert",
+            "outcome": "워크로드 완료 후 온도 정상화"
+          }
+        ],
+        "verifyAlert": {
+          "alertName": "GPUHighTemperature",
+          "value": "87",
+          "timestamp": "2025-01-15T02:18:00Z"
+        },
+        "prometheusResponses": [
+          {
+            "keyword": "TEMP",
+            "responses": [
+              "01:50: 72°C → 02:00: 78°C → 02:18: 85°C → 02:25: 87°C (현재)"
+            ]
+          },
+          {
+            "keyword": "UTIL",
+            "responses": [
+              "01:50부터 94% 지속 (35분간 고부하 상태)"
+            ]
+          }
+        ],
+        "lokiResponse": null
+      },
+      "simulation": {
+        "toolCalls": [
+          { "tool": "search_rag",       "query": "GPU 온도 85도 과열 쿨링" },
+          { "tool": "verify_alert",     "alertName": "GPUHighTemperature", "labelsJson": "{\"instance\":\"gpu-server-01\",\"gpu\":\"0\"}" },
+          { "tool": "query_prometheus", "promql": "DCGM_FI_DEV_GPU_TEMP{gpu='0',instance='gpu-server-01'}", "timeRange": "30" },
+          { "tool": "query_prometheus", "promql": "DCGM_FI_DEV_GPU_UTIL{gpu='0',instance='gpu-server-01'}", "timeRange": "30" }
+        ],
+        "conclusion": "근본 원인: GPU 사용률 94% 35분간 지속으로 인한 발열 누적.\n상황 분석: 3개월 전 동일 패턴(학습 워크로드 집중 시 발생). 현재 thermal throttling 임계치(90°C) 3°C 전. 3개월 전과 달리 이번은 더 빠른 온도 상승세(25분 만에 15°C 상승).\n즉시 조치: (1) 실행 중인 학습 작업 확인 및 배치 크기 축소 (2) 냉각 팬 물리 상태 점검 (3) 90°C 초과 시 워크로드 일시 중단.\n심각도: WARNING — 즉각 조치하지 않으면 thermal throttling 또는 강제 셧다운 위험.",
+        "recommendation": { "description": "GPU 부하 감소 및 냉각 상태 점검", "category": "READ_ONLY", "command": null },
+        "reflectionResult": "SUFFICIENT",
+        "judgeResponse": "Factuality: 8/10\n온도 추이와 GPU 사용률 데이터로 발열 원인을 구체적으로 뒷받침했다.\n\nTool Use: 8/10\n과거 사례 확인 후 온도와 사용률을 별도 쿼리로 확인한 접근이 적절하다.\n\nActionability: 8/10\n배치 크기 축소, 냉각 팬 점검, 임계치 초과 시 중단 순으로 우선순위가 명확하다.\n\nHallucination Risk: 9/10\n과거 사례와의 차이점을 명확히 언급했으며 추측성 주장이 없다."
+      },
+      "expectedCriteria": {
+        "shouldUsePrometheus": true,
+        "shouldUseLoki": false,
+        "shouldRecommendRestartApproval": false,
+        "shouldNotRecommendRestart": false,
+        "shouldSuggestMemoryInvestigation": false,
+        "shouldCheckSessionCount": false,
+        "maxToolCalls": 5,
+        "minJudgeScore": 6
+      }
+    },
+    {
+      "id": "S4",
+      "description": "ContainerDown — 로그에서 원인 확인 후 즉시 재시작 권고",
+      "alert": {
+        "level": "CRITICAL",
+        "alertName": "ContainerDown",
+        "message": "Container api-gateway is not running",
+        "labelsJson": "{\"container\":\"api-gateway\",\"instance\":\"prod-server-01\"}",
+        "annotationSummary": "api-gateway 컨테이너 중단",
+        "annotationDescription": "api-gateway 컨테이너가 응답하지 않음"
+      },
+      "mocks": {
+        "ragResults": [
+          {
+            "text": "ContainerDown api-gateway — 포트 8080 바인딩 실패. 비정상 종료 후 좀비 프로세스가 포트 점유.",
+            "type": "alert",
+            "outcome": "docker restart api-gateway로 해결"
+          }
+        ],
+        "verifyAlert": {
+          "alertName": "ContainerDown",
+          "value": "0",
+          "timestamp": "2025-01-15T05:01:33Z"
+        },
+        "prometheusResponses": [
+          {
+            "keyword": "api-gateway",
+            "responses": [
+              "05:00:58 이후 메트릭 없음 (컨테이너 다운 확인됨)"
+            ]
+          }
+        ],
+        "lokiResponse": {
+          "keyword": "api-gateway",
+          "lines": [
+            "2025-01-15T05:01:31Z FATAL: failed to bind to port 8080: address already in use",
+            "2025-01-15T05:01:30Z Starting api-gateway v2.3.1",
+            "2025-01-15T05:00:58Z api-gateway stopped (exit code 1)",
+            "2025-01-15T05:00:57Z Received SIGTERM"
+          ]
+        }
+      },
+      "simulation": {
+        "toolCalls": [
+          { "tool": "verify_alert",     "alertName": "ContainerDown", "labelsJson": "{\"container\":\"api-gateway\",\"instance\":\"prod-server-01\"}" },
+          { "tool": "query_loki",       "container": "api-gateway", "timeRange": "30" },
+          { "tool": "search_rag",       "query": "ContainerDown api-gateway port 8080 address already in use" },
+          { "tool": "query_prometheus", "promql": "count(container_last_seen{name='api-gateway'})", "timeRange": "10" }
+        ],
+        "conclusion": "근본 원인: api-gateway 비정상 종료 후 좀비 프로세스가 포트 8080을 점유한 채 남아, 재시작 시 바인딩 실패.\n상황 분석: 1개월 전과 동일한 패턴. SIGTERM 수신 후 정상 종료되지 않고 exit code 1로 비정상 종료. api-gateway 다운으로 전체 API 요청 영향 중.\n즉시 조치: (1) docker restart api-gateway [승인 필요] — restart 시 좀비 프로세스 포함 정리됨 (2) 재시작 실패 시 sudo lsof -i :8080으로 포트 점유 프로세스 확인 후 kill -9.\n심각도: CRITICAL — API 게이트웨이 다운, 즉시 재시작 필요.",
+        "recommendation": { "description": "api-gateway 재시작", "category": "NEEDS_APPROVAL", "command": "docker restart api-gateway" },
+        "reflectionResult": "SUFFICIENT",
+        "judgeResponse": "Factuality: 9/10\n로그에서 포트 바인딩 실패를 직접 확인하고 메트릭으로 다운 시점을 검증했다.\n\nTool Use: 8/10\nCRITICAL 알림에서 즉시 verify 후 로그로 원인을 확인한 순서가 적절하다.\n\nActionability: 9/10\n재시작 명령이 구체적이며 실패 시 대안 조치까지 포함되어 있다.\n\nHallucination Risk: 8/10\n과거 사례와 현재 상황을 로그 데이터로 연결했으며 추측성 주장이 없다."
+      },
+      "expectedCriteria": {
+        "shouldUsePrometheus": false,
+        "shouldUseLoki": true,
+        "shouldRecommendRestartApproval": true,
+        "shouldNotRecommendRestart": false,
+        "shouldSuggestMemoryInvestigation": false,
+        "shouldCheckSessionCount": false,
+        "maxToolCalls": 5,
+        "minJudgeScore": 6
+      }
+    },
+    {
+      "id": "S5",
+      "description": "ApolloGameHighFrameLatency — 세션 수 및 렌더링 지연 분석",
+      "alert": {
+        "level": "WARNING",
+        "alertName": "ApolloGameHighFrameLatency",
+        "message": "Apollo frame latency > 50ms (current: 120ms)",
+        "labelsJson": "{\"instance\":\"apollo-server-01\",\"service\":\"apollo\"}",
+        "annotationSummary": "Apollo 게임 세션 프레임 지연",
+        "annotationDescription": "Apollo 스트리밍 서버 프레임 레이턴시 50ms 초과"
+      },
+      "mocks": {
+        "ragResults": [
+          {
+            "text": "ApolloGameHighFrameLatency apollo-server-01 — 세션 수 80 초과 시 레이턴시 급등. GPU 메모리 부족이 원인.",
+            "type": "alert",
+            "outcome": "렌더링 캐시 정리로 해결"
+          }
+        ],
+        "verifyAlert": {
+          "alertName": "ApolloGameHighFrameLatency",
+          "value": "120",
+          "timestamp": "2025-01-15T11:22:15Z"
+        },
+        "prometheusResponses": [
+          {
+            "keyword": "sessions",
+            "responses": [
+              "11:00: 31 → 11:10: 36 → 11:15: 38 → 11:22: 44 (현재)"
+            ]
+          },
+          {
+            "keyword": "render",
+            "responses": [
+              "11:00: 28ms → 11:15: 32ms → 11:20: 67ms → 11:22: 120ms (급등)"
+            ]
+          }
+        ],
+        "lokiResponse": null
+      },
+      "simulation": {
+        "toolCalls": [
+          { "tool": "search_rag",       "query": "Apollo frame latency 50ms 지연 급등" },
+          { "tool": "verify_alert",     "alertName": "ApolloGameHighFrameLatency", "labelsJson": "{\"instance\":\"apollo-server-01\",\"service\":\"apollo\"}" },
+          { "tool": "query_prometheus", "promql": "apollo_active_sessions{instance='apollo-server-01'}", "timeRange": "30" },
+          { "tool": "query_prometheus", "promql": "apollo_frame_render_duration_ms{instance='apollo-server-01',quantile='0.99'}", "timeRange": "30" }
+        ],
+        "conclusion": "근본 원인: 세션 44개 상태에서 프레임 렌더링 지연 급증. GPU 메모리 관련 문제로 추정.\n상황 분석: 2개월 전에는 세션 80 초과 시 발생했는데, 이번은 44개에서 발생. 동일 원인이라면 GPU 메모리 상태가 이전보다 나쁜 상황일 수 있음.\n즉시 조치: (1) GPU 메모리 사용량 확인 필요 (2) 확인 결과에 따라 렌더링 캐시 정리 또는 신규 세션 임시 차단 (3) 현재 세션 사용자 대상 렌더링 품질 저하 모니터링.\n심각도: WARNING — 서비스 중단은 없으나 사용자 경험 저하 진행 중.",
+        "recommendation": { "description": "세션 및 GPU 메모리 상태 확인", "category": "READ_ONLY", "command": null },
+        "reflectionResult": "SUFFICIENT",
+        "judgeResponse": "Factuality: 7/10\n세션 수와 렌더링 지연은 데이터로 확인했으나 GPU 메모리 직접 조회 없이 추정으로 결론 내렸다.\n\nTool Use: 8/10\n과거 사례 참조 후 세션과 렌더링 두 메트릭을 확인한 접근이 적절하다.\n\nActionability: 7/10\nGPU 메모리 확인을 권고했으나 구체적인 쿼리나 명령이 빠져 있다.\n\nHallucination Risk: 8/10\n추정임을 명시하고 과거 사례와의 차이를 언급해 오탐 위험을 낮췄다."
+      },
+      "expectedCriteria": {
+        "shouldUsePrometheus": true,
+        "shouldUseLoki": false,
+        "shouldRecommendRestartApproval": false,
+        "shouldNotRecommendRestart": false,
+        "shouldSuggestMemoryInvestigation": false,
+        "shouldCheckSessionCount": true,
+        "maxToolCalls": 5,
+        "minJudgeScore": 5
+      }
+    }
+  ]
+}
