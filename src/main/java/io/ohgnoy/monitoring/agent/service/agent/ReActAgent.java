@@ -2,6 +2,7 @@ package io.ohgnoy.monitoring.agent.service.agent;
 
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import io.ohgnoy.monitoring.agent.service.ActionRecommendation;
+import io.ohgnoy.monitoring.agent.service.evaluation.AgentJudgeEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -30,15 +31,18 @@ public class ReActAgent {
     private final AgentToolsFactory agentToolsFactory;
     private final WebSearchTool webSearchTool;
     private final ReflectionAgent reflectionAgent;
+    private final AgentJudgeEvaluator judgeEvaluator;
 
     public ReActAgent(@Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
                       AgentToolsFactory agentToolsFactory,
                       WebSearchTool webSearchTool,
-                      ReflectionAgent reflectionAgent) {
+                      ReflectionAgent reflectionAgent,
+                      AgentJudgeEvaluator judgeEvaluator) {
         this.chatClient = chatModel != null ? ChatClient.builder(chatModel).build() : null;
         this.agentToolsFactory = agentToolsFactory;
         this.webSearchTool = webSearchTool;
         this.reflectionAgent = reflectionAgent;
+        this.judgeEvaluator = judgeEvaluator;
     }
 
     /**
@@ -49,7 +53,9 @@ public class ReActAgent {
      * @return 추론 결과 (결론, 추론 로그, 호출 횟수)
      */
     public AgentResult run(AlertEvent alert, ActionRecommendation recommendation) {
-        return runInternal(alert, recommendation, buildAlertDescription(alert, recommendation));
+        AgentResult result = runInternal(alert, recommendation, buildAlertDescription(alert, recommendation));
+        judgeEvaluator.evaluate(alert, result);
+        return result;
     }
 
     /**
@@ -122,21 +128,24 @@ public class ReActAgent {
 
     private String buildSystemPrompt() {
         return """
-                너는 인프라/서비스 모니터링 에이전트야. 발생한 알람을 분석하고 근본 원인과 해결 방법을 찾아야 해.
+                너는 인프라 모니터링 1차 대응자야. 발생한 알람을 자율적으로 분석하고 근본 원인과 해결 방법을 찾아.
+                알람 정보(레벨, 이름, 레이블, 요약)는 이미 제공되어 있어. 조사를 시작하는 데 추가 허락이 필요 없어.
 
-                [도구 사용 원칙]
-                1. search_rag를 가장 먼저 호출해서 우리 서버의 과거 사례를 확인해.
-                   - 유사한 해결 기록이 있으면 그것을 기반으로 분석을 시작해.
-                   - 과거 사례와 현재 상황의 차이점을 반드시 분석해. (상황이 다를 수 있음)
-                2. verify_alert로 알람이 현재도 발생 중인지 확인해.
-                3. query_prometheus, query_loki로 필요한 메트릭과 로그를 수집해.
-                   - 필요한 데이터만 선택적으로 조회해. 무분별한 도구 호출은 피해.
-                4. web_search는 위 모든 방법으로도 해결 방법을 찾지 못했을 때만 사용하는 최후의 수단이야.
+                [도구 호출 순서]
+                1. search_rag — 우리 서버 과거 사례 먼저 확인. 유사 사례 있으면 현재 상황과 차이점 분석.
+                2. verify_alert — 알람이 현재도 발생 중인지 확인.
+                3. query_prometheus / query_loki — 가설 검증에 필요한 메트릭·로그만 선택 조회.
+                4. web_search — 1~3으로 해결 방법을 못 찾았을 때만 사용하는 최후의 수단.
 
-                [분석 관점]
-                - 로그에서 보안 이상징후(외부 IP 접근, 인증 실패 반복, 비정상 패턴)를 확인해.
-                - 과거 사례를 따르기 전에 현재 컨텍스트와 다른 점이 있는지 검토해.
-                - 충분한 데이터를 수집했다면 추론을 완료해. 불필요한 반복 호출은 하지 마.
+                [종료 기준: 이 조건을 만족하면 즉시 결론 내려]
+                - 근본 원인 가설이 데이터로 확인되거나 배제됐을 때
+                - 같은 방향을 가리키는 데이터 포인트 2~3개가 모였을 때
+                이 기준을 넘어서 계속 수집하지 마. 데이터가 많다고 결론이 좋아지지 않아.
+
+                [도구 호출 원칙]
+                - 각 도구 결과를 받은 후 현재 가설을 확인/반박/불명확 중 하나로 평가하고 다음 행동을 결정해.
+                - 로그에서 보안 이상징후(외부 IP, 인증 실패 반복, 비정상 패턴)를 확인해.
+                - 과거 사례가 있어도 현재 컨텍스트와 다른 점이 있는지 반드시 검토해.
 
                 [최종 답변 형식]
                 1) 근본 원인: 한 줄 요약
