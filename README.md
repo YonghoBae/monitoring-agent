@@ -19,6 +19,7 @@ Alertmanager 웹훅을 수신해 AI 분석 → 자동 조치까지 처리하는 
 - **RAG**: PGVector + Ollama(all-minilm)로 유사 과거 알람 검색 후 프롬프트에 주입
 - **자동 복구**: Playbook에 등록된 AUTO 알람은 승인 없이 즉시 실행
 - **Discord 승인 워크플로우**: NEEDS_APPROVAL 알람은 Discord Bot으로 승인 후 실행
+- **LLM-as-a-Judge 품질 평가**: G-Eval 방식으로 에이전트 응답을 4개 차원(Factuality / Tool Use / Actionability / Hallucination Risk)으로 자동 채점, DB 저장
 
 ## 시스템 아키텍처
 
@@ -158,6 +159,7 @@ sequenceDiagram
 | `DISCORD_BOT_TOKEN` | 선택 | Discord Bot 토큰 (없으면 자동 승인 기능 비활성화) |
 | `DISCORD_BOT_CHANNEL_ID` | 선택 | 봇이 수신할 채널 ID |
 | `DISCORD_BOT_ALLOWED_ROLE_ID` | 선택 | approve 명령 허가 역할 ID |
+| `AGENT_EVALUATION_ENABLED` | 선택 | Judge 평가 활성화 여부 (기본값 `false`, `true` 설정 시 매 분석마다 추가 LLM 호출) |
 
 ## 실행 방법
 
@@ -216,5 +218,22 @@ vector_store (
   content   TEXT,
   embedding vector(384),  -- all-minilm 차원
   metadata  JSONB
+)
+
+-- Judge 평가 결과 (AGENT_EVALUATION_ENABLED=true 시 적재)
+agent_evaluation (
+  id                     BIGINT       PRIMARY KEY,
+  version                BIGINT,                   -- 낙관적 락
+  alert_event_id         BIGINT,
+  alert_name             VARCHAR(255),
+  conclusion             TEXT,
+  tool_call_count        INT,
+  factuality_score       INT,          -- 1~10
+  tool_use_score         INT,          -- 1~10
+  actionability_score    INT,          -- 1~10
+  hallucination_risk_score INT,        -- 1~10
+  overall_score          DOUBLE,       -- 4개 평균
+  judge_feedback         TEXT,
+  evaluated_at           TIMESTAMP NOT NULL
 )
 ```
