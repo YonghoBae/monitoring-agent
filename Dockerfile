@@ -8,13 +8,16 @@ COPY build.gradle settings.gradle ./
 RUN chmod +x gradlew
 
 # Copy sources and build the executable jar
+# --mount=type=cache: Gradle 캐시를 빌드 간 재사용해 의존성 재다운로드 방지
 COPY src src
-RUN ./gradlew bootJar -x test
+RUN --mount=type=cache,target=/root/.gradle \
+    ./gradlew bootJar -x test --build-cache
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
+# docker.io(데몬 포함) 대신 CLI만 설치
+RUN apk add --no-cache docker-cli
 
 # Copy the built jar from the builder image
 COPY --from=builder /app/build/libs/*.jar app.jar
