@@ -20,7 +20,7 @@ public class ConversationSessionStore {
     private final long ttlMinutes;
 
     public ConversationSessionStore(
-            @Value("${discord.bot.approval-ttl-minutes:30}") long ttlMinutes) {
+            @Value("${discord.bot.session-ttl-minutes:60}") long ttlMinutes) {
         this.ttlMinutes = ttlMinutes;
     }
 

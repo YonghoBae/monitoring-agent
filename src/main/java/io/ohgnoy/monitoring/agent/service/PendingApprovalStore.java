@@ -21,11 +21,6 @@ public class PendingApprovalStore {
         this.ttlMinutes = ttlMinutes;
     }
 
-    public void store(String command, Long alertId) {
-        Instant expiresAt = Instant.now().plusSeconds(ttlMinutes * 60);
-        store.put(command, new PendingApproval(command, alertId, expiresAt, null));
-    }
-
     public void store(String command, Long alertId, String channelId) {
         Instant expiresAt = Instant.now().plusSeconds(ttlMinutes * 60);
         store.put("channel:" + channelId, new PendingApproval(command, alertId, expiresAt, channelId));

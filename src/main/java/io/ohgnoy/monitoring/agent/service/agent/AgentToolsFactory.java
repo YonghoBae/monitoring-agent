@@ -2,6 +2,7 @@ package io.ohgnoy.monitoring.agent.service.agent;
 
 import io.ohgnoy.monitoring.agent.service.AlertVectorService;
 import io.ohgnoy.monitoring.agent.service.AlertVerifier;
+import io.ohgnoy.monitoring.agent.service.CommandExecutorService;
 import io.ohgnoy.monitoring.agent.service.LokiQueryService;
 import io.ohgnoy.monitoring.agent.service.PrometheusQueryService;
 import org.springframework.stereotype.Component;
@@ -18,18 +19,18 @@ public class AgentToolsFactory {
     private final PrometheusQueryService prometheusQuery;
     private final LokiQueryService lokiQuery;
     private final AlertVectorService vectorService;
-    private final WebSearchTool webSearchTool;
+    private final CommandExecutorService commandExecutorService;
 
     public AgentToolsFactory(AlertVerifier alertVerifier,
                               PrometheusQueryService prometheusQuery,
                               LokiQueryService lokiQuery,
                               AlertVectorService vectorService,
-                              WebSearchTool webSearchTool) {
+                              CommandExecutorService commandExecutorService) {
         this.alertVerifier = alertVerifier;
         this.prometheusQuery = prometheusQuery;
         this.lokiQuery = lokiQuery;
         this.vectorService = vectorService;
-        this.webSearchTool = webSearchTool;
+        this.commandExecutorService = commandExecutorService;
     }
 
     /**
@@ -38,6 +39,6 @@ public class AgentToolsFactory {
      * 매 ReAct 루프마다 새 인스턴스를 생성한다.
      */
     public AgentTools createAgentTools() {
-        return new AgentTools(alertVerifier, prometheusQuery, lokiQuery, vectorService);
+        return new AgentTools(alertVerifier, prometheusQuery, lokiQuery, vectorService, commandExecutorService);
     }
 }

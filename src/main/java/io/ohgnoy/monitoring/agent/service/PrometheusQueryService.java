@@ -32,6 +32,40 @@ public class PrometheusQueryService {
     }
 
     /**
+     * filter 키워드를 포함하는 메트릭 이름 목록을 반환한다.
+     * Prometheus /api/v1/label/__name__/values 의 match[] 파라미터로 서버 측 필터링.
+     */
+    public List<String> listMetrics(String filter) {
+        try {
+            String uri;
+            if (filter != null && !filter.isBlank()) {
+                String selector = "{__name__=~\".*" + filter + ".*\"}";
+                uri = baseUrl + "/api/v1/label/__name__/values?match[]="
+                        + URLEncoder.encode(selector, StandardCharsets.UTF_8).replace("+", "%20");
+            } else {
+                uri = baseUrl + "/api/v1/label/__name__/values";
+            }
+
+            String response = restClient.get()
+                    .uri(java.net.URI.create(uri))
+                    .retrieve()
+                    .body(String.class);
+
+            JsonNode root = objectMapper.readTree(response);
+            if (!"success".equals(root.path("status").asText())) return List.of();
+
+            List<String> metrics = new ArrayList<>();
+            for (JsonNode name : root.path("data")) {
+                metrics.add(name.asText());
+            }
+            return metrics;
+        } catch (Exception e) {
+            log.warn("메트릭 목록 조회 실패 [{}]: {}", filter, e.getMessage());
+            return List.of();
+        }
+    }
+
+    /**
      * PromQL range query를 실행하고 요약 문자열 반환.
      * 실패 시 null 반환 (alert 처리를 중단하지 않음).
      */

@@ -5,8 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -26,6 +29,25 @@ public class CommandExecutorService {
                 && "docker".equals(parts[0])
                 && "restart".equals(parts[1])
                 && ALLOWED_CONTAINER_NAME.matcher(parts[2]).matches();
+    }
+
+    public List<String> listContainers() {
+        try {
+            Process process = new ProcessBuilder("docker", "ps", "--format", "{{.Names}}").start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                List<String> containers = reader.lines()
+                        .map(String::trim)
+                        .filter(s -> !s.isBlank())
+                        .toList();
+                boolean finished = process.waitFor(5, TimeUnit.SECONDS);
+                if (finished && process.exitValue() == 0) {
+                    return containers;
+                }
+            }
+        } catch (Exception e) {
+            log.warn("[CommandExecutorService] 컨테이너 목록 조회 실패: {}", e.getMessage());
+        }
+        return List.of();
     }
 
     public CommandResult execute(String command) {

@@ -6,16 +6,18 @@ import io.ohgnoy.monitoring.agent.service.evaluation.AgentJudgeEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.lang.Nullable;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * ReAct 패턴 기반 에이전트.
  * Spring AI ChatClient의 Function Calling 기능을 이용해
  * Gemini가 필요한 도구를 스스로 선택하며 반복 추론한다.
+ *
+ * Reflection 자기검증은 ReflectionAdvisor가 담당한다.
+ * ChatClient는 AgentConfig에서 생성한 단일 빈을 주입받는다.
  *
  * 도구 우선순위 (시스템 프롬프트로 명시):
  *   1. search_rag — 우리 서버 과거 사례 우선
@@ -28,100 +30,75 @@ public class ReActAgent {
     private static final Logger log = LoggerFactory.getLogger(ReActAgent.class);
 
     private final ChatClient chatClient;
+    private final ReflectionAdvisor reflectionAdvisor;
     private final AgentToolsFactory agentToolsFactory;
     private final WebSearchTool webSearchTool;
-    private final ReflectionAgent reflectionAgent;
     private final AgentJudgeEvaluator judgeEvaluator;
 
-    public ReActAgent(@Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
+    public ReActAgent(ObjectProvider<ChatClient> chatClientProvider,
+                      ObjectProvider<ReflectionAdvisor> reflectionAdvisorProvider,
                       AgentToolsFactory agentToolsFactory,
                       WebSearchTool webSearchTool,
-                      ReflectionAgent reflectionAgent,
                       AgentJudgeEvaluator judgeEvaluator) {
-        this.chatClient = chatModel != null ? ChatClient.builder(chatModel).build() : null;
+        this.chatClient = chatClientProvider.getIfAvailable();
+        this.reflectionAdvisor = reflectionAdvisorProvider.getIfAvailable();
         this.agentToolsFactory = agentToolsFactory;
         this.webSearchTool = webSearchTool;
-        this.reflectionAgent = reflectionAgent;
         this.judgeEvaluator = judgeEvaluator;
     }
 
-    /**
-     * 알람 분석 실행. Spring AI가 내부적으로 Gemini tool call 루프를 처리한다.
-     *
-     * @param alert          분석 대상 알람
-     * @param recommendation Playbook 기반 권장 조치 (safety ceiling)
-     * @return 추론 결과 (결론, 추론 로그, 호출 횟수)
-     */
     public AgentResult run(AlertEvent alert, ActionRecommendation recommendation) {
-        AgentResult result = runInternal(alert, recommendation, buildAlertDescription(alert, recommendation));
+        AgentResult result = runInternal(alert, buildAlertDescription(alert, recommendation));
         judgeEvaluator.evaluate(alert, result);
         return result;
     }
 
-    /**
-     * OrchestratorAgent에서 그룹 컨텍스트를 추가해 실행할 때 사용.
-     */
     public AgentResult runWithContext(AlertEvent alert, ActionRecommendation recommendation, String additionalContext) {
-        return runInternal(alert, recommendation, buildAlertDescription(alert, recommendation) + additionalContext);
+        AgentResult result = runInternal(alert, buildAlertDescription(alert, recommendation) + additionalContext);
+        judgeEvaluator.evaluate(alert, result);
+        return result;
     }
 
-    /**
-     * ReAct 루프 실행 + Reflection 자기검증 (1회 한도).
-     */
-    private AgentResult runInternal(AlertEvent alert, ActionRecommendation recommendation, String userMessage) {
+    private AgentResult runInternal(AlertEvent alert, String userMessage) {
         if (chatClient == null) {
             return new AgentResult(
                     "에이전트 분석 기능이 비활성화되어 있습니다. (Gemini API 키 미설정)",
-                    "", 0, null, recommendation
+                    "", 0, null
             );
         }
 
         log.info("[ReActAgent] 분석 시작 — alertId={}, alertName={}", alert.getId(), alert.getAlertName());
 
         AgentTools agentTools = agentToolsFactory.createAgentTools();
-        String systemPrompt = buildSystemPrompt();
+        AtomicReference<String> reflectionResultHolder = new AtomicReference<>();
 
         try {
             String conclusion = chatClient.prompt()
-                    .system(systemPrompt)
+                    .advisors(spec -> {
+                        spec.param(ReflectionAdvisor.CTX_ALERT, alert)
+                                .param(ReflectionAdvisor.CTX_AGENT_TOOLS, agentTools)
+                                .param(ReflectionAdvisor.CTX_REFLECTION_RESULT, reflectionResultHolder);
+                        if (reflectionAdvisor != null) {
+                            spec.advisors(reflectionAdvisor);
+                        }
+                    })
+                    .system(buildSystemPrompt())
                     .user(userMessage)
                     .tools(agentTools, webSearchTool)
                     .call()
                     .content();
 
-            String reasoningChain = agentTools.getReasoningLog();
             int iterationCount = agentTools.getCallCount();
-            log.info("[ReActAgent] 1차 분석 완료 — alertId={}, toolCalls={}", alert.getId(), iterationCount);
+            log.info("[ReActAgent] 분석 완료 — alertId={}, toolCalls={}", alert.getId(), iterationCount);
 
-            // Reflection: 결론 자기검증
-            String reflectionOutput = reflectionAgent.reflect(alert,
-                    new AgentResult(conclusion, reasoningChain, iterationCount, null, recommendation));
-
-            if (reflectionOutput != null && reflectionOutput.startsWith("INSUFFICIENT")) {
-                log.info("[ReActAgent] Reflection 재분석 트리거 — alertId={}", alert.getId());
-
-                AgentTools retryTools = agentToolsFactory.createAgentTools();
-                String retriedConclusion = chatClient.prompt()
-                        .system(systemPrompt)
-                        .user(userMessage + "\n\n[이전 분석 검토 결과]\n" + reflectionOutput + "\n\n위 피드백을 반영해서 다시 분석해줘.")
-                        .tools(retryTools, webSearchTool)
-                        .call()
-                        .content();
-
-                int totalCalls = iterationCount + retryTools.getCallCount();
-                log.info("[ReActAgent] 재분석 완료 — alertId={}, totalToolCalls={}", alert.getId(), totalCalls);
-                return new AgentResult(retriedConclusion,
-                        reasoningChain + "\n[Reflection 재분석]\n" + retryTools.getReasoningLog(),
-                        totalCalls, reflectionOutput, recommendation);
-            }
-
-            return new AgentResult(conclusion, reasoningChain, iterationCount, reflectionOutput, recommendation);
+            return new AgentResult(conclusion, agentTools.getReasoningLog(),
+                    iterationCount, reflectionResultHolder.get());
 
         } catch (Exception e) {
             log.error("[ReActAgent] 분석 실패 — alertId={}: {}", alert.getId(), e.getMessage());
             return new AgentResult(
                     "AI 분석 실패: " + e.getMessage(),
-                    agentTools.getReasoningLog(), agentTools.getCallCount(), null, recommendation
+                    agentTools.getReasoningLog(), agentTools.getCallCount(), null
             );
         }
     }
@@ -134,8 +111,9 @@ public class ReActAgent {
                 [도구 호출 순서]
                 1. search_rag — 우리 서버 과거 사례 먼저 확인. 유사 사례 있으면 현재 상황과 차이점 분석.
                 2. verify_alert — 알람이 현재도 발생 중인지 확인.
-                3. query_prometheus / query_loki — 가설 검증에 필요한 메트릭·로그만 선택 조회.
-                4. web_search — 1~3으로 해결 방법을 못 찾았을 때만 사용하는 최후의 수단.
+                3. query_prometheus — 호출 전 list_metrics로 메트릭 이름을 확인한다.
+                4. query_loki — 컨테이너 로그 조회.
+                5. web_search — 1~4로 해결 방법을 못 찾았을 때만 사용하는 최후의 수단.
 
                 [종료 기준: 이 조건을 만족하면 즉시 결론 내려]
                 - 근본 원인 가설이 데이터로 확인되거나 배제됐을 때

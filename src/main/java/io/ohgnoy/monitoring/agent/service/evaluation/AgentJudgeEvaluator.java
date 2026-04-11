@@ -7,10 +7,9 @@ import io.ohgnoy.monitoring.agent.service.agent.AgentResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.Nullable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -46,29 +45,28 @@ public class AgentJudgeEvaluator {
     private final boolean evaluationEnabled;
 
     public AgentJudgeEvaluator(
-            @Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
+            ObjectProvider<ChatClient> chatClientProvider,
             AgentEvaluationRepository evaluationRepository,
             @Value("${agent.evaluation.enabled:false}") boolean evaluationEnabled) {
-        this.judgeClient = chatModel != null ? ChatClient.builder(chatModel).build() : null;
+        this.judgeClient = chatClientProvider.getIfAvailable();
         this.evaluationRepository = evaluationRepository;
         this.evaluationEnabled = evaluationEnabled;
     }
 
     /**
      * 에이전트 응답을 평가하고 결과를 DB에 저장한다.
+     * 평가는 분석 결과 반환과 무관하므로 비동기로 실행한다.
      * chatModel이 없으면 평가를 건너뛴다.
-     *
-     * @return 저장된 평가 엔티티, 또는 평가 불가 시 null
      */
-    @Nullable
-    public AgentEvaluation evaluate(AlertEvent alert, AgentResult agentResult) {
+    @Async
+    public void evaluate(AlertEvent alert, AgentResult agentResult) {
         if (!evaluationEnabled) {
             log.debug("[Judge] 평가 건너뜀 — agent.evaluation.enabled=false");
-            return null;
+            return;
         }
         if (judgeClient == null) {
             log.debug("[Judge] 평가 건너뜀 — chatModel 없음");
-            return null;
+            return;
         }
 
         log.info("[Judge] 평가 시작 — alertId={}, toolCalls={}",
@@ -85,11 +83,9 @@ public class AgentJudgeEvaluator {
 
             log.info("[Judge] 평가 완료 — alertId={}, overall={}/10",
                     alert.getId(), evaluation.getOverallScore());
-            return evaluation;
 
         } catch (Exception e) {
             log.warn("[Judge] 평가 실패 — alertId={}: {}", alert.getId(), e.getMessage());
-            return null;
         }
     }
 
