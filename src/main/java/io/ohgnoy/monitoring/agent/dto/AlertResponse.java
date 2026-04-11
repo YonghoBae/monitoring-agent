@@ -2,18 +2,18 @@ package io.ohgnoy.monitoring.agent.dto;
 
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class AlertResponse {
     private Long id;
     private String level;
     private String message;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     private boolean resolved;
     private String alertName;
     private String annotationSummary;
-    private LocalDateTime startsAt;
-    private LocalDateTime resolvedAt;
+    private Instant startsAt;
+    private Instant resolvedAt;
 
     public AlertResponse(AlertEvent alert) {
         this.id = alert.getId();
@@ -39,7 +39,7 @@ public class AlertResponse {
         return message;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
@@ -55,11 +55,11 @@ public class AlertResponse {
         return annotationSummary;
     }
 
-    public LocalDateTime getStartsAt() {
+    public Instant getStartsAt() {
         return startsAt;
     }
 
-    public LocalDateTime getResolvedAt() {
+    public Instant getResolvedAt() {
         return resolvedAt;
     }
 }

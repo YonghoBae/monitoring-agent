@@ -1,9 +1,12 @@
 package io.ohgnoy.monitoring.agent.domain;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.util.Map;
 
 @Entity
 @Table(name = "alert_event")
@@ -20,7 +23,7 @@ public class AlertEvent {
     private String message; // 알람 메시지 원문
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(nullable = false)
     private boolean resolved;
@@ -38,35 +41,27 @@ public class AlertEvent {
     private String annotationDescription;
 
     @Column(name = "starts_at")
-    private LocalDateTime startsAt;
+    private Instant startsAt;
 
     @Column(length = 1000)
     private String generatorURL;
 
     @Column(name = "resolved_at")
-    private LocalDateTime resolvedAt;
+    private Instant resolvedAt;
 
-    @Column(name = "analysis_result", columnDefinition = "TEXT")
-    private String analysisResult;
-
-    @Column(name = "verification_status", length = 32)
-    private String verificationStatus;
-
-    // ReAct 루프 추론 과정 전체 (도구 호출 + 관찰 결과)
-    @Column(name = "reasoning_chain", columnDefinition = "TEXT")
-    private String reasoningChain;
-
-    // ReAct 루프에서 도구를 호출한 총 횟수
-    @Column(name = "agent_iterations")
-    private int agentIterations;
-
-    // Reflection 결과 (SUFFICIENT or INSUFFICIENT: ...)
-    @Column(name = "reflection_result", columnDefinition = "TEXT")
-    private String reflectionResult;
+    @Embedded
+    private AlertAnalysis analysis = new AlertAnalysis();
 
     // 피드백 수신 후 연결된 ResolutionRecord ID
     @Column(name = "resolution_record_id")
     private Long resolutionRecordId;
+
+    @PrePersist
+    protected void prePersist() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+    }
 
     protected AlertEvent() {
     }
@@ -74,7 +69,6 @@ public class AlertEvent {
     public AlertEvent(String level, String message) {
         this.level = level;
         this.message = message;
-        this.createdAt = LocalDateTime.now();
         this.resolved = false;
     }
 
@@ -88,11 +82,8 @@ public class AlertEvent {
         this.labelsJson = labelsJson;
         this.annotationSummary = annotationSummary;
         this.annotationDescription = annotationDescription;
-        this.startsAt = startsAt != null
-                ? LocalDateTime.ofInstant(startsAt, ZoneId.systemDefault())
-                : null;
+        this.startsAt = startsAt;
         this.generatorURL = generatorURL;
-        this.createdAt = LocalDateTime.now();
         this.resolved = false;
     }
 
@@ -108,7 +99,7 @@ public class AlertEvent {
         return message;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
@@ -132,7 +123,7 @@ public class AlertEvent {
         return annotationDescription;
     }
 
-    public LocalDateTime getStartsAt() {
+    public Instant getStartsAt() {
         return startsAt;
     }
 
@@ -140,40 +131,54 @@ public class AlertEvent {
         return generatorURL;
     }
 
-    public LocalDateTime getResolvedAt() {
+    public Instant getResolvedAt() {
         return resolvedAt;
     }
 
-    public String getAnalysisResult() {
-        return analysisResult;
-    }
+    public AlertAnalysis getAnalysis() { return analysis; }
 
-    public void setAnalysisResult(String analysisResult) {
-        this.analysisResult = analysisResult;
-    }
+    public String getAnalysisResult() { return analysis.getAnalysisResult(); }
+    public void setAnalysisResult(String analysisResult) { analysis.setAnalysisResult(analysisResult); }
 
-    public String getVerificationStatus() {
-        return verificationStatus;
-    }
+    public String getVerificationStatus() { return analysis.getVerificationStatus(); }
+    public void setVerificationStatus(String verificationStatus) { analysis.setVerificationStatus(verificationStatus); }
 
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
-    }
+    public String getReasoningChain() { return analysis.getReasoningChain(); }
+    public void setReasoningChain(String reasoningChain) { analysis.setReasoningChain(reasoningChain); }
 
-    public String getReasoningChain() { return reasoningChain; }
-    public void setReasoningChain(String reasoningChain) { this.reasoningChain = reasoningChain; }
+    public int getAgentIterations() { return analysis.getAgentIterations(); }
+    public void setAgentIterations(int agentIterations) { analysis.setAgentIterations(agentIterations); }
 
-    public int getAgentIterations() { return agentIterations; }
-    public void setAgentIterations(int agentIterations) { this.agentIterations = agentIterations; }
-
-    public String getReflectionResult() { return reflectionResult; }
-    public void setReflectionResult(String reflectionResult) { this.reflectionResult = reflectionResult; }
+    public String getReflectionResult() { return analysis.getReflectionResult(); }
+    public void setReflectionResult(String reflectionResult) { analysis.setReflectionResult(reflectionResult); }
 
     public Long getResolutionRecordId() { return resolutionRecordId; }
     public void setResolutionRecordId(Long resolutionRecordId) { this.resolutionRecordId = resolutionRecordId; }
 
     public void resolve() {
         this.resolved = true;
-        this.resolvedAt = LocalDateTime.now();
+        this.resolvedAt = Instant.now();
+    }
+
+    /**
+     * 커맨드 템플릿의 {key}를 이 알람의 labels 값으로 치환한다.
+     * 예: "docker restart {name}" → "docker restart nginx"
+     */
+    @SuppressWarnings("unchecked")
+    public static String resolveTemplate(String template, String labelsJson, ObjectMapper objectMapper) {
+        if (template == null || labelsJson == null || labelsJson.isBlank()) {
+            return template;
+        }
+        try {
+            Map<String, String> labels = objectMapper.readValue(labelsJson, Map.class);
+            for (Map.Entry<String, String> e : labels.entrySet()) {
+                template = template.replace("{" + e.getKey() + "}", e.getValue());
+            }
+        } catch (Exception e) {
+            LoggerFactory.getLogger(AlertEvent.class)
+                    .warn("라벨 JSON 파싱 실패 — template='{}', labelsJson='{}': {}",
+                            template, labelsJson, e.getMessage());
+        }
+        return template;
     }
 }

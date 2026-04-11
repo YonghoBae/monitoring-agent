@@ -1,7 +1,9 @@
 package io.ohgnoy.monitoring.agent.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+
+import java.time.Instant;
 
 /**
  * LLM-as-a-Judge 평가 결과 저장 엔티티.
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "agent_evaluation")
+@Getter
 public class AgentEvaluation {
 
     @Id
@@ -24,11 +27,9 @@ public class AgentEvaluation {
     @Column(name = "alert_name", length = 255)
     private String alertName;
 
-    // 에이전트 최종 결론
     @Column(name = "conclusion", columnDefinition = "TEXT")
     private String conclusion;
 
-    // 도구 호출 횟수
     @Column(name = "tool_call_count")
     private int toolCallCount;
 
@@ -57,7 +58,7 @@ public class AgentEvaluation {
     private String judgeFeedback;
 
     @Column(name = "evaluated_at", nullable = false)
-    private LocalDateTime evaluatedAt;
+    private Instant evaluatedAt;
 
     protected AgentEvaluation() {
     }
@@ -77,21 +78,8 @@ public class AgentEvaluation {
         this.hallucinationRiskScore = hallucinationRiskScore;
         this.overallScore = (factualityScore + toolUseScore + actionabilityScore + hallucinationRiskScore) / 4.0;
         this.judgeFeedback = judgeFeedback;
-        this.evaluatedAt = LocalDateTime.now();
+        this.evaluatedAt = Instant.now();
     }
-
-    public Long getId() { return id; }
-    public Long getAlertEventId() { return alertEventId; }
-    public String getAlertName() { return alertName; }
-    public String getConclusion() { return conclusion; }
-    public int getToolCallCount() { return toolCallCount; }
-    public int getFactualityScore() { return factualityScore; }
-    public int getToolUseScore() { return toolUseScore; }
-    public int getActionabilityScore() { return actionabilityScore; }
-    public int getHallucinationRiskScore() { return hallucinationRiskScore; }
-    public double getOverallScore() { return overallScore; }
-    public String getJudgeFeedback() { return judgeFeedback; }
-    public LocalDateTime getEvaluatedAt() { return evaluatedAt; }
 
     public boolean isHighQuality() {
         return overallScore >= 7.0;
