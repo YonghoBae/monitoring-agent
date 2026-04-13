@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -38,7 +39,8 @@ public class WebSearchTool {
     }
 
     @Tool(description = "인터넷에서 에러 메시지나 알람 증상에 대한 정보를 검색한다. search_rag와 Gemini 자체 지식으로 해결이 불가능할 때만 사용하는 최후의 수단.")
-    public String web_search(String query) {
+    public String web_search(
+            @ToolParam(description = "검색어 (예: 'nginx OOM killed container restart')") String query) {
         if (apiKey == null || apiKey.isBlank()) {
             log.warn("[WebSearchTool] Tavily API 키 미설정 — web_search 비활성");
             return "웹 검색 기능이 설정되지 않았습니다.";

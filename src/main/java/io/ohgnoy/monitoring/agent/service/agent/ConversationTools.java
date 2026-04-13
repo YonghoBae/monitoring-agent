@@ -5,6 +5,7 @@ import io.ohgnoy.monitoring.agent.service.PendingApprovalStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.lang.Nullable;
 
 /**
@@ -32,10 +33,10 @@ public class ConversationTools {
         this.alertId = alertId;
     }
 
-    @Tool(description = "명령 실행을 제안한다. 실제 실행 전 운영자의 확인(yes/no)이 필요하다. "
-            + "command: 실행할 명령어 (docker restart <name> 형식만 허용), "
-            + "reason: 이 명령이 필요한 이유")
-    public String execute_command(String command, String reason) {
+    @Tool(description = "명령 실행을 제안한다. 실제 실행 전 운영자의 확인(yes/no)이 필요하다.")
+    public String execute_command(
+            @ToolParam(description = "실행할 명령어 (docker restart <container-name> 형식만 허용)") String command,
+            @ToolParam(description = "이 명령이 필요한 이유") String reason) {
         log.info("[ConversationTool] execute_command 제안: '{}', 이유: {}", command, reason);
 
         if (!commandExecutorService.isAllowed(command)) {
