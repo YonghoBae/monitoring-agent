@@ -6,14 +6,15 @@ import io.ohgnoy.monitoring.agent.service.AlertPlaybook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.lang.Nullable;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -27,15 +28,17 @@ import java.util.stream.Collectors;
 public class OrchestratorAgent {
 
     private static final Logger log = LoggerFactory.getLogger(OrchestratorAgent.class);
+    private static final long AGENT_TIMEOUT_SECONDS = 120;
 
     private final ChatClient chatClient;
     private final ReActAgent reActAgent;
     private final AlertPlaybook alertPlaybook;
+    private final ExecutorService agentExecutor = Executors.newVirtualThreadPerTaskExecutor();
 
-    public OrchestratorAgent(@Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
+    public OrchestratorAgent(ObjectProvider<ChatClient> chatClientProvider,
                               ReActAgent reActAgent,
                               AlertPlaybook alertPlaybook) {
-        this.chatClient = chatModel != null ? ChatClient.builder(chatModel).build() : null;
+        this.chatClient = chatClientProvider.getIfAvailable();
         this.reActAgent = reActAgent;
         this.alertPlaybook = alertPlaybook;
     }
@@ -64,30 +67,38 @@ public class OrchestratorAgent {
                 .findFirst()
                 .orElse(List.of(primary));
 
-        // 각 그룹의 대표 알람으로 ReAct 실행 (병렬 처리는 추후 개선 가능)
-        AgentResult primaryResult = null;
-        for (List<AlertEvent> group : groups) {
-            AlertEvent representative = group.get(0);
-            ActionRecommendation recommendation = alertPlaybook.lookup(representative.getAlertName());
+        // 각 그룹을 병렬로 ReAct 실행 (Virtual Thread — I/O 바운드 LLM 호출에 최적)
+        List<CompletableFuture<AgentResult>> futures = groups.stream()
+                .map(group -> CompletableFuture.supplyAsync(() -> {
+                    AlertEvent representative = group.get(0);
+                    ActionRecommendation recommendation = alertPlaybook.lookup(representative.getAlertName());
+                    AgentResult result = reActAgent.runWithContext(representative, recommendation, buildGroupContext(group));
+                    log.info("[OrchestratorAgent] 그룹 분석 완료 — 대표알람={}, toolCalls={}",
+                            representative.getAlertName(), result.iterationCount());
+                    return result;
+                }, agentExecutor).orTimeout(AGENT_TIMEOUT_SECONDS, TimeUnit.SECONDS))
+                .toList();
 
-            // 그룹 내 다른 알람 정보를 컨텍스트로 추가
-            String groupContext = buildGroupContext(group);
-            AgentResult result = reActAgent.runWithContext(representative, recommendation, groupContext);
+        // 모든 그룹 완료 대기
+        List<AgentResult> results = futures.stream()
+                .map(CompletableFuture::join)
+                .toList();
 
-            if (group.contains(primary)) {
-                primaryResult = result;
+        // 주 알람이 속한 그룹의 결과 반환
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).contains(primary)) {
+                return results.get(i);
             }
-
-            log.info("[OrchestratorAgent] 그룹 분석 완료 — 대표알람={}, toolCalls={}",
-                    representative.getAlertName(), result.iterationCount());
         }
 
-        return primaryResult != null ? primaryResult
-                : reActAgent.run(primary, alertPlaybook.lookup(primary.getAlertName()));
+        return reActAgent.run(primary, alertPlaybook.lookup(primary.getAlertName()));
     }
+
+    private record GroupingResult(List<List<Integer>> groups) {}
 
     /**
      * Gemini를 이용해 알람들을 연관성 기반으로 그룹핑한다.
+     * Structured Output으로 파싱 실패 가능성을 없앤다.
      */
     private List<List<AlertEvent>> decompose(List<AlertEvent> alerts) {
         if (chatClient == null || alerts.size() <= 1) {
@@ -95,9 +106,26 @@ public class OrchestratorAgent {
         }
 
         try {
-            String prompt = buildDecompositionPrompt(alerts);
-            String response = chatClient.prompt().user(prompt).call().content();
-            return parseGroups(response, alerts);
+            GroupingResult result = chatClient.prompt()
+                    .system("너는 인프라 알람 분류 전문가야. 주어진 알람들을 연관성 기반으로 그룹핑해. 응답은 반드시 JSON 형식으로만 해.")
+                    .user(buildDecompositionPrompt(alerts))
+                    .call()
+                    .entity(GroupingResult.class);
+
+            if (result == null || result.groups() == null || result.groups().isEmpty()) {
+                return List.of(alerts);
+            }
+
+            List<List<AlertEvent>> groups = result.groups().stream()
+                    .map(indices -> indices.stream()
+                            .filter(idx -> idx >= 0 && idx < alerts.size())
+                            .map(alerts::get)
+                            .collect(Collectors.toList()))
+                    .filter(g -> !g.isEmpty())
+                    .collect(Collectors.toList());
+
+            return groups.isEmpty() ? List.of(alerts) : groups;
+
         } catch (Exception e) {
             log.warn("[OrchestratorAgent] 분해 실패, 단일 그룹으로 처리: {}", e.getMessage());
             return List.of(alerts);
@@ -116,35 +144,7 @@ public class OrchestratorAgent {
                     .append(a.getMessage()).append(" labels=").append(a.getLabelsJson()).append("\n");
         }
 
-        sb.append("\n응답은 반드시 다음 형식만 사용해 (다른 설명 없이):\n");
-        sb.append("GROUP_0: 0,2,3\nGROUP_1: 1,4\n");
         return sb.toString();
-    }
-
-    private List<List<AlertEvent>> parseGroups(String response, List<AlertEvent> alerts) {
-        List<List<AlertEvent>> groups = new ArrayList<>();
-
-        for (String line : response.split("\n")) {
-            line = line.trim();
-            if (!line.startsWith("GROUP_")) continue;
-
-            try {
-                String indicesPart = line.substring(line.indexOf(":") + 1).trim();
-                List<AlertEvent> group = Arrays.stream(indicesPart.split(","))
-                        .map(String::trim)
-                        .mapToInt(Integer::parseInt)
-                        .filter(idx -> idx >= 0 && idx < alerts.size())
-                        .mapToObj(alerts::get)
-                        .collect(Collectors.toList());
-
-                if (!group.isEmpty()) groups.add(group);
-            } catch (Exception e) {
-                log.warn("[OrchestratorAgent] 그룹 파싱 실패: {}", line);
-            }
-        }
-
-        // 파싱 실패 시 전체를 단일 그룹으로
-        return groups.isEmpty() ? List.of(alerts) : groups;
     }
 
     private String buildGroupContext(List<AlertEvent> group) {
