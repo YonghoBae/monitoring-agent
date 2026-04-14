@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -29,11 +28,11 @@ public class ConversationAgent {
     private final ConversationToolsFactory conversationToolsFactory;
     private final WebSearchTool webSearchTool;
 
-    public ConversationAgent(@Qualifier("googleGenAiChatModel") @Nullable ChatModel chatModel,
+    public ConversationAgent(ObjectProvider<ChatClient> chatClientProvider,
                              AgentToolsFactory agentToolsFactory,
                              ConversationToolsFactory conversationToolsFactory,
                              WebSearchTool webSearchTool) {
-        this.chatClient = chatModel != null ? ChatClient.builder(chatModel).build() : null;
+        this.chatClient = chatClientProvider.getIfAvailable();
         this.agentToolsFactory = agentToolsFactory;
         this.conversationToolsFactory = conversationToolsFactory;
         this.webSearchTool = webSearchTool;
@@ -51,9 +50,11 @@ public class ConversationAgent {
         log.info("[ConversationAgent] 대화 처리: channelId={}, alertId={}, message={}",
                 session.channelId(), session.alertId(), userMessage);
 
+        // Memory advisor는 tool calling보다 먼저 실행되어야 대화 히스토리에 tool call/result가 포함됨
         MessageChatMemoryAdvisor memoryAdvisor = MessageChatMemoryAdvisor
                 .builder(session.chatMemory())
                 .conversationId(session.channelId())
+                .order(0)
                 .build();
 
         AgentTools agentTools = agentToolsFactory.createAgentTools();
@@ -105,6 +106,7 @@ public class ConversationAgent {
 
                 [도구 사용 원칙]
                 1. 읽기 전용 작업(메트릭, 로그, RAG 검색, 알람 확인)은 묻지 말고 즉시 실행해.
+                   query_prometheus 호출 전 list_metrics로 메트릭 이름을 먼저 확인한다.
                 2. 명령 실행이 필요하면 execute_command를 호출해 — 직접 실행 안 하고 운영자 확인을 받아.
                 3. execute_command 결과에 PENDING_CONFIRM이 오면 'yes' 또는 'no'로 답하라고 안내해.
                 4. 한 번에 하나의 명령만 제안해.

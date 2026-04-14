@@ -79,7 +79,7 @@ public class DiscordNotificationService {
                 && recommendation.command() != null) {
             String resolvedCommand = resolveCommand(recommendation.command(), alert);
             if (resolvedCommand != null) {
-                pendingApprovalStore.store(resolvedCommand, alert.getId());
+                pendingApprovalStore.store(resolvedCommand, alert.getId(), botChannelId);
                 log.info("승인 대기 저장: command='{}', alertId={}", resolvedCommand, alert.getId());
             }
         }
@@ -155,18 +155,8 @@ public class DiscordNotificationService {
         };
     }
 
-    /** 커맨드 템플릿의 {key} 를 alert labels 값으로 치환 */
-    @SuppressWarnings("unchecked")
     private String resolveCommand(String command, AlertEvent alert) {
-        if (command == null) return null;
-        if (alert.getLabelsJson() == null || alert.getLabelsJson().isBlank()) return command;
-        try {
-            Map<String, String> labels = objectMapper.readValue(alert.getLabelsJson(), Map.class);
-            for (Map.Entry<String, String> e : labels.entrySet()) {
-                command = command.replace("{" + e.getKey() + "}", e.getValue());
-            }
-        } catch (Exception ignored) {}
-        return command;
+        return AlertEvent.resolveTemplate(command, alert.getLabelsJson(), objectMapper);
     }
 
     private void sendToDiscord(String content) {
