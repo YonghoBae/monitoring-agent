@@ -8,6 +8,7 @@ import io.ohgnoy.monitoring.agent.service.ActionRecommendation;
 import io.ohgnoy.monitoring.agent.service.ActionRecommendation.Category;
 import io.ohgnoy.monitoring.agent.service.AlertVectorService;
 import io.ohgnoy.monitoring.agent.service.AlertVerifier;
+import io.ohgnoy.monitoring.agent.service.CommandExecutorService;
 import io.ohgnoy.monitoring.agent.service.LokiQueryService;
 import io.ohgnoy.monitoring.agent.service.PrometheusQueryService;
 import io.ohgnoy.monitoring.agent.service.VerificationResult;
@@ -22,7 +23,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
+import org.springframework.beans.factory.ObjectProvider;
 
 import java.io.InputStream;
 import java.time.Instant;
@@ -54,15 +57,19 @@ class AgentScenarioSimulationTest {
     @Mock PrometheusQueryService prometheusQuery;
     @Mock LokiQueryService lokiQuery;
     @Mock AlertVectorService vectorService;
+    @Mock CommandExecutorService commandExecutorService;
     @Mock AgentEvaluationRepository evaluationRepository;
 
     private AgentJudgeEvaluator evaluator;
 
+    @SuppressWarnings("unchecked")
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        // chatModel=null → Judge LLM 없이 parseScores()만 실행, evaluationEnabled=true로 enabled 체크는 통과
-        evaluator = new AgentJudgeEvaluator(null, evaluationRepository, true);
+        // chatClient=null → Judge LLM 없이 parseScores()만 실행, evaluationEnabled=true로 enabled 체크는 통과
+        ObjectProvider<ChatClient> emptyProvider = org.mockito.Mockito.mock(ObjectProvider.class);
+        when(emptyProvider.getIfAvailable()).thenReturn(null);
+        evaluator = new AgentJudgeEvaluator(emptyProvider, evaluationRepository, true);
     }
 
     // ──────────────────────────────────────────────────────────────────────
@@ -95,7 +102,7 @@ class AgentScenarioSimulationTest {
         setupMocks(scenario.get("mocks"));
 
         // 2. 도구 호출 시뮬레이션
-        AgentTools tools = new AgentTools(alertVerifier, prometheusQuery, lokiQuery, vectorService);
+        AgentTools tools = new AgentTools(alertVerifier, prometheusQuery, lokiQuery, vectorService, commandExecutorService);
         executeToolCalls(tools, scenario.get("simulation").get("toolCalls"));
 
         // 3. AgentResult 생성
@@ -105,8 +112,7 @@ class AgentScenarioSimulationTest {
                 sim.get("conclusion").asText(),
                 tools.getReasoningLog(),
                 tools.getCallCount(),
-                sim.get("reflectionResult").asText(),
-                rec
+                sim.get("reflectionResult").asText()
         );
 
         // 4. Judge 점수 파싱 및 AgentEvaluation 생성
@@ -122,9 +128,9 @@ class AgentScenarioSimulationTest {
         );
 
         // 5. expectedCriteria 검증
-        assertCriteria(scenario.get("expectedCriteria"), result, eval);
+        assertCriteria(scenario.get("expectedCriteria"), result, eval, rec);
 
-        printResult(name, result, eval);
+        printResult(name, result, eval, rec);
     }
 
     // ──────────────────────────────────────────────────────────────────────
@@ -214,7 +220,7 @@ class AgentScenarioSimulationTest {
     // expectedCriteria 검증 헬퍼
     // ──────────────────────────────────────────────────────────────────────
 
-    private void assertCriteria(JsonNode criteria, AgentResult result, AgentEvaluation eval) {
+    private void assertCriteria(JsonNode criteria, AgentResult result, AgentEvaluation eval, ActionRecommendation rec) {
         assertThat(result.iterationCount())
                 .as("maxToolCalls")
                 .isLessThanOrEqualTo(criteria.get("maxToolCalls").asInt());
@@ -230,10 +236,10 @@ class AgentScenarioSimulationTest {
             assertThat(result.reasoningChain()).as("shouldUseLoki").contains("query_loki");
 
         if (criteria.get("shouldRecommendRestartApproval").asBoolean())
-            assertThat(result.recommendation().category()).as("shouldRecommendRestartApproval").isEqualTo(NEEDS_APPROVAL);
+            assertThat(rec.category()).as("shouldRecommendRestartApproval").isEqualTo(NEEDS_APPROVAL);
 
         if (criteria.get("shouldNotRecommendRestart").asBoolean())
-            assertThat(result.recommendation().category()).as("shouldNotRecommendRestart").isNotEqualTo(NEEDS_APPROVAL);
+            assertThat(rec.category()).as("shouldNotRecommendRestart").isNotEqualTo(NEEDS_APPROVAL);
 
         if (criteria.get("shouldSuggestMemoryInvestigation").asBoolean())
             assertThat(result.conclusion()).as("shouldSuggestMemoryInvestigation").containsIgnoringCase("메모리");
@@ -246,13 +252,13 @@ class AgentScenarioSimulationTest {
     // 출력 헬퍼
     // ──────────────────────────────────────────────────────────────────────
 
-    private void printResult(String name, AgentResult result, AgentEvaluation eval) {
+    private void printResult(String name, AgentResult result, AgentEvaluation eval, ActionRecommendation rec) {
         System.out.println("\n" + "=".repeat(60));
         System.out.println("[ " + name + " ]");
         System.out.println("=".repeat(60));
         System.out.println("▶ 도구 호출 수: " + result.iterationCount());
         System.out.println("▶ Reflection: " + result.reflectionResult());
-        System.out.println("▶ 권고 카테고리: " + result.recommendation().category());
+        System.out.println("▶ 권고 카테고리: " + rec.category());
         System.out.println("\n[추론 로그]");
         System.out.println(result.reasoningChain());
         System.out.println("[결론]");

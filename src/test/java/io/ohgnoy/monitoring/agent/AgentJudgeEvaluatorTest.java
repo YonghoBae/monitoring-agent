@@ -3,20 +3,17 @@ package io.ohgnoy.monitoring.agent;
 import io.ohgnoy.monitoring.agent.domain.AgentEvaluation;
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
 import io.ohgnoy.monitoring.agent.repository.AgentEvaluationRepository;
-import io.ohgnoy.monitoring.agent.service.ActionRecommendation;
 import io.ohgnoy.monitoring.agent.service.agent.AgentResult;
 import io.ohgnoy.monitoring.agent.service.evaluation.AgentJudgeEvaluator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.beans.factory.ObjectProvider;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @DisplayName("AgentJudgeEvaluator 단위 테스트")
@@ -27,27 +24,28 @@ class AgentJudgeEvaluatorTest {
 
     private AgentJudgeEvaluator evaluator;
 
+    @SuppressWarnings("unchecked")
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        // chatModel=null → 평가 건너뜀 경로로 단위 테스트, evaluationEnabled=true로 enabled 체크는 통과
-        evaluator = new AgentJudgeEvaluator(null, evaluationRepository, true);
+        // chatClient=null → 평가 건너뜀 경로로 단위 테스트, evaluationEnabled=true로 enabled 체크는 통과
+        ObjectProvider<ChatClient> emptyProvider = mock(ObjectProvider.class);
+        when(emptyProvider.getIfAvailable()).thenReturn(null);
+        evaluator = new AgentJudgeEvaluator(emptyProvider, evaluationRepository, true);
     }
 
     @Test
-    @DisplayName("chatModel이 없으면 evaluate()가 null을 반환하고 DB 저장하지 않는다")
-    void evaluate_whenChatModelNull_returnsNull() {
+    @DisplayName("chatModel이 없으면 evaluate()가 DB 저장하지 않는다")
+    void evaluate_whenChatModelNull_doesNotSave() {
         AlertEvent alert = new AlertEvent("WARNING", "CPU spike");
         AgentResult result = new AgentResult(
                 "CPU 과부하로 인한 성능 저하",
                 "[search_rag] 유사 사례 없음\n[query_prometheus] CPU 85%",
-                2, null,
-                new ActionRecommendation("확인", ActionRecommendation.Category.READ_ONLY, null)
+                2, null
         );
 
-        AgentEvaluation evaluation = evaluator.evaluate(alert, result);
+        evaluator.evaluate(alert, result);
 
-        assertThat(evaluation).isNull();
         verifyNoInteractions(evaluationRepository);
     }
 

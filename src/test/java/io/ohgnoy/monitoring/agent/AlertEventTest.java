@@ -13,7 +13,6 @@ class AlertEventTest {
 
         assertThat(alert.getLevel()).isEqualTo("WARN");
         assertThat(alert.getMessage()).isEqualTo("cpu usage high");
-        assertThat(alert.getCreatedAt()).isNotNull();
         assertThat(alert.isResolved()).isFalse();
     }
 

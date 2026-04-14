@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestClient;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,7 +67,7 @@ class DiscordNotificationServiceTest {
     void sendAlert_buildsContentAndPostsToWebhook() {
         // given
         AlertEvent alert = new AlertEvent("ERROR", "database down");
-        setIdAndCreatedAt(alert, 99L, LocalDateTime.of(2025, 11, 23, 19, 30));
+        setIdAndCreatedAt(alert, 99L, Instant.parse("2025-11-23T19:30:00Z"));
 
         ActionRecommendation recommendation =
                 new ActionRecommendation("수동 조사", ActionRecommendation.Category.NONE, null);
@@ -104,7 +104,7 @@ class DiscordNotificationServiceTest {
     void sendAlert_needsApproval_storesPendingApproval() {
         // given
         AlertEvent alert = new AlertEvent("CRITICAL", "[ContainerRestarting] test");
-        setIdAndCreatedAt(alert, 10L, LocalDateTime.now());
+        setIdAndCreatedAt(alert, 10L, Instant.now());
 
         ActionRecommendation recommendation = new ActionRecommendation(
                 "컨테이너 재시작", ActionRecommendation.Category.NEEDS_APPROVAL, "docker restart my-app");
@@ -113,7 +113,7 @@ class DiscordNotificationServiceTest {
         discordNotificationService.sendAlert(alert, "분석 결과", null, recommendation);
 
         // then
-        verify(pendingApprovalStore).store("docker restart my-app", 10L);
+        verify(pendingApprovalStore).store("docker restart my-app", 10L, "");
     }
 
     @Test
@@ -121,7 +121,7 @@ class DiscordNotificationServiceTest {
     void sendAlert_noneCategory_doesNotStorePending() {
         // given
         AlertEvent alert = new AlertEvent("ERROR", "cpu high");
-        setIdAndCreatedAt(alert, 20L, LocalDateTime.now());
+        setIdAndCreatedAt(alert, 20L, Instant.now());
 
         ActionRecommendation recommendation =
                 new ActionRecommendation("수동 조사", ActionRecommendation.Category.NONE, null);
@@ -133,7 +133,7 @@ class DiscordNotificationServiceTest {
         verifyNoInteractions(pendingApprovalStore);
     }
 
-    private static void setIdAndCreatedAt(AlertEvent alert, Long id, LocalDateTime createdAt) {
+    private static void setIdAndCreatedAt(AlertEvent alert, Long id, Instant createdAt) {
         try {
             var idField = AlertEvent.class.getDeclaredField("id");
             idField.setAccessible(true);

@@ -12,7 +12,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +39,8 @@ class AlertVectorServiceTest {
     void indexAlert_convertsEventToDocument() {
         AlertEvent alert = new AlertEvent("ERROR", "database down");
         setId(alert, 99L);
-        LocalDateTime createdAt = alert.getCreatedAt();
+        Instant createdAt = Instant.parse("2026-01-01T12:00:00Z");
+        setCreatedAt(alert, createdAt);
 
         alertVectorService.indexAlert(alert);
 
@@ -78,6 +79,16 @@ class AlertVectorServiceTest {
             idField.set(alertEvent, id);
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("id 필드를 설정할 수 없습니다.", e);
+        }
+    }
+
+    private static void setCreatedAt(AlertEvent alertEvent, Instant createdAt) {
+        try {
+            var field = AlertEvent.class.getDeclaredField("createdAt");
+            field.setAccessible(true);
+            field.set(alertEvent, createdAt);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("createdAt 필드를 설정할 수 없습니다.", e);
         }
     }
 }

@@ -2,18 +2,18 @@ package io.ohgnoy.monitoring.agent;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ohgnoy.monitoring.agent.domain.AlertEvent;
-import io.ohgnoy.monitoring.agent.dto.CommandResult;
 import io.ohgnoy.monitoring.agent.repository.AlertEventRepository;
-import io.ohgnoy.monitoring.agent.service.*;
-import io.ohgnoy.monitoring.agent.service.agent.AgentResult;
-import io.ohgnoy.monitoring.agent.service.agent.OrchestratorAgent;
-import io.ohgnoy.monitoring.agent.service.agent.ReActAgent;
+import io.ohgnoy.monitoring.agent.service.AlertService;
+import io.ohgnoy.monitoring.agent.service.AlertVectorService;
+import io.ohgnoy.monitoring.agent.service.pipeline.AlertCreatedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -32,22 +32,7 @@ class AlertServiceTest {
     private AlertVectorService alertVectorService;
 
     @Mock
-    private DiscordNotificationService discordNotificationService;
-
-    @Mock
-    private ReActAgent reActAgent;
-
-    @Mock
-    private OrchestratorAgent orchestratorAgent;
-
-    @Mock
-    private AlertVerifier alertVerifier;
-
-    @Mock
-    private AlertPlaybook alertPlaybook;
-
-    @Mock
-    private CommandExecutorService commandExecutorService;
+    private ApplicationEventPublisher eventPublisher;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -61,8 +46,8 @@ class AlertServiceTest {
     }
 
     @Test
-    @DisplayName("createAlert - ERROR 레벨이면 저장 + 벡터 인덱싱 + 에이전트 파이프라인 수행한다")
-    void createAlert_error_runsAgentPipelineAndNotifiesDiscord() {
+    @DisplayName("createAlert - ERROR 레벨이면 저장 + 벡터 인덱싱 + 파이프라인 이벤트를 발행한다")
+    void createAlert_error_savesAndPublishesEvent() {
         // given
         when(alertEventRepository.save(any(AlertEvent.class)))
                 .thenAnswer(invocation -> {
@@ -70,17 +55,6 @@ class AlertServiceTest {
                     setId(actual, 42L);
                     return actual;
                 });
-        // 동시 알람 없음 → ReActAgent 사용 (OrchestratorAgent 발동 조건 미충족)
-        when(alertEventRepository.findTop20ByResolvedFalseOrderByCreatedAtDesc())
-                .thenReturn(List.of());
-
-        ActionRecommendation recommendation = new ActionRecommendation(
-                "컨테이너 재시작", ActionRecommendation.Category.NEEDS_APPROVAL, "docker restart test");
-        AgentResult agentResult = new AgentResult("analysis", "tool-log", 2, "SUFFICIENT", recommendation);
-
-        when(alertVerifier.verify(any(AlertEvent.class))).thenReturn(VerificationResult.unknown());
-        when(alertPlaybook.lookup(any())).thenReturn(recommendation);
-        when(reActAgent.run(any(AlertEvent.class), any())).thenReturn(agentResult);
 
         // when
         AlertEvent result = alertService.createAlert("ERROR", "database down");
@@ -93,49 +67,15 @@ class AlertServiceTest {
 
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(result);
-        verify(alertVerifier).verify(result);
-        verify(alertPlaybook).lookup(any());
-        verify(reActAgent).run(eq(result), any());
-        verify(discordNotificationService).sendAlert(eq(result), eq("analysis"), any(), any());
-        verify(commandExecutorService, never()).execute(any());
+
+        ArgumentCaptor<AlertCreatedEvent> eventCaptor = ArgumentCaptor.forClass(AlertCreatedEvent.class);
+        verify(eventPublisher).publishEvent(eventCaptor.capture());
+        assertThat(eventCaptor.getValue().alertId()).isEqualTo(42L);
     }
 
     @Test
-    @DisplayName("createAlert - AUTO 카테고리면 명령어를 즉시 실행하고 sendAutoExecuted를 호출한다")
-    void createAlert_autoCategory_executesCommandImmediately() {
-        // given
-        when(alertEventRepository.save(any(AlertEvent.class)))
-                .thenAnswer(invocation -> {
-                    AlertEvent actual = invocation.getArgument(0);
-                    setId(actual, 99L);
-                    return actual;
-                });
-        when(alertEventRepository.findTop20ByResolvedFalseOrderByCreatedAtDesc())
-                .thenReturn(List.of());
-
-        ActionRecommendation recommendation = new ActionRecommendation(
-                "컨테이너 재시작", ActionRecommendation.Category.AUTO, "docker restart test-container");
-        AgentResult agentResult = new AgentResult("analysis", "tool-log", 1, "SUFFICIENT", recommendation);
-
-        when(alertVerifier.verify(any())).thenReturn(VerificationResult.confirmed("1", "now"));
-        when(alertPlaybook.lookup(any())).thenReturn(recommendation);
-        when(reActAgent.run(any(AlertEvent.class), any())).thenReturn(agentResult);
-        when(commandExecutorService.execute(any()))
-                .thenReturn(new CommandResult(0, "test-container\n", ""));
-
-        // when
-        AlertEvent result = alertService.createAlert("CRITICAL", "container restarting");
-
-        // then
-        verify(commandExecutorService).execute("docker restart test-container");
-        verify(discordNotificationService).sendAutoExecuted(
-                eq(result), eq("analysis"), any(), any(), eq("docker restart test-container"), any());
-        verify(discordNotificationService, never()).sendAlert(any(), any(), any(), any());
-    }
-
-    @Test
-    @DisplayName("createAlert - INFO 레벨이면 에이전트 파이프라인과 디스코드 전송을 하지 않는다")
-    void createAlert_info_doesNotRunPipeline() {
+    @DisplayName("createAlert - INFO 레벨이면 이벤트를 발행하지 않는다")
+    void createAlert_info_doesNotPublishEvent() {
         // given
         when(alertEventRepository.save(any(AlertEvent.class)))
                 .thenAnswer(invocation -> {
@@ -150,8 +90,7 @@ class AlertServiceTest {
         // then
         verify(alertEventRepository).save(any(AlertEvent.class));
         verify(alertVectorService).indexAlert(any());
-        verifyNoInteractions(alertVerifier, alertPlaybook, reActAgent, orchestratorAgent,
-                commandExecutorService, discordNotificationService);
+        verify(eventPublisher, never()).publishEvent(any());
     }
 
     @Test
@@ -168,8 +107,7 @@ class AlertServiceTest {
         // then
         assertThat(result).isSameAs(events);
         verify(alertEventRepository).findTop20ByResolvedFalseOrderByCreatedAtDesc();
-        verifyNoInteractions(alertVectorService, discordNotificationService,
-                reActAgent, orchestratorAgent);
+        verifyNoInteractions(alertVectorService, eventPublisher);
     }
 
     private static void setId(AlertEvent alertEvent, Long id) {
