@@ -3,33 +3,37 @@ package io.ohgnoy.monitoring.agent.config;
 import io.ohgnoy.monitoring.agent.service.agent.ReflectionAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 /**
  * Spring AI ChatClient 중앙 구성.
  *
- * 각 에이전트의 역할이 다르므로 ChatClient를 분리하여
- * defaultSystem 등 빌더 레벨 설정을 에이전트별로 관리한다.
- *
- * @ConditionalOnBean + @DependsOn으로 Spring AI 자동 구성 이후에 빈이 생성되도록 보장.
+ * @ConditionalOnBean 미사용 이유:
+ * 사용자 @Configuration은 Spring AI 자동 구성보다 먼저 처리되므로
+ * @ConditionalOnBean(name = "googleGenAiChatModel")이 항상 false로 평가된다.
+ * ObjectProvider로 런타임에 빈 존재 여부를 확인한다.
  */
 @Configuration
 public class AgentConfig {
 
     @Bean
-    @DependsOn("googleGenAiChatModel")
-    @ConditionalOnBean(name = "googleGenAiChatModel")
-    ChatClient agentChatClient(@Qualifier("googleGenAiChatModel") ChatModel chatModel) {
+    ChatClient agentChatClient(@Qualifier("googleGenAiChatModel") ObjectProvider<ChatModel> chatModelProvider) {
+        ChatModel chatModel = chatModelProvider.getIfAvailable();
+        if (chatModel == null) {
+            return null;
+        }
         return ChatClient.builder(chatModel).build();
     }
 
     @Bean
-    @ConditionalOnBean(ChatClient.class)
-    ReflectionAdvisor reflectionAdvisor(ChatClient agentChatClient) {
-        return new ReflectionAdvisor(agentChatClient);
+    ReflectionAdvisor reflectionAdvisor(ObjectProvider<ChatClient> chatClientProvider) {
+        ChatClient chatClient = chatClientProvider.getIfAvailable();
+        if (chatClient == null) {
+            return null;
+        }
+        return new ReflectionAdvisor(chatClient);
     }
 }
