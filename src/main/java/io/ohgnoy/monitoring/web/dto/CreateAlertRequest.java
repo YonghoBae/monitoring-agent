@@ -1,0 +1,14 @@
+package io.ohgnoy.monitoring.web.dto;
+
+public class CreateAlertRequest {
+    private String level;
+    private String message;
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
