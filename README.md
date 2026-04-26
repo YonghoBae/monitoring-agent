@@ -100,17 +100,17 @@ sequenceDiagram
 
     AM->>AG: webhook (firing)
     AG->>AG: 4단계 파이프라인 실행
-    AG->>DC: 알림 전송<br/>"approve docker restart &lt;container&gt;"
+    AG->>DC: 알림 전송 (approve docker restart [container])
     DC->>U: 알림 표시
 
     alt 30분 이내 승인
-        U->>DC: approve docker restart &lt;container&gt;
+        U->>DC: approve docker restart [container]
         DC->>AG: DiscordBotListener 수신
         AG->>AG: 화이트리스트 검증
         AG->>AG: CommandExecutorService 실행
         AG->>DC: 실행 결과 회신
     else 30분 TTL 만료
-        AG->>DC: "승인 대기 만료" 메시지
+        AG->>DC: 승인 대기 만료 메시지
     end
 ```
 
