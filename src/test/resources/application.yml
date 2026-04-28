@@ -1,4 +1,12 @@
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiEmbeddingAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiImageAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiModerationAutoConfiguration
+
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
@@ -19,6 +27,8 @@ spring:
     google:
       genai:
         api-key: test-key
+    openai:
+      api-key: test-key
 
 discord:
   webhook:
@@ -34,6 +44,16 @@ prometheus:
 loki:
   url: http://localhost:3100
 
+monitoring:
+  webhook:
+    token-file: src/test/resources/alert-webhook-token
+
 agent:
+  provider: google
   evaluation:
     enabled: false
+
+judge:
+  enabled: false
+  provider: google
+  sample-rate: 1.0

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient; // Spring AI의 핵심 채팅 클라이언트
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor; // 대화 기록(Memory) 관리 어드바이저
 import org.springframework.beans.factory.ObjectProvider; // 빈(Bean)을 유연하게 주입받기 위한 프로바이더
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty; // 특정 설정값 존재 여부에 따른 활성화 설정
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service; // 스프링 서비스 빈 등록
@@ -30,7 +31,7 @@ public class ConversationAgent {
     private final WebSearchTool webSearchTool; // 웹 검색 도구
 
     // 생성자를 통한 의존성 주입 (Constructor Injection)
-    public ConversationAgent(ObjectProvider<ChatClient> chatClientProvider,
+    public ConversationAgent(@Qualifier("agentChatClient") ObjectProvider<ChatClient> chatClientProvider,
                              AgentToolsFactory agentToolsFactory,
                              ConversationToolsFactory conversationToolsFactory,
                              WebSearchTool webSearchTool) {

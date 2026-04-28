@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class OrchestratorAgent {
     private final AlertPlaybook alertPlaybook;
     private final ExecutorService agentExecutor = Executors.newVirtualThreadPerTaskExecutor();
 
-    public OrchestratorAgent(ObjectProvider<ChatClient> chatClientProvider,
+    public OrchestratorAgent(@Qualifier("agentChatClient") ObjectProvider<ChatClient> chatClientProvider,
                               ReActAgent reActAgent,
                               AlertPlaybook alertPlaybook) {
         this.chatClient = chatClientProvider.getIfAvailable();

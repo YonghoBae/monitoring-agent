@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,7 +39,7 @@ public class ReActAgent {
     private final WebSearchTool webSearchTool;
     private final AgentJudgeEvaluator judgeEvaluator;
 
-    public ReActAgent(ObjectProvider<ChatClient> chatClientProvider,
+    public ReActAgent(@Qualifier("agentChatClient") ObjectProvider<ChatClient> chatClientProvider,
                       ObjectProvider<ReflectionAdvisor> reflectionAdvisorProvider,
                       AgentToolsFactory agentToolsFactory,
                       WebSearchTool webSearchTool,
