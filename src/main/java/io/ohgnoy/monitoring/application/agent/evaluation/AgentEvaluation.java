@@ -57,6 +57,18 @@ public class AgentEvaluation {
     @Column(name = "judge_feedback", columnDefinition = "TEXT")
     private String judgeFeedback;
 
+    @Column(name = "judge_verdict", length = 32)
+    private String judgeVerdict;
+
+    @Column(name = "parse_failed", nullable = false)
+    private boolean parseFailed;
+
+    @Column(name = "missing_requirements", columnDefinition = "TEXT")
+    private String missingRequirements;
+
+    @Column(name = "unsupported_claims", columnDefinition = "TEXT")
+    private String unsupportedClaims;
+
     @Column(name = "evaluated_at", nullable = false)
     private Instant evaluatedAt;
 
@@ -78,6 +90,33 @@ public class AgentEvaluation {
         this.hallucinationRiskScore = hallucinationRiskScore;
         this.overallScore = (factualityScore + toolUseScore + actionabilityScore + hallucinationRiskScore) / 4.0;
         this.judgeFeedback = judgeFeedback;
+        this.judgeVerdict = overallScore >= 7.0 ? "pass" : "uncertain";
+        this.parseFailed = false;
+        this.missingRequirements = "[]";
+        this.unsupportedClaims = "[]";
+        this.evaluatedAt = Instant.now();
+    }
+
+    public AgentEvaluation(Long alertEventId, String alertName, String conclusion,
+                           int toolCallCount,
+                           JudgeEvaluationResult result,
+                           String judgeFeedback,
+                           String missingRequirements,
+                           String unsupportedClaims) {
+        this.alertEventId = alertEventId;
+        this.alertName = alertName;
+        this.conclusion = conclusion;
+        this.toolCallCount = toolCallCount;
+        this.factualityScore = result.factuality().score();
+        this.toolUseScore = result.tool_use().score();
+        this.actionabilityScore = result.actionability().score();
+        this.hallucinationRiskScore = result.safety().score();
+        this.overallScore = result.overallScore();
+        this.judgeFeedback = judgeFeedback;
+        this.judgeVerdict = result.verdict();
+        this.parseFailed = result.parse_failed();
+        this.missingRequirements = missingRequirements;
+        this.unsupportedClaims = unsupportedClaims;
         this.evaluatedAt = Instant.now();
     }
 
