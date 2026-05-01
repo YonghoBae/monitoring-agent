@@ -32,6 +32,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static io.ohgnoy.monitoring.domain.playbook.ActionRecommendation.Category.NEEDS_APPROVAL;
@@ -66,10 +68,10 @@ class AgentScenarioSimulationTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        // chatClient=null → Judge LLM 없이 parseScores()만 실행, evaluationEnabled=true로 enabled 체크는 통과
+        // chatClient=null → Judge LLM 없이 기존 시뮬레이션 데이터만 실행
         ObjectProvider<ChatClient> emptyProvider = org.mockito.Mockito.mock(ObjectProvider.class);
         when(emptyProvider.getIfAvailable()).thenReturn(null);
-        evaluator = new AgentJudgeEvaluator(emptyProvider, evaluationRepository, true);
+        evaluator = new AgentJudgeEvaluator(emptyProvider, evaluationRepository, new ObjectMapper(), true, 1.0);
     }
 
     // ──────────────────────────────────────────────────────────────────────
@@ -115,9 +117,10 @@ class AgentScenarioSimulationTest {
                 sim.get("reflectionResult").asText()
         );
 
-        // 4. Judge 점수 파싱 및 AgentEvaluation 생성
+        // 4. 기존 fixture 점수로 AgentEvaluation 생성
+        // 운영 평가기는 구조화 JSON만 파싱한다. 이 테스트는 과거 fixture 호환용 점수 추출만 로컬에서 수행한다.
         String judgeResponse = sim.get("judgeResponse").asText();
-        int[] scores = evaluator.parseScores(judgeResponse);
+        int[] scores = parseLegacyScores(judgeResponse);
         AgentEvaluation eval = new AgentEvaluation(
                 0L,
                 scenario.get("alert").get("alertName").asText(),
@@ -131,6 +134,25 @@ class AgentScenarioSimulationTest {
         assertCriteria(scenario.get("expectedCriteria"), result, eval, rec);
 
         printResult(name, result, eval, rec);
+    }
+
+    private int[] parseLegacyScores(String judgeResponse) {
+        return new int[] {
+                extractScore(judgeResponse, "factuality"),
+                extractScore(judgeResponse, "tool\\s*use"),
+                extractScore(judgeResponse, "actionability"),
+                extractScore(judgeResponse, "hallucination\\s*risk")
+        };
+    }
+
+    private int extractScore(String text, String label) {
+        Pattern pattern = Pattern.compile(label + "\\s*:\\s*(\\d+)\\s*/\\s*10", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+        if (!matcher.find()) {
+            return 5;
+        }
+        int score = Integer.parseInt(matcher.group(1));
+        return Math.max(1, Math.min(10, score));
     }
 
     // ──────────────────────────────────────────────────────────────────────
