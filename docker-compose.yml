@@ -42,10 +42,11 @@ services:
         condition: service_started
       monitoring-agent-db:
         condition: service_healthy
-    ports:
-      - "8081:8080"
+    expose:
+      - "8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /data/monitoring/secrets/alert-webhook-token:/run/secrets/alert-webhook-token:ro
     networks:
       - agent-internal
       - monitoring-net
@@ -64,8 +65,16 @@ services:
       DISCORD_BOT_ALLOWED_ROLE_ID: ${DISCORD_BOT_ALLOWED_ROLE_ID:-}
       SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
       SPRING_AI_GOOGLE_GENAI_API_KEY: ${SPRING_AI_GOOGLE_GENAI_APIKEY:-}
+      SPRING_AI_OPENAI_API_KEY: ${SPRING_AI_OPENAI_API_KEY:-}
+      SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL: ${SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL:-gpt-4.1-mini}
+      AGENT_PROVIDER: ${AGENT_PROVIDER:-google}
+      AGENT_EVALUATION_ENABLED: ${AGENT_EVALUATION_ENABLED:-false}
+      JUDGE_ENABLED: ${JUDGE_ENABLED:-false}
+      JUDGE_PROVIDER: ${JUDGE_PROVIDER:-google}
+      JUDGE_SAMPLE_RATE: ${JUDGE_SAMPLE_RATE:-0.2}
       PROMETHEUS_URL: http://prometheus:9090
       LOKI_URL: http://loki:3100
+      MONITORING_WEBHOOK_TOKEN_FILE: /run/secrets/alert-webhook-token
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
 
 volumes:
