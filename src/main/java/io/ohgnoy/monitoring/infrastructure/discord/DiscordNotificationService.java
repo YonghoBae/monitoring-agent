@@ -146,7 +146,7 @@ public class DiscordNotificationService {
             case NEEDS_APPROVAL ->
                     "⚠️ **승인 필요**: " + rec.description()
                     + (command != null ? "\n```" + command + "```" : "")
-                    + (command != null ? "\n> 허가하려면 Discord에 **`approve " + command + "`** 를 입력하세요." : "");
+                    + approvalInstruction(command);
             case READ_ONLY ->
                     "📊 **정보 수집**: " + rec.description();
             case NONE ->
@@ -156,6 +156,17 @@ public class DiscordNotificationService {
 
     private String resolveCommand(String command, AlertEvent alert) {
         return TemplateResolver.resolve(command, alert.getLabelsJson());
+    }
+
+    private String approvalInstruction(String command) {
+        if (command == null) {
+            return "";
+        }
+        String instruction = "\n> 허가하려면 Discord에 **`approve " + command + "`** 를 입력하세요.";
+        if (!botChannelId.isBlank()) {
+            instruction += "\n> 또는 같은 채널에서 **`yes`** / **`확인`** 을 입력하세요.";
+        }
+        return instruction;
     }
 
     private void sendToDiscord(String content) {

@@ -118,6 +118,52 @@ class DiscordNotificationServiceTest {
     }
 
     @Test
+    @DisplayName("sendAlert - botChannelId가 있으면 approve와 yes/확인을 모두 안내한다")
+    void sendAlert_needsApprovalWithBotChannel_includesApproveAndYesInstructions() {
+        // given
+        DiscordNotificationService service = new DiscordNotificationService(
+                restClientBuilder, WEBHOOK_URL, "channel-1",
+                pendingApprovalStore, conversationSessionStore);
+        AlertEvent alert = new AlertEvent("CRITICAL", "[ContainerRestarting] test");
+        setIdAndCreatedAt(alert, 10L, Instant.now());
+
+        ActionRecommendation recommendation = new ActionRecommendation(
+                "컨테이너 재시작", ActionRecommendation.Category.NEEDS_APPROVAL, "docker restart my-app");
+
+        // when
+        service.sendAlert(alert, "분석 결과", null, recommendation);
+
+        // then
+        String content = sentContent();
+        assertThat(content)
+                .contains("approve docker restart my-app")
+                .contains("yes")
+                .contains("확인");
+        verify(pendingApprovalStore).store("docker restart my-app", 10L, "channel-1");
+    }
+
+    @Test
+    @DisplayName("sendAlert - botChannelId가 없으면 approve만 안내한다")
+    void sendAlert_needsApprovalWithoutBotChannel_includesOnlyApproveInstruction() {
+        // given
+        AlertEvent alert = new AlertEvent("CRITICAL", "[ContainerRestarting] test");
+        setIdAndCreatedAt(alert, 10L, Instant.now());
+
+        ActionRecommendation recommendation = new ActionRecommendation(
+                "컨테이너 재시작", ActionRecommendation.Category.NEEDS_APPROVAL, "docker restart my-app");
+
+        // when
+        discordNotificationService.sendAlert(alert, "분석 결과", null, recommendation);
+
+        // then
+        String content = sentContent();
+        assertThat(content)
+                .contains("approve docker restart my-app")
+                .doesNotContain("yes")
+                .doesNotContain("확인");
+    }
+
+    @Test
     @DisplayName("sendAlert - NONE 카테고리면 PendingApprovalStore에 저장하지 않는다")
     void sendAlert_noneCategory_doesNotStorePending() {
         // given
@@ -146,5 +192,16 @@ class DiscordNotificationServiceTest {
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("필드 설정 실패", e);
         }
+    }
+
+    private String sentContent() {
+        ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(requestBodySpec, atLeastOnce()).body(bodyCaptor.capture());
+        Object body = bodyCaptor.getValue();
+        assertThat(body).isInstanceOf(Map.class);
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> payload = (Map<String, Object>) body;
+        return (String) payload.get("content");
     }
 }

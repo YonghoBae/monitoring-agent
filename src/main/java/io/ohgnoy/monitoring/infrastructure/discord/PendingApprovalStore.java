@@ -13,7 +13,8 @@ public class PendingApprovalStore {
 
     public record PendingApproval(String command, Long alertId, Instant expiresAt, @org.springframework.lang.Nullable String channelId) {}
 
-    private final ConcurrentHashMap<String, PendingApproval> store = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, PendingApproval> byCommand = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, String> commandByChannel = new ConcurrentHashMap<>();
     private final long ttlMinutes;
 
     public PendingApprovalStore(
@@ -23,26 +24,56 @@ public class PendingApprovalStore {
 
     public void store(String command, Long alertId, String channelId) {
         Instant expiresAt = Instant.now().plusSeconds(ttlMinutes * 60);
-        store.put("channel:" + channelId, new PendingApproval(command, alertId, expiresAt, channelId));
+        PendingApproval approval = new PendingApproval(command, alertId, expiresAt, normalizeChannelId(channelId));
+        PendingApproval previousApproval = byCommand.put(command, approval);
+        if (previousApproval != null && previousApproval.channelId() != null) {
+            commandByChannel.remove(previousApproval.channelId(), previousApproval.command());
+        }
+        if (approval.channelId() != null) {
+            String previousCommand = commandByChannel.put(approval.channelId(), command);
+            if (previousCommand != null && !previousCommand.equals(command)) {
+                byCommand.remove(previousCommand);
+            }
+        }
     }
 
     public Optional<PendingApproval> pop(String command) {
-        PendingApproval approval = store.remove(command);
+        PendingApproval approval = byCommand.remove(command);
         if (approval == null) return Optional.empty();
-        if (approval.expiresAt().isBefore(Instant.now())) return Optional.empty();
+        if (approval.channelId() != null) {
+            commandByChannel.remove(approval.channelId(), command);
+        }
+        if (approval.expiresAt().isBefore(Instant.now())) {
+            return Optional.empty();
+        }
         return Optional.of(approval);
     }
 
     public Optional<PendingApproval> popByChannel(String channelId) {
-        PendingApproval approval = store.remove("channel:" + channelId);
-        if (approval == null) return Optional.empty();
-        if (approval.expiresAt().isBefore(Instant.now())) return Optional.empty();
-        return Optional.of(approval);
+        String normalizedChannelId = normalizeChannelId(channelId);
+        if (normalizedChannelId == null) return Optional.empty();
+        String command = commandByChannel.remove(normalizedChannelId);
+        if (command == null) return Optional.empty();
+        return pop(command);
     }
 
     @Scheduled(fixedRate = 60_000)
     public void cleanExpired() {
         Instant now = Instant.now();
-        store.entrySet().removeIf(e -> e.getValue().expiresAt().isBefore(now));
+        byCommand.entrySet().removeIf(e -> {
+            PendingApproval approval = e.getValue();
+            boolean expired = approval.expiresAt().isBefore(now);
+            if (expired && approval.channelId() != null) {
+                commandByChannel.remove(approval.channelId(), approval.command());
+            }
+            return expired;
+        });
+    }
+
+    private static String normalizeChannelId(String channelId) {
+        if (channelId == null || channelId.isBlank()) {
+            return null;
+        }
+        return channelId;
     }
 }
