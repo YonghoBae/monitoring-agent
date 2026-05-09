@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class AlertVerifier {
 
     private static final Logger log = LoggerFactory.getLogger(AlertVerifier.class);
-    private static final List<String> KEY_LABELS = List.of("name", "instance", "gpu", "client_name");
 
     private final RestClient restClient;
     private final ObjectMapper objectMapper;
@@ -45,11 +43,14 @@ public class AlertVerifier {
                     .path("data").path("alerts");
 
             Map<String, String> labels = parseLabels(labelsJson);
+            if (labels.isEmpty()) {
+                return VerificationResult.unknown();
+            }
 
             for (JsonNode firing : alerts) {
                 JsonNode firingLabels = firing.path("labels");
                 if (!alertName.equals(firingLabels.path("alertname").asText())) continue;
-                if (!keyLabelsMatch(labels, firingLabels)) continue;
+                if (!allLabelsMatch(labels, firingLabels)) continue;
 
                 return VerificationResult.confirmed(
                         firing.path("value").asText("N/A"),
@@ -84,12 +85,15 @@ public class AlertVerifier {
                     .path("data").path("alerts");
 
             Map<String, String> labels = parseLabels(alert.getLabelsJson());
+            if (labels.isEmpty()) {
+                return VerificationResult.unknown();
+            }
 
             for (JsonNode firing : alerts) {
                 JsonNode firingLabels = firing.path("labels");
 
                 if (!alert.getAlertName().equals(firingLabels.path("alertname").asText())) continue;
-                if (!keyLabelsMatch(labels, firingLabels)) continue;
+                if (!allLabelsMatch(labels, firingLabels)) continue;
 
                 return VerificationResult.confirmed(
                         firing.path("value").asText("N/A"),
@@ -105,12 +109,19 @@ public class AlertVerifier {
         }
     }
 
-    // 핵심 레이블만 비교 — 값이 있는 레이블만 체크
-    private boolean keyLabelsMatch(Map<String, String> alertLabels, JsonNode firingLabels) {
-        for (String key : KEY_LABELS) {
-            String alertVal = alertLabels.get(key);
-            if (alertVal != null && !alertVal.isBlank()) {
-                if (!alertVal.equals(firingLabels.path(key).asText())) return false;
+    // Alertmanager가 보낸 원본 labels 전체가 Prometheus firing labels에 포함되어야 같은 알림으로 본다.
+    private boolean allLabelsMatch(Map<String, String> alertLabels, JsonNode firingLabels) {
+        for (Map.Entry<String, String> entry : alertLabels.entrySet()) {
+            String key = entry.getKey();
+            String alertVal = entry.getValue();
+            if (key == null || key.isBlank() || alertVal == null) {
+                return false;
+            }
+            if (!firingLabels.has(key)) {
+                return false;
+            }
+            if (!alertVal.equals(firingLabels.path(key).asText())) {
+                return false;
             }
         }
         return true;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ohgnoy.monitoring.domain.alert.AlertEvent;
 import io.ohgnoy.monitoring.domain.alert.AlertEventRepository;
 import io.ohgnoy.monitoring.application.alert.AlertService;
+import io.ohgnoy.monitoring.application.pipeline.AlertIndexingEvent;
 import io.ohgnoy.monitoring.infrastructure.rag.AlertVectorService;
 import io.ohgnoy.monitoring.application.pipeline.AlertCreatedEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,11 +67,17 @@ class AlertServiceTest {
         assertThat(result.isResolved()).isFalse();
 
         verify(alertEventRepository).save(any(AlertEvent.class));
-        verify(alertVectorService).indexAlert(result);
-
-        ArgumentCaptor<AlertCreatedEvent> eventCaptor = ArgumentCaptor.forClass(AlertCreatedEvent.class);
-        verify(eventPublisher).publishEvent(eventCaptor.capture());
-        assertThat(eventCaptor.getValue().alertId()).isEqualTo(42L);
+        ArgumentCaptor<Object> eventCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(eventPublisher, times(2)).publishEvent(eventCaptor.capture());
+        assertThat(eventCaptor.getAllValues())
+                .anySatisfy(event -> {
+                    assertThat(event).isInstanceOf(AlertIndexingEvent.class);
+                    assertThat(((AlertIndexingEvent) event).alertId()).isEqualTo(42L);
+                })
+                .anySatisfy(event -> {
+                    assertThat(event).isInstanceOf(AlertCreatedEvent.class);
+                    assertThat(((AlertCreatedEvent) event).alertId()).isEqualTo(42L);
+                });
     }
 
     @Test
@@ -89,8 +96,10 @@ class AlertServiceTest {
 
         // then
         verify(alertEventRepository).save(any(AlertEvent.class));
-        verify(alertVectorService).indexAlert(any());
-        verify(eventPublisher, never()).publishEvent(any());
+        ArgumentCaptor<Object> eventCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(eventPublisher).publishEvent(eventCaptor.capture());
+        assertThat(eventCaptor.getValue()).isInstanceOf(AlertIndexingEvent.class);
+        assertThat(((AlertIndexingEvent) eventCaptor.getValue()).alertId()).isEqualTo(100L);
     }
 
     @Test
