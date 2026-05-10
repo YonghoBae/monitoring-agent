@@ -66,9 +66,20 @@ public class AgentTools {
     public String list_metrics(
             @ToolParam(description = "메트릭 이름에 포함된 키워드 (예: 'DCGM', 'container', 'node', 'gpu')") String filter) {
         log.info("[AgentTool] list_metrics: filter={}", filter);
+        return listMetricsByFilter("list_metrics", filter);
+    }
+
+    @Tool(description = "Prometheus에서 사용 가능한 메트릭 이름 목록을 조회한다. list_metrics 이름이 모델에 의해 변형되어 호출된 경우의 호환 도구다.")
+    public String list_misc(
+            @ToolParam(description = "메트릭 이름에 포함된 키워드 (예: 'memory', 'node', 'container')") String filter) {
+        log.info("[AgentTool] list_misc(alias of list_metrics): filter={}", filter);
+        return listMetricsByFilter("list_misc", filter);
+    }
+
+    private String listMetricsByFilter(String toolName, String filter) {
         List<String> metrics = prometheusQuery.listMetrics(filter);
         String result = metrics.isEmpty() ? "메트릭 없음: " + filter : String.join(", ", metrics);
-        appendLog("list_metrics", "filter=" + filter, result);
+        appendLog(toolName, "filter=" + filter, result);
         return result;
     }
 
