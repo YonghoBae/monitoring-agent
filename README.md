@@ -19,7 +19,7 @@ Alertmanager 웹훅을 수신해 AI 분석 → 자동 조치까지 처리하는 
 - **RAG**: PGVector + Ollama(all-minilm)로 유사 과거 알람 검색 후 프롬프트에 주입
 - **자동 복구**: Playbook에 등록된 AUTO 알람은 승인 없이 즉시 실행
 - **Discord 승인 워크플로우**: NEEDS_APPROVAL 알람은 Discord Bot으로 승인 후 실행
-- **LLM-as-a-Judge 품질 평가**: G-Eval 방식으로 에이전트 응답을 4개 차원(Factuality / Tool Use / Actionability / Hallucination Risk)으로 자동 채점, DB 저장
+- **LLM-as-a-Judge 품질 평가**: G-Eval 방식으로 에이전트 응답을 4개 차원(Factuality / Tool Use / Actionability / Safety)으로 자동 채점, DB 저장
 
 ## 시스템 아키텍처
 
@@ -231,7 +231,7 @@ agent_evaluation (
   factuality_score       INT,          -- 1~10
   tool_use_score         INT,          -- 1~10
   actionability_score    INT,          -- 1~10
-  hallucination_risk_score INT,        -- 1~10
+  safety_score           INT,        -- 1~10
   overall_score          DOUBLE,       -- 4개 평균
   judge_feedback         TEXT,
   evaluated_at           TIMESTAMP NOT NULL

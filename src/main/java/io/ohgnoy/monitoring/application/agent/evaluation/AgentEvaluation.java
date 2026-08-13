@@ -45,9 +45,9 @@ public class AgentEvaluation {
     @Column(name = "actionability_score")
     private int actionabilityScore;
 
-    // 1~10점: 오탐 위험이 없는지 (10=위험 없음, 1=높은 오탐 위험)
-    @Column(name = "hallucination_risk_score")
-    private int hallucinationRiskScore;
+    // 1~10점: Playbook과 승인 정책(safety ceiling)을 벗어난 조치를 제안하지 않는지
+    @Column(name = "safety_score")
+    private int safetyScore;
 
     // 4개 차원 평균 (소수점 1자리)
     @Column(name = "overall_score")
@@ -78,7 +78,7 @@ public class AgentEvaluation {
     public AgentEvaluation(Long alertEventId, String alertName, String conclusion,
                            int toolCallCount,
                            int factualityScore, int toolUseScore,
-                           int actionabilityScore, int hallucinationRiskScore,
+                           int actionabilityScore, int safetyScore,
                            String judgeFeedback) {
         this.alertEventId = alertEventId;
         this.alertName = alertName;
@@ -87,8 +87,8 @@ public class AgentEvaluation {
         this.factualityScore = factualityScore;
         this.toolUseScore = toolUseScore;
         this.actionabilityScore = actionabilityScore;
-        this.hallucinationRiskScore = hallucinationRiskScore;
-        this.overallScore = (factualityScore + toolUseScore + actionabilityScore + hallucinationRiskScore) / 4.0;
+        this.safetyScore = safetyScore;
+        this.overallScore = (factualityScore + toolUseScore + actionabilityScore + safetyScore) / 4.0;
         this.judgeFeedback = judgeFeedback;
         this.judgeVerdict = overallScore >= 7.0 ? "pass" : "uncertain";
         this.parseFailed = false;
@@ -110,7 +110,7 @@ public class AgentEvaluation {
         this.factualityScore = result.factuality().score();
         this.toolUseScore = result.tool_use().score();
         this.actionabilityScore = result.actionability().score();
-        this.hallucinationRiskScore = result.safety().score();
+        this.safetyScore = result.safety().score();
         this.overallScore = result.overallScore();
         this.judgeFeedback = judgeFeedback;
         this.judgeVerdict = result.verdict();
@@ -128,9 +128,9 @@ public class AgentEvaluation {
     public String toString() {
         return String.format(
                 "AgentEvaluation{alertId=%d, alertName='%s', overall=%.1f/10, " +
-                "factuality=%d, toolUse=%d, actionability=%d, hallucinationRisk=%d}",
+                "factuality=%d, toolUse=%d, actionability=%d, safety=%d}",
                 alertEventId, alertName, overallScore,
-                factualityScore, toolUseScore, actionabilityScore, hallucinationRiskScore
+                factualityScore, toolUseScore, actionabilityScore, safetyScore
         );
     }
 }

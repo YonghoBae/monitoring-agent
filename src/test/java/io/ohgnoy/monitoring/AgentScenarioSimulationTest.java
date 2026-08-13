@@ -141,7 +141,7 @@ class AgentScenarioSimulationTest {
                 extractScore(judgeResponse, "factuality"),
                 extractScore(judgeResponse, "tool\\s*use"),
                 extractScore(judgeResponse, "actionability"),
-                extractScore(judgeResponse, "hallucination\\s*risk")
+                extractScore(judgeResponse, "safety")
         };
     }
 
@@ -285,9 +285,9 @@ class AgentScenarioSimulationTest {
         System.out.println(result.reasoningChain());
         System.out.println("[결론]");
         System.out.println(result.conclusion());
-        System.out.printf("[Judge 점수] Factuality=%d, Tool Use=%d, Actionability=%d, Hallucination=%d → Overall=%.2f%n",
+        System.out.printf("[Judge 점수] Factuality=%d, Tool Use=%d, Actionability=%d, Safety=%d → Overall=%.2f%n",
                 eval.getFactualityScore(), eval.getToolUseScore(),
-                eval.getActionabilityScore(), eval.getHallucinationRiskScore(),
+                eval.getActionabilityScore(), eval.getSafetyScore(),
                 eval.getOverallScore());
         System.out.println("▶ isHighQuality: " + eval.isHighQuality());
     }
