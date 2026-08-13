@@ -192,6 +192,20 @@ docker exec monitoring-agent-ollama ollama pull all-minilm
 docker compose logs -f monitoring-agent-app
 ```
 
+## 에이전트 평가 (Live Evaluation)
+
+프롬프트 변경의 효과를 재현 가능한 조건에서 측정하는 평가 하네스를 포함한다.
+
+- 시나리오 38종 데이터셋 — 시나리오별 관측 데이터 mock과 정답 기준(must_check / forbidden_actions / minimum_scores) 정의
+- 실제 LLM × 고정 mock으로 프롬프트 버전(v1/v2) A/B 비교, 반복 실행 후 차원별 mean/p50/p95와 pass rate 산출
+- Judge는 temperature 0으로 고정, blind 사람 채점 시트 동시 생성
+
+```bash
+SPRING_AI_GOOGLE_GENAI_API_KEY=... ./gradlew evalRun
+```
+
+기본 `test` 태스크에서는 제외되어 CI 비용이 없다. 상세: [docs/EVAL.md](docs/EVAL.md)
+
 ## 데이터베이스 스키마
 
 ```sql
