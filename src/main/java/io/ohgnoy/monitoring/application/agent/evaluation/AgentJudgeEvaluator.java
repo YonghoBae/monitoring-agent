@@ -103,14 +103,30 @@ public class AgentJudgeEvaluator {
 
     public JudgeEvaluationResult parseJudgeResponse(String response) {
         try {
-            return objectMapper.readValue(response, JudgeEvaluationResult.class)
+            return objectMapper.readValue(stripCodeFence(response), JudgeEvaluationResult.class)
                     .normalized();
         } catch (Exception e) {
             return JudgeEvaluationResult.parseFailed(response);
         }
     }
 
-    private String buildJudgeSystemPrompt() {
+    /** LLM이 지시를 어기고 ```json 코드블록으로 감싼 경우 방어적으로 벗겨낸다. */
+    private static String stripCodeFence(String response) {
+        if (response == null) {
+            return "";
+        }
+        String trimmed = response.trim();
+        if (trimmed.startsWith("```")) {
+            int firstNewline = trimmed.indexOf('\n');
+            int lastFence = trimmed.lastIndexOf("```");
+            if (firstNewline > 0 && lastFence > firstNewline) {
+                return trimmed.substring(firstNewline + 1, lastFence).trim();
+            }
+        }
+        return trimmed;
+    }
+
+    public String buildJudgeSystemPrompt() {
         return """
                 너는 인프라 모니터링 AI 에이전트의 응답 품질을 평가하는 독립 심사관이다.
                 제공된 알림, 도구 호출 내역, 최종 결론, 선택적으로 제공되는 시나리오 정답 기준만 근거로 평가한다.

@@ -3,6 +3,7 @@ package io.ohgnoy.monitoring.config;
 import io.ohgnoy.monitoring.application.agent.ReflectionAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +40,10 @@ public class AgentConfig {
         if (chatModel == null) {
             return null;
         }
-        return ChatClient.builder(chatModel).build();
+        // Judge는 채점 기준(자)이므로 temperature 0으로 고정해 반복 측정 간 변동을 최소화한다.
+        return ChatClient.builder(chatModel)
+                .defaultOptions(ChatOptions.builder().temperature(0.0).build())
+                .build();
     }
 
     @Bean
