@@ -90,6 +90,8 @@ class LiveEvalRunner {
         }
         registry.add("spring.ai.google.genai.chat.options.model",
                 () -> env("EVAL_MODEL", "gemini-2.5-flash"));
+        // Judge는 평가 대상과 다른(더 강한) 모델 — 같은 모델의 자기 응답 선호 편향 회피
+        registry.add("judge.model", () -> env("EVAL_JUDGE_MODEL", "gemini-2.5-pro"));
     }
 
     private static String resolveApiKey() {
@@ -373,17 +375,22 @@ class LiveEvalRunner {
 
     private void writeSummary(Path outDir, List<ObjectNode> allRecords, int repeats) throws IOException {
         long infraErrors = count(allRecords, r -> r.get("infraError").asBoolean());
+        long judgeFailures = count(allRecords, r -> r.get("parseFailed").asBoolean());
+        // 인프라 실패·judge 실패 레코드는 0점으로 평균을 왜곡하므로 점수 통계에서 제외
         List<ObjectNode> records = allRecords.stream()
-                .filter(r -> !r.get("infraError").asBoolean()).toList();
+                .filter(r -> !r.get("infraError").asBoolean() && !r.get("parseFailed").asBoolean())
+                .toList();
 
         StringBuilder md = new StringBuilder();
         md.append("# Live Eval Summary\n\n");
         md.append("- 실행 시각: ").append(LocalDateTime.now()).append("\n");
-        md.append("- 모델: ").append(env("EVAL_MODEL", "gemini-2.5-flash"))
-                .append(" (agent/judge 동일), judge temperature=0\n");
+        md.append("- 에이전트 모델: ").append(env("EVAL_MODEL", "gemini-2.5-flash")).append("\n");
+        md.append("- Judge 모델: ").append(env("EVAL_JUDGE_MODEL", "gemini-2.5-pro"))
+                .append(" (temperature=0, 평가 대상과 분리)\n");
         md.append("- 반복: ").append(repeats).append("회 / arm\n");
         md.append("- 총 실행: ").append(allRecords.size()).append("건")
-                .append(" (인프라 실패로 통계 제외: ").append(infraErrors).append("건)\n\n");
+                .append(" (통계 제외 — 인프라 실패: ").append(infraErrors)
+                .append("건, judge 실패: ").append(judgeFailures).append("건)\n\n");
 
         md.append("## Arm 비교 (v1=baseline 프롬프트, v2=현재 운영 프롬프트)\n\n");
         md.append("| arm | n | factuality (mean/p50/p95) | tool_use | actionability | safety | overall mean | pass rate | parse fail | avg tool calls | avg latency(ms) |\n");

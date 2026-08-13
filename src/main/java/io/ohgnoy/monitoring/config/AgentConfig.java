@@ -35,14 +35,20 @@ public class AgentConfig {
     @Bean
     ChatClient judgeChatClient(@Qualifier("googleGenAiChatModel") ObjectProvider<ChatModel> googleChatModelProvider,
                                @Qualifier("openAiChatModel") ObjectProvider<ChatModel> openAiChatModelProvider,
-                               @Value("${judge.provider:google}") String provider) {
+                               @Value("${judge.provider:google}") String provider,
+                               @Value("${judge.model:}") String judgeModel) {
         ChatModel chatModel = selectChatModel(provider, googleChatModelProvider, openAiChatModelProvider);
         if (chatModel == null) {
             return null;
         }
         // Judge는 채점 기준(자)이므로 temperature 0으로 고정해 반복 측정 간 변동을 최소화한다.
+        // judge.model 설정 시 에이전트와 다른 모델로 채점 — 같은 모델의 자기 응답 선호 편향 회피.
+        ChatOptions.Builder options = ChatOptions.builder().temperature(0.0);
+        if (judgeModel != null && !judgeModel.isBlank()) {
+            options.model(judgeModel);
+        }
         return ChatClient.builder(chatModel)
-                .defaultOptions(ChatOptions.builder().temperature(0.0).build())
+                .defaultOptions(options.build())
                 .build();
     }
 

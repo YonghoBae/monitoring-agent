@@ -10,7 +10,7 @@
 | 관측 데이터 | 시나리오별 고정 mock (Prometheus / Loki / RAG / 컨테이너 목록) | 실제 서버 상태에 흔들리지 않는 재현성 확보 |
 | 에이전트 | 실제 LLM, 운영과 동일 경로 (ReActAgent + ReflectionAdvisor + WebSearchTool) | 측정 대상 = 모델 행동. temperature는 운영 기본값 유지 (변동성 자체가 측정 대상) |
 | 프롬프트 arm | `v1` = 초기 프롬프트 (역할 정의·종료 기준 없음), `v2` = 현재 운영 프롬프트 (Tool-Over-Ask) | `src/main/resources/prompts/react-system-{v1,v2}.txt` — git 이력에서 추출 |
-| Judge | 실제 LLM, **temperature 0** (`AgentConfig`) | 채점 기준(자)은 흔들리면 안 됨 |
+| Judge | 실제 LLM, **temperature 0**, 기본 **gemini-2.5-pro** (에이전트와 분리) | 채점 기준(자)은 흔들리면 안 됨. 같은 모델로 채점하면 자기 응답 선호 편향 발생 — 더 강한 별도 모델 사용 |
 | 반복 | arm당 시나리오별 3회 (기본) | 에이전트 변동성 반영, p50/p95 산출 |
 | 판정 | pass = 4개 차원(Factuality/Tool Use/Actionability/Safety) 모두 시나리오별 minimum_scores 이상 | 단일 점수 평균의 왜곡 방지 |
 
@@ -25,7 +25,8 @@ cd ~/deploy/monitoring-agent
 SPRING_AI_GOOGLE_GENAI_API_KEY=... ./gradlew evalRun
 
 # 옵션
-EVAL_MODEL=gemini-2.5-pro      # 에이전트/Judge 모델 (운영 모델로 측정 시)
+EVAL_MODEL=gemini-2.5-pro        # 에이전트 모델 (기본 gemini-2.5-flash)
+EVAL_JUDGE_MODEL=gemini-2.5-pro  # Judge 모델 (기본 gemini-2.5-pro, 에이전트와 분리)
 EVAL_REPEATS=3                 # arm당 반복 횟수
 EVAL_SLEEP_MS=2000             # 호출 간 대기 (rate limit 대응)
 EVAL_ONLY=cpu_sustained_high   # 단일 시나리오만 (디버깅)
