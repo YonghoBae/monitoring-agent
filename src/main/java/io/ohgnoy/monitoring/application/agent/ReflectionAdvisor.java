@@ -69,6 +69,14 @@ public class ReflectionAdvisor implements CallAdvisor {
         AtomicReference<String> resultHolder =
                 (AtomicReference<String>) request.context().get(CTX_REFLECTION_RESULT);
 
+        // 모델이 빈 응답을 반환하면 getResult()가 null일 수 있다 — 검증 없이 통과시킨다.
+        if (initialResponse.chatResponse() == null
+                || initialResponse.chatResponse().getResult() == null
+                || initialResponse.chatResponse().getResult().getOutput() == null) {
+            log.warn("[ReflectionAdvisor] 모델 응답이 비어 있어 자기검증 건너뜀 — alertId={}", alert.getId());
+            return initialResponse;
+        }
+
         String conclusion = initialResponse.chatResponse().getResult().getOutput().getText();
         String reasoningChain = agentTools != null ? agentTools.getReasoningLog() : "";
 

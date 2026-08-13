@@ -185,13 +185,9 @@ class LiveEvalRunner {
                 factory, webSearchTool, noopJudge, arm);
 
         long startNanos = System.nanoTime();
-        AgentResult result;
-        try {
-            result = agent.run(alert, recommendation);
-        } catch (Exception e) {
-            result = new AgentResult("실행 실패: " + e.getMessage(), "", 0, null);
-        }
+        AgentResult result = runAgentWithRetry(agent, alert, recommendation);
         long latencyMs = (System.nanoTime() - startNanos) / 1_000_000;
+        boolean infraError = isInfraFailure(result);
 
         String criteria = buildCriteriaText(scenario.get("expected"));
         JudgeEvaluationResult judged;
@@ -228,12 +224,37 @@ class LiveEvalRunner {
         record.put("overall", judged.overallScore());
         record.put("verdict", judged.verdict());
         record.put("parseFailed", judged.parse_failed());
+        record.put("infraError", infraError);
         record.put("pass", pass);
         record.put("conclusion", result.conclusion());
         record.put("reasoningLog", result.reasoningChain());
         record.put("judgeFactualityReason", judged.factuality().reason());
         record.put("judgeSafetyReason", judged.safety().reason());
         return record;
+    }
+
+    /** LLM 빈 응답 등 인프라성 실패는 1회 재시도 — 에이전트 행동 측정을 오염시키지 않기 위함 */
+    private AgentResult runAgentWithRetry(ReActAgent agent, AlertEvent alert, ActionRecommendation recommendation) {
+        AgentResult result = runAgentOnce(agent, alert, recommendation);
+        if (isInfraFailure(result)) {
+            System.out.println("  인프라 실패 감지 — 1회 재시도");
+            result = runAgentOnce(agent, alert, recommendation);
+        }
+        return result;
+    }
+
+    private AgentResult runAgentOnce(ReActAgent agent, AlertEvent alert, ActionRecommendation recommendation) {
+        try {
+            return agent.run(alert, recommendation);
+        } catch (Exception e) {
+            return new AgentResult("실행 실패: " + e.getMessage(), "", 0, null);
+        }
+    }
+
+    private boolean isInfraFailure(AgentResult result) {
+        return result.conclusion() == null
+                || result.conclusion().startsWith("AI 분석 실패")
+                || result.conclusion().startsWith("실행 실패");
     }
 
     private boolean passesMinimumScores(JudgeEvaluationResult judged, JsonNode minimums) {
@@ -350,14 +371,19 @@ class LiveEvalRunner {
     // 통계 및 리포트
     // ──────────────────────────────────────────────
 
-    private void writeSummary(Path outDir, List<ObjectNode> records, int repeats) throws IOException {
+    private void writeSummary(Path outDir, List<ObjectNode> allRecords, int repeats) throws IOException {
+        long infraErrors = count(allRecords, r -> r.get("infraError").asBoolean());
+        List<ObjectNode> records = allRecords.stream()
+                .filter(r -> !r.get("infraError").asBoolean()).toList();
+
         StringBuilder md = new StringBuilder();
         md.append("# Live Eval Summary\n\n");
         md.append("- 실행 시각: ").append(LocalDateTime.now()).append("\n");
         md.append("- 모델: ").append(env("EVAL_MODEL", "gemini-2.5-flash"))
-                .append(" (agent), judge temperature=0\n");
+                .append(" (agent/judge 동일), judge temperature=0\n");
         md.append("- 반복: ").append(repeats).append("회 / arm\n");
-        md.append("- 총 실행: ").append(records.size()).append("건\n\n");
+        md.append("- 총 실행: ").append(allRecords.size()).append("건")
+                .append(" (인프라 실패로 통계 제외: ").append(infraErrors).append("건)\n\n");
 
         md.append("## Arm 비교 (v1=baseline 프롬프트, v2=현재 운영 프롬프트)\n\n");
         md.append("| arm | n | factuality (mean/p50/p95) | tool_use | actionability | safety | overall mean | pass rate | parse fail | avg tool calls | avg latency(ms) |\n");
@@ -432,7 +458,8 @@ class LiveEvalRunner {
      */
     private void writeHumanGradingSheet(Path outDir, List<ObjectNode> records) throws IOException {
         int sampleSize = Integer.parseInt(env("EVAL_HUMAN_SAMPLE", "15"));
-        List<ObjectNode> shuffled = new ArrayList<>(records);
+        List<ObjectNode> shuffled = new ArrayList<>(records.stream()
+                .filter(r -> !r.get("infraError").asBoolean()).toList());
         java.util.Collections.shuffle(shuffled, new Random(42));  // 고정 seed — 표본 재현 가능
         List<ObjectNode> sample = shuffled.stream()
                 .limit(Math.min(sampleSize, shuffled.size()))
