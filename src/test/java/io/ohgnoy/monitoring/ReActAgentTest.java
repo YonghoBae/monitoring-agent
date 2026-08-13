@@ -53,7 +53,7 @@ class ReActAgentTest {
     void run_whenChatClientNull_returnsDisabledResult() {
         ReActAgent agent = new ReActAgent(
                 emptyProvider(), emptyReflectionProvider(),
-                agentToolsFactory, webSearchTool, judgeEvaluator);
+                agentToolsFactory, webSearchTool, judgeEvaluator, "v2");
         AlertEvent alert = new AlertEvent("WARNING", "CPU spike");
 
         AgentResult result = agent.run(alert, rec);
@@ -67,7 +67,7 @@ class ReActAgentTest {
     void run_whenChatClientNull_stillCallsJudgeEvaluator() {
         ReActAgent agent = new ReActAgent(
                 emptyProvider(), emptyReflectionProvider(),
-                agentToolsFactory, webSearchTool, judgeEvaluator);
+                agentToolsFactory, webSearchTool, judgeEvaluator, "v2");
         AlertEvent alert = new AlertEvent("WARNING", "CPU spike");
 
         AgentResult result = agent.run(alert, rec);

@@ -11,8 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -38,17 +43,37 @@ public class ReActAgent {
     private final AgentToolsFactory agentToolsFactory;
     private final WebSearchTool webSearchTool;
     private final AgentJudgeEvaluator judgeEvaluator;
+    private final String systemPrompt;
 
     public ReActAgent(@Qualifier("agentChatClient") ObjectProvider<ChatClient> chatClientProvider,
                       ObjectProvider<ReflectionAdvisor> reflectionAdvisorProvider,
                       AgentToolsFactory agentToolsFactory,
                       WebSearchTool webSearchTool,
-                      AgentJudgeEvaluator judgeEvaluator) {
+                      AgentJudgeEvaluator judgeEvaluator,
+                      @Value("${agent.prompt-version:v2}") String promptVersion) {
         this.chatClient = chatClientProvider.getIfAvailable();
         this.reflectionAdvisor = reflectionAdvisorProvider.getIfAvailable();
         this.agentToolsFactory = agentToolsFactory;
         this.webSearchTool = webSearchTool;
         this.judgeEvaluator = judgeEvaluator;
+        this.systemPrompt = loadSystemPrompt(promptVersion);
+    }
+
+    /**
+     * 시스템 프롬프트를 classpath 리소스에서 버전별로 로드한다.
+     * v1: 초기 프롬프트 (역할 정의/종료 기준 없음) — 평가 baseline 용도
+     * v2: Tool-Over-Ask 및 종료 기준이 포함된 현재 운영 프롬프트
+     */
+    static String loadSystemPrompt(String version) {
+        String path = "/prompts/react-system-" + version + ".txt";
+        try (InputStream in = ReActAgent.class.getResourceAsStream(path)) {
+            if (in == null) {
+                throw new IllegalStateException("시스템 프롬프트 리소스 없음: " + path);
+            }
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new UncheckedIOException("시스템 프롬프트 로드 실패: " + path, e);
+        }
     }
 
     public AgentResult run(AlertEvent alert, ActionRecommendation recommendation) {
@@ -93,10 +118,41 @@ public class ReActAgent {
                     .content();
 
             int iterationCount = agentTools.getCallCount();
+            String reasoningChain = agentTools.getReasoningLog();
+            String reflectionResult = reflectionResultHolder.get();
             log.info("[ReActAgent] 분석 완료 — alertId={}, toolCalls={}", alert.getId(), iterationCount);
 
-            return new AgentResult(conclusion, agentTools.getReasoningLog(),
-                    iterationCount, reflectionResultHolder.get());
+            // Reflection이 근거 불충분으로 판정하면 피드백을 붙여 1회 재분석한다.
+            // (advisor 체인은 소모형이라 체인 내부 재호출이 불가능 — 여기서 새 요청으로 수행)
+            if (reflectionResult != null && reflectionResult.startsWith("INSUFFICIENT")) {
+                log.info("[ReActAgent] Reflection 재분석 시작 — alertId={}", alert.getId());
+
+                AgentTools retryTools = agentToolsFactory.createAgentTools();
+                String retriedConclusion = chatClient.prompt()
+                        .system(buildSystemPrompt())
+                        .user(userMessage
+                                + "\n\n[이전 분석 검토 결과]\n" + reflectionResult
+                                + "\n\n[이전 분석에서 수집한 데이터]\n" + (reasoningChain.isBlank() ? "없음" : reasoningChain)
+                                + "\n\n위 피드백을 반영하고, 이미 수집한 데이터는 재조회하지 말고 추가로 필요한 데이터만 수집해서 다시 분석해줘.")
+                        .tools(retryTools, webSearchTool)
+                        .call()
+                        .content();
+
+                int totalCalls = iterationCount + retryTools.getCallCount();
+                log.info("[ReActAgent] 재분석 완료 — alertId={}, totalToolCalls={}", alert.getId(), totalCalls);
+
+                // 모델이 도구 호출 후 텍스트 없이 종료하면 content()가 null일 수 있다.
+                // 빈 재분석 결론으로 최초 결론을 덮어쓰지 않는다.
+                if (retriedConclusion == null || retriedConclusion.isBlank()) {
+                    log.warn("[ReActAgent] 재분석 결론이 비어 있음 — 최초 결론 유지. alertId={}", alert.getId());
+                    retriedConclusion = conclusion;
+                }
+                return new AgentResult(retriedConclusion,
+                        reasoningChain + "\n[Reflection 재분석]\n" + retryTools.getReasoningLog(),
+                        totalCalls, reflectionResult);
+            }
+
+            return new AgentResult(conclusion, reasoningChain, iterationCount, reflectionResult);
 
         } catch (Exception e) {
             log.error("[ReActAgent] 분석 실패 — alertId={}: {}", alert.getId(), e.getMessage());
@@ -108,35 +164,7 @@ public class ReActAgent {
     }
 
     private String buildSystemPrompt() {
-        return """
-                너는 인프라 모니터링 1차 대응자야. 발생한 알람을 자율적으로 분석하고 근본 원인과 해결 방법을 찾아.
-                알람 정보(레벨, 이름, 레이블, 요약)는 이미 제공되어 있어. 조사를 시작하는 데 추가 허락이 필요 없어.
-
-                [도구 호출 순서]
-                1. search_rag — 우리 서버 과거 사례 먼저 확인. 유사 사례 있으면 현재 상황과 차이점 분석.
-                2. verify_alert — 알람이 현재도 발생 중인지 확인.
-                3. query_prometheus — 호출 전 list_metrics로 메트릭 이름을 확인한다.
-                4. query_loki — 컨테이너 로그 조회.
-                5. web_search — 1~4로 해결 방법을 못 찾았을 때만 사용하는 최후의 수단.
-
-                [종료 기준: 이 조건을 만족하면 즉시 결론 내려]
-                - 근본 원인 가설이 데이터로 확인되거나 배제됐을 때
-                - 같은 방향을 가리키는 데이터 포인트 2~3개가 모였을 때
-                이 기준을 넘어서 계속 수집하지 마. 데이터가 많다고 결론이 좋아지지 않아.
-
-                [도구 호출 원칙]
-                - 각 도구 결과를 받은 후 현재 가설을 확인/반박/불명확 중 하나로 평가하고 다음 행동을 결정해.
-                - 로그에서 보안 이상징후(외부 IP, 인증 실패 반복, 비정상 패턴)를 확인해.
-                - 과거 사례가 있어도 현재 컨텍스트와 다른 점이 있는지 반드시 검토해.
-
-                [최종 답변 형식]
-                1) 근본 원인: 한 줄 요약
-                2) 상황 분석: 수집된 데이터 기반 구체적 설명 (과거 사례와의 차이 포함)
-                3) 즉시 조치: 실행 가능한 항목 2~3개 (bullet 리스트)
-                4) 심각도: 낮음/보통/높음/치명적 + 이유 한 줄
-
-                답변은 짧고 실용적으로, 한국어로 써.
-                """;
+        return systemPrompt;
     }
 
     private String buildAlertDescription(AlertEvent alert, ActionRecommendation recommendation) {

@@ -9,26 +9,21 @@ import org.springframework.ai.chat.client.ChatClientRequest;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisor;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisorChain;
-import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.core.Ordered;
 
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * ReAct 에이전트 결론을 자기검증하는 Advisor.
  *
- * ReflectionAgent를 별도 서비스로 두고 ReActAgent에서 수동 호출하던 방식을
- * Spring AI Advisor 패턴으로 대체한다.
- *
  * 동작:
  *   1. chain.nextCall() 로 ReAct 결론을 얻는다.
  *   2. Gemini를 호출해 결론이 SUFFICIENT / INSUFFICIENT 인지 판정한다.
- *   3. INSUFFICIENT 이면 피드백을 붙여 같은 chain으로 재분석을 요청한다.
+ *   3. 판정 결과를 reflectionResultHolder에 남긴다.
+ *      재분석은 체인 안에서 수행하지 않는다 — DefaultAroundAdvisorChain은 advisor를
+ *      소모하는 Deque라 같은 chain으로 nextCall을 다시 부르면
+ *      "No CallAdvisors available to execute"로 실패한다. INSUFFICIENT 시의
+ *      재분석은 홀더를 읽은 ReActAgent가 새 요청으로 수행한다.
  *
  * ReActAgent는 .advisors(spec -> spec.param(...).advisors(this)) 로 등록하고,
  * reflectionResultHolder(AtomicReference)로 결과를 전달받는다.
@@ -40,8 +35,6 @@ public class ReflectionAdvisor implements CallAdvisor {
     static final String CTX_ALERT = "alert";
     static final String CTX_AGENT_TOOLS = "agentTools";
     static final String CTX_REFLECTION_RESULT = "reflectionResultHolder";
-    private static final String CTX_RETRY_COUNT = "reflectionRetryCount";
-    private static final int MAX_RETRIES = 1;
 
     private final ChatClient chatClient;
 
@@ -56,7 +49,9 @@ public class ReflectionAdvisor implements CallAdvisor {
 
     @Override
     public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
+        // LOWEST_PRECEDENCE는 터미널 ChatModelCallAdvisor(Integer.MAX_VALUE)와 동순위가 되어
+        // 정렬 결과에 따라 이 advisor가 체인에서 실행되지 않는다. 반드시 그보다 앞서야 한다.
+        return Ordered.LOWEST_PRECEDENCE - 1000;
     }
 
     @Override
@@ -66,13 +61,6 @@ public class ReflectionAdvisor implements CallAdvisor {
         AlertEvent alert = (AlertEvent) request.context().get(CTX_ALERT);
         if (alert == null) {
             // ConversationAgent 등 alert 컨텍스트가 없는 경우 pass-through
-            return initialResponse;
-        }
-
-        // 재시도 횟수 확인 — 무한 재귀 방지
-        Integer retryCount = (Integer) request.context().get(CTX_RETRY_COUNT);
-        if (retryCount != null && retryCount >= MAX_RETRIES) {
-            log.info("[ReflectionAdvisor] 최대 재시도 횟수 도달 — alertId={}", alert.getId());
             return initialResponse;
         }
 
@@ -92,30 +80,7 @@ public class ReflectionAdvisor implements CallAdvisor {
         }
 
         if (reflectionResult != null && reflectionResult.startsWith("INSUFFICIENT")) {
-            log.info("[ReflectionAdvisor] 재분석 트리거 — alertId={}", alert.getId());
-
-            // 이전 도구 호출 결과를 포함하여 중복 호출 방지
-            String retryAddition = "\n\n[이전 분석 검토 결과]\n" + reflectionResult
-                    + "\n\n[이전 분석에서 수집한 데이터]\n" + (reasoningChain.isBlank() ? "없음" : reasoningChain)
-                    + "\n\n위 피드백을 반영하고, 이미 수집한 데이터는 재조회하지 말고 추가 필요한 데이터만 수집해서 다시 분석해줘.";
-
-            List<Message> retryMessages = request.prompt().getInstructions().stream()
-                    .map(msg -> msg instanceof UserMessage
-                            ? UserMessage.builder().text(msg.getText() + retryAddition).build()
-                            : msg)
-                    .collect(Collectors.toList());
-
-            Prompt retryPrompt = new Prompt(retryMessages, request.prompt().getOptions());
-            ChatClientRequest retryRequest = request.mutate()
-                    .prompt(retryPrompt)
-                    .context(Map.of(
-                            CTX_ALERT, alert,
-                            CTX_AGENT_TOOLS, agentTools,
-                            CTX_REFLECTION_RESULT, resultHolder,
-                            CTX_RETRY_COUNT, (retryCount != null ? retryCount : 0) + 1
-                    ))
-                    .build();
-            return chain.nextCall(retryRequest);
+            log.info("[ReflectionAdvisor] 근거 불충분 판정 — 재분석은 ReActAgent가 수행. alertId={}", alert.getId());
         }
 
         return initialResponse;
