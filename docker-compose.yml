@@ -65,7 +65,9 @@ services:
       DISCORD_BOT_ALLOWED_ROLE_ID: ${DISCORD_BOT_ALLOWED_ROLE_ID:-}
       SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
       SPRING_AI_GOOGLE_GENAI_API_KEY: ${SPRING_AI_GOOGLE_GENAI_APIKEY:-}
-      SPRING_AI_OPENAI_API_KEY: ${SPRING_AI_OPENAI_API_KEY:-}
+      # 빈 문자열이면 OpenAiApi 빈 생성이 시작 단계에서 실패한다.
+      # openai는 provider 전환 옵션일 뿐이므로 미설정 시 더미 키로 빈만 생성되게 한다 (호출 안 됨).
+      SPRING_AI_OPENAI_API_KEY: ${SPRING_AI_OPENAI_API_KEY:-unused-placeholder}
       SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL: ${SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL:-gpt-4.1-mini}
       AGENT_PROVIDER: ${AGENT_PROVIDER:-google}
       AGENT_EVALUATION_ENABLED: ${AGENT_EVALUATION_ENABLED:-false}
