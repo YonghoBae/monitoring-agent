@@ -131,24 +131,35 @@ public class AlertEvent {
         return resolvedAt;
     }
 
-    public AlertAnalysis getAnalysis() { return analysis; }
+    public AlertAnalysis getAnalysis() { return analysis(); }
 
-    public String getAnalysisResult() { return analysis.getAnalysisResult(); }
-    public void setAnalysisResult(String analysisResult) { analysis.setAnalysisResult(analysisResult); }
+    /**
+     * 임베디드 컬럼이 전부 NULL인 행(분석 전 알람)은 Hibernate가 analysis 자체를
+     * null로 하이드레이션한다 — 필드 초기화값을 덮어쓰므로 접근 시 보정한다.
+     */
+    private AlertAnalysis analysis() {
+        if (analysis == null) {
+            analysis = new AlertAnalysis();
+        }
+        return analysis;
+    }
 
-    public String getVerificationStatus() { return analysis.getVerificationStatus(); }
-    public void setVerificationStatus(String verificationStatus) { analysis.setVerificationStatus(verificationStatus); }
+    public String getAnalysisResult() { return analysis().getAnalysisResult(); }
+    public void setAnalysisResult(String analysisResult) { analysis().setAnalysisResult(analysisResult); }
 
-    public String getReasoningChain() { return analysis.getReasoningChain(); }
-    public void setReasoningChain(String reasoningChain) { analysis.setReasoningChain(reasoningChain); }
+    public String getVerificationStatus() { return analysis().getVerificationStatus(); }
+    public void setVerificationStatus(String verificationStatus) { analysis().setVerificationStatus(verificationStatus); }
+
+    public String getReasoningChain() { return analysis().getReasoningChain(); }
+    public void setReasoningChain(String reasoningChain) { analysis().setReasoningChain(reasoningChain); }
 
     public int getAgentIterations() {
-        return analysis.getAgentIterations() == null ? 0 : analysis.getAgentIterations();
+        return analysis().getAgentIterations() == null ? 0 : analysis().getAgentIterations();
     }
-    public void setAgentIterations(int agentIterations) { analysis.setAgentIterations(agentIterations); }
+    public void setAgentIterations(int agentIterations) { analysis().setAgentIterations(agentIterations); }
 
-    public String getReflectionResult() { return analysis.getReflectionResult(); }
-    public void setReflectionResult(String reflectionResult) { analysis.setReflectionResult(reflectionResult); }
+    public String getReflectionResult() { return analysis().getReflectionResult(); }
+    public void setReflectionResult(String reflectionResult) { analysis().setReflectionResult(reflectionResult); }
 
     public Long getResolutionRecordId() { return resolutionRecordId; }
     public void setResolutionRecordId(Long resolutionRecordId) { this.resolutionRecordId = resolutionRecordId; }
