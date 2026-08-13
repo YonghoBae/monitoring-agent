@@ -66,5 +66,24 @@ hibernate {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	useJUnitPlatform {
+		excludeTags 'eval'   // 라이브 LLM 평가는 CI에서 제외 — ./gradlew evalRun으로 수동 실행
+	}
+}
+
+// 라이브 평가 러너: 실제 LLM 호출 — API 키 필요, 수동 실행 전용
+// SPRING_AI_GOOGLE_GENAI_API_KEY=... ./gradlew evalRun
+tasks.register('evalRun', Test) {
+	group = 'verification'
+	description = 'Run live agent evaluation (real LLM, mocked observability). Requires API key.'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	useJUnitPlatform {
+		includeTags 'eval'
+	}
+	outputs.upToDateWhen { false }
+	testLogging {
+		showStandardStreams = true
+		events 'passed', 'failed', 'skipped'
+	}
 }
