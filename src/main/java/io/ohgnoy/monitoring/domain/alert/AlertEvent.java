@@ -142,7 +142,9 @@ public class AlertEvent {
     public String getReasoningChain() { return analysis.getReasoningChain(); }
     public void setReasoningChain(String reasoningChain) { analysis.setReasoningChain(reasoningChain); }
 
-    public int getAgentIterations() { return analysis.getAgentIterations(); }
+    public int getAgentIterations() {
+        return analysis.getAgentIterations() == null ? 0 : analysis.getAgentIterations();
+    }
     public void setAgentIterations(int agentIterations) { analysis.setAgentIterations(agentIterations); }
 
     public String getReflectionResult() { return analysis.getReflectionResult(); }

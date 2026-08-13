@@ -24,4 +24,12 @@ class AlertEventTest {
 
         assertThat(alert.isResolved()).isTrue();
     }
+
+    @Test
+    void getAgentIterations_returnsZeroWhenUnanalyzed() {
+        // 분석 전 행은 agent_iterations가 NULL — 재시작 후 재로드 시 NPE 없이 0으로 읽혀야 한다
+        AlertEvent alert = new AlertEvent("WARN", "pending alert");
+
+        assertThat(alert.getAgentIterations()).isZero();
+    }
 }

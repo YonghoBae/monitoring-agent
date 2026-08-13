@@ -23,8 +23,9 @@ public class AlertAnalysis {
     @Column(name = "reasoning_chain", columnDefinition = "TEXT")
     private String reasoningChain;
 
+    // 분석 전 저장된 행은 NULL — primitive면 재시작 후 미처리 알람 재로드가 실패한다
     @Column(name = "agent_iterations")
-    private int agentIterations;
+    private Integer agentIterations;
 
     @Column(name = "reflection_result", columnDefinition = "TEXT")
     private String reflectionResult;
