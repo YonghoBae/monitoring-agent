@@ -50,7 +50,7 @@ public class ReActAgent {
                       AgentToolsFactory agentToolsFactory,
                       WebSearchTool webSearchTool,
                       AgentJudgeEvaluator judgeEvaluator,
-                      @Value("${agent.prompt-version:v2}") String promptVersion) {
+                      @Value("${agent.prompt-version:v1}") String promptVersion) {
         this.chatClient = chatClientProvider.getIfAvailable();
         this.reflectionAdvisor = reflectionAdvisorProvider.getIfAvailable();
         this.agentToolsFactory = agentToolsFactory;
@@ -61,8 +61,9 @@ public class ReActAgent {
 
     /**
      * 시스템 프롬프트를 classpath 리소스에서 버전별로 로드한다.
-     * v1: 초기 프롬프트 (역할 정의/종료 기준 없음) — 평가 baseline 용도
-     * v2: Tool-Over-Ask 및 종료 기준이 포함된 현재 운영 프롬프트
+     * v1: 초기 프롬프트 — 라이브 평가 결과(38 시나리오 x 3반복, flash 기준) 통과율 65%로 최고 성능. 현재 운영 기본값
+     * v2: Tool-Over-Ask 및 종료 기준 포함 — 동일 평가에서 통과율 11% (계획만 서술하고 결론 없이 종료하는 회귀), 운영 제외
+     * v3: 결론 강제 지시 추가 — 통과율 64%로 v1과 동급이나 도구 호출 22% 증가, 채택 보류
      */
     static String loadSystemPrompt(String version) {
         String path = "/prompts/react-system-" + version + ".txt";
