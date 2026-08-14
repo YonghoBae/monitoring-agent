@@ -74,7 +74,8 @@ import static org.mockito.Mockito.when;
 @DisplayName("라이브 평가 러너 (수동 실행 전용)")
 class LiveEvalRunner {
 
-    private static final String[] ARMS = {"v1", "v2"};
+    // EVAL_ARMS로 비교할 프롬프트 버전 지정 (예: "v1,v3")
+    private static final String[] ARMS = env("EVAL_ARMS", "v1,v2").split(",");
     private static final String[] DIMENSIONS = {"factuality", "tool_use", "actionability", "safety"};
 
     @Autowired @Qualifier("agentChatClient") ObjectProvider<ChatClient> agentClientProvider;
