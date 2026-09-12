@@ -103,6 +103,78 @@ class AlertServiceTest {
     }
 
     @Test
+    @DisplayName("processWebhookPayload - 같은 startsAt의 미해결 알람이 있으면 새로 저장하지 않는다")
+    void processWebhookPayload_duplicateFiring_skipsCreation() throws Exception {
+        // given
+        ObjectMapper realMapper = new ObjectMapper();
+        realMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        AlertService service = new AlertService(alertEventRepository, eventPublisher, realMapper);
+
+        String json = """
+                {"alerts":[{"status":"firing",
+                  "labels":{"alertname":"HostSystemdServiceCrashed","severity":"warning"},
+                  "annotations":{"summary":"service failed"},
+                  "startsAt":"2026-08-13T05:49:01.032Z"}]}
+                """;
+        var payload = realMapper.readValue(json,
+                io.ohgnoy.monitoring.web.dto.AlertmanagerWebhookPayload.class);
+        String labelsJson = realMapper.writeValueAsString(
+                new java.util.TreeMap<>(payload.getAlerts().get(0).getLabels()));
+
+        AlertEvent existing = new AlertEvent("WARNING", "[HostSystemdServiceCrashed] service failed",
+                "HostSystemdServiceCrashed", labelsJson, "service failed", "",
+                java.time.Instant.parse("2026-08-13T05:49:01.032Z"), null);
+        setId(existing, 7L);
+        when(alertEventRepository.findByAlertNameAndLabelsJsonAndResolvedFalse(
+                "HostSystemdServiceCrashed", labelsJson))
+                .thenReturn(List.of(existing));
+
+        // when
+        service.processWebhookPayload(payload);
+
+        // then
+        verify(alertEventRepository, never()).save(any(AlertEvent.class));
+        verify(eventPublisher, never()).publishEvent(any());
+    }
+
+    @Test
+    @DisplayName("processWebhookPayload - startsAt이 다르면 새 발화로 저장한다")
+    void processWebhookPayload_newFiring_createsEvent() throws Exception {
+        // given
+        ObjectMapper realMapper = new ObjectMapper();
+        realMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        AlertService service = new AlertService(alertEventRepository, eventPublisher, realMapper);
+
+        String json = """
+                {"alerts":[{"status":"firing",
+                  "labels":{"alertname":"HostSystemdServiceCrashed","severity":"warning"},
+                  "annotations":{"summary":"service failed"},
+                  "startsAt":"2026-08-14T00:00:00Z"}]}
+                """;
+        var payload = realMapper.readValue(json,
+                io.ohgnoy.monitoring.web.dto.AlertmanagerWebhookPayload.class);
+
+        AlertEvent existing = new AlertEvent("WARNING", "old", "HostSystemdServiceCrashed",
+                "{}", "old", "", java.time.Instant.parse("2026-08-13T05:49:01.032Z"), null);
+        setId(existing, 7L);
+        when(alertEventRepository.findByAlertNameAndLabelsJsonAndResolvedFalse(
+                eq("HostSystemdServiceCrashed"), any()))
+                .thenReturn(List.of(existing));
+        when(alertEventRepository.save(any(AlertEvent.class)))
+                .thenAnswer(invocation -> {
+                    AlertEvent actual = invocation.getArgument(0);
+                    setId(actual, 8L);
+                    return actual;
+                });
+
+        // when
+        service.processWebhookPayload(payload);
+
+        // then
+        verify(alertEventRepository).save(any(AlertEvent.class));
+    }
+
+    @Test
     @DisplayName("getRecentOpenAlerts - 레포지토리에서 최근 미해결 알람만 조회한다")
     void getRecentOpenAlerts_delegatesToRepository() {
         // given

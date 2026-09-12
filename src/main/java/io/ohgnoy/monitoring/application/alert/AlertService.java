@@ -72,6 +72,18 @@ public class AlertService {
         String message    = "[" + alertName + "] " + summary;
         String labelsJson = toSortedJson(alert.getLabels());
 
+        // Alertmanager repeat_interval 재전송 중복 제거: 같은 알림 인스턴스(startsAt 동일)가
+        // 미해결 상태로 이미 있으면 새 이벤트를 만들지 않는다. startsAt이 다르면 새 발화로 취급.
+        List<AlertEvent> open = alertEventRepository
+                .findByAlertNameAndLabelsJsonAndResolvedFalse(alertName, labelsJson);
+        for (AlertEvent existing : open) {
+            if (existing.getStartsAt() != null && existing.getStartsAt().equals(alert.getStartsAt())) {
+                log.info("중복 알람 스킵: {} (기존 미해결 id={}, startsAt={})",
+                        alertName, existing.getId(), alert.getStartsAt());
+                return existing;
+            }
+        }
+
         AlertEvent event = new AlertEvent(severity, message,
                 alertName, labelsJson, summary, desc,
                 alert.getStartsAt(), alert.getGeneratorURL());
