@@ -1,0 +1,29 @@
+{
+  "frozen_at": "2026-11-17T13:16:46.665943+00:00",
+  "dataset_manifest_sha256": "4aa66450e987b0c2b5b92a31ffe0bcf6454fab730cf9bb450bde43081b189ee1",
+  "main_protocol_sha256": "26dae69a251855f5e662de6d84be2402b186fd5fd1683bd2e24469194e54f57d",
+  "main_runner_sha256": "ec475525148b1ba1c1cb360de06d22c1c5f4484b86f883c60c960ef590b1b954",
+  "runner_sha256": "abfc6dfb5f7c6859bcd627d8b696e8a2a347e16c6b0c5b048f67c07b06c81055",
+  "candidate_documents": 47463,
+  "changed_target_records": 105,
+  "new_target_ids": 81,
+  "queries": 100,
+  "gold_pairs": 109,
+  "operations_query_ids": [
+    "794505",
+    "794698",
+    "797626",
+    "797658",
+    "798325",
+    "800425",
+    "801582",
+    "805591",
+    "807130",
+    "807492"
+  ],
+  "inputs_sha256": "f1bbb405fb76585fa5fff902123a7bf0cd2cbb63de5c92ffeb2f165857a16235",
+  "runtime_context": 256,
+  "embedding_truncate": true,
+  "paid_api_calls": 0,
+  "bootstrap": "paired 2000 query resamples, seed=20261117, 95% percentile; descriptive without multiplicity adjustment"
+}

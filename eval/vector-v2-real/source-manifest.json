@@ -1,0 +1,34 @@
+{
+  "repository": "mteb/cqadupstack-unix",
+  "revision": "3197b09145642430d9db451fcdc1e1987e54d74c",
+  "retrieved_at": "2026-11-17T12:50:52.386582+00:00",
+  "files": [
+    {
+      "path": "corpus.jsonl",
+      "url": "https://huggingface.co/datasets/mteb/cqadupstack-unix/resolve/3197b09145642430d9db451fcdc1e1987e54d74c/corpus.jsonl",
+      "bytes": 49881412,
+      "sha256": "fd1c0922dc036962440cfc9d440574ca0e22bfcbc5f6059072e7339fdb8d569e"
+    },
+    {
+      "path": "queries.jsonl",
+      "url": "https://huggingface.co/datasets/mteb/cqadupstack-unix/resolve/3197b09145642430d9db451fcdc1e1987e54d74c/queries.jsonl",
+      "bytes": 85363,
+      "sha256": "2ed3a6d73a03c06213e5f05f74126d7187528e9d26917d8562d312226947aea9"
+    },
+    {
+      "path": "qrels/test.tsv",
+      "url": "https://huggingface.co/datasets/mteb/cqadupstack-unix/resolve/3197b09145642430d9db451fcdc1e1987e54d74c/qrels/test.tsv",
+      "bytes": 26039,
+      "sha256": "a7bd24ce081b0bb892602e9b0067017dc66fd03e7593563ad095cb3cd05e92ed"
+    },
+    {
+      "path": "README.md",
+      "url": "https://huggingface.co/datasets/mteb/cqadupstack-unix/resolve/3197b09145642430d9db451fcdc1e1987e54d74c/README.md",
+      "bytes": 7540,
+      "sha256": "3ebf8d54d61f5889e25e5316060575a21a79635aeaa390899531100a982f33a9"
+    }
+  ],
+  "original_paper": "https://doi.org/10.1145/2838931.2838934",
+  "benchmark": "https://github.com/beir-cellar/beir",
+  "upstream_terms_note": "Original CQADupStack paper specifies CC BY-SA 3.0; maintained mirrors have differing metadata. Original text is cached locally and not redistributed by this project."
+}

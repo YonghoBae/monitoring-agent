@@ -41,6 +41,7 @@ src/main/resources/application.yml
 
 .env
 .venv-eval/
+.venv-vector/
 __pycache__/
 
 # Evaluation run archives and local operational state remain private.
@@ -88,3 +89,41 @@ TODO.md
 !/eval/vector-v1/runs/initial/results.json
 !/eval/vector-v1/runs/initial/summary.json
 !/eval/vector-v1/runs/initial/artifact-sha256.json
+
+# Real public benchmark: source posts and vector caches remain local.
+!/eval/vector-v2-real/
+/eval/vector-v2-real/*
+!/eval/vector-v2-real/README.md
+!/eval/vector-v2-real/source-manifest.json
+!/eval/vector-v2-real/protocol.json
+!/eval/vector-v2-real/protocol-amendment.json
+!/eval/vector-v2-real/query-subsets.json
+!/eval/vector-v2-real/korean-queries.json
+!/eval/vector-v2-real/runtime-observation.json
+!/eval/vector-v2-real/source-case-audit.json
+!/eval/vector-v2-real/runs/
+/eval/vector-v2-real/runs/*
+!/eval/vector-v2-real/runs/real-v1/
+/eval/vector-v2-real/runs/real-v1/*
+!/eval/vector-v2-real/runs/real-v1/manifest.json
+!/eval/vector-v2-real/runs/real-v1/summary.json
+!/eval/vector-v2-real/runs/real-v1/per-query-metrics.json
+!/eval/vector-v2-real/runs/real-v1/rankings-5000.jsonl.gz
+!/eval/vector-v2-real/runs/real-v1/rankings-20000.jsonl.gz
+!/eval/vector-v2-real/runs/real-v1/rankings-47382.jsonl.gz
+!/eval/vector-v2-real/runs/real-v1/verification.json
+!/eval/vector-v2-real/runs/real-v1/pgvector-verification.json
+!/eval/vector-v2-real/runs/real-v1/embedding-state.json
+!/eval/vector-v2-real/runs/real-v1/artifact-sha256.json
+!/eval/vector-v2-real/training-overlap-audit.json
+!/eval/vector-v2-real/recent-control/
+/eval/vector-v2-real/recent-control/*
+!/eval/vector-v2-real/recent-control/acquisition-plan.json
+!/eval/vector-v2-real/recent-control/dataset-manifest.json
+!/eval/vector-v2-real/recent-control/run-plan.json
+!/eval/vector-v2-real/recent-control/run-manifest.json
+!/eval/vector-v2-real/recent-control/candidate-ids.json
+!/eval/vector-v2-real/recent-control/rankings.jsonl.gz
+!/eval/vector-v2-real/recent-control/per-query-metrics.json
+!/eval/vector-v2-real/recent-control/summary.json
+!/eval/vector-v2-real/recent-control/verification.json

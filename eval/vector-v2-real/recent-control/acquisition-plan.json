@@ -1,0 +1,25 @@
+{
+  "frozen_at": "2026-11-17T13:14:23.860440+00:00",
+  "reason": "Adaptive follow-up after historical benchmark overlap audit; before any recent-control score",
+  "site": "unix",
+  "fromdate": 1640995200,
+  "todate": 1794921263,
+  "pages": 5,
+  "page_size": 100,
+  "sort": "creation",
+  "order": "desc",
+  "closed": true,
+  "max_queries": 100,
+  "selection": "First 100 duplicate questions with original_questions targets from first 500 closed questions created since 2022-01-01; API creation descending, ID descending for ties",
+  "exclusions": [
+    "missing target after batched API fetch",
+    "normalized query/target title pair matches declared MiniLM duplicate-title training source"
+  ],
+  "candidate_corpus": "all 47382 frozen historical records, union current fetched duplicate target records; current target body replaces older snapshot for same ID; exclude own query ID at ranking time",
+  "query_input": "original English question title, HTML entities unescaped; no rewriting",
+  "target_input": "title plus newline plus HTML-unescaped text extracted from body; preserve text/code order",
+  "methods": "same dense/BM25/RRF formulas and fixed parameters as vector-v2-real protocol",
+  "primary_metric": "nDCG@10",
+  "no_tuning": true,
+  "scope": "Additional temporally newer real-question control; not an official BEIR split or proof of fully unseen pretraining data"
+}

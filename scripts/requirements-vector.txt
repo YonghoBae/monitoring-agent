@@ -1,0 +1,3 @@
+numpy==2.2.6
+ir_measures==0.4.3
+pytrec_eval-terrier==0.5.11

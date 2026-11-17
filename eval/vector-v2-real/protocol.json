@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "frozen_at": "2026-11-17T12:59:11.827515+00:00",
+  "corpus_count": 47382,
+  "query_count": 1072,
+  "qrel_count": 1693,
+  "korean_query_count": 32,
+  "dataset_revision": "3197b09145642430d9db451fcdc1e1987e54d74c",
+  "input_sha256": {
+    "source-manifest.json": "96f9c4b46c22b378fae7bd8ea49e34d066f8a6ae94ab7a785855cf46045ff791",
+    "query-subsets.json": "2ed9b527fdd927bc9f499318d05abbda1e2be68861aa218e352c25f7c41511bf",
+    "korean-queries.json": "550266813550bf7497a50c9b5014eb98981f0f311a00fc6df341a0fd38ab2ae2",
+    "upstream/corpus.jsonl": "fd1c0922dc036962440cfc9d440574ca0e22bfcbc5f6059072e7339fdb8d569e",
+    "upstream/queries.jsonl": "2ed3a6d73a03c06213e5f05f74126d7187528e9d26917d8562d312226947aea9",
+    "upstream/qrels/test.tsv": "a7bd24ce081b0bb892602e9b0067017dc66fd03e7593563ad095cb3cd05e92ed"
+  },
+  "methods": [
+    "dense",
+    "bm25",
+    "rrf"
+  ],
+  "model": "all-minilm:latest",
+  "model_digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+  "dimensions": 384,
+  "document_input": "title + newline + text, unchanged upstream fields",
+  "query_input": "unchanged upstream title; separately labeled Korean translations",
+  "embedding_truncate": true,
+  "embedding_context": 512,
+  "batch_size": 32,
+  "dense": "exact normalized float32 dot product; no ANN",
+  "bm25": {
+    "k1": 1.2,
+    "b": 0.75,
+    "idf": "log(1+(N-df+0.5)/(df+0.5))",
+    "token_pattern": "[^\\W_]+(?:_[^\\W_]+)*",
+    "lowercase": true,
+    "stemming": false,
+    "stopword_removal": false,
+    "duplicate_query_terms": "count once",
+    "input": "full text"
+  },
+  "rrf": {
+    "k": 60,
+    "depth": 100,
+    "weights": [
+      1,
+      1
+    ],
+    "exclude_nonpositive_bm25": true
+  },
+  "tie_break": "document ID ascending as string",
+  "pool_sizes": [
+    5000,
+    20000,
+    47382
+  ],
+  "pool_selection": "all 1693 judged-relevant documents plus SHA256(vector-real-pool-v1:docid) ordered distractors; nested; no retrieval score selection",
+  "primary": "full-corpus English nDCG@10",
+  "metrics": [
+    "nDCG@10",
+    "Recall@5",
+    "Recall@10",
+    "Recall@100",
+    "Hit@1",
+    "Hit@5",
+    "MRR@10"
+  ],
+  "groups": [
+    "all English",
+    "operations title regex subset",
+    "32 Korean translations (full corpus only)"
+  ],
+  "confidence": "paired query bootstrap 2000 resamples, seed=20261117, 95% percentile CI on nDCG@10 difference; query independence assumption",
+  "pgvector_check": "first 32 English queries by SHA256(pg-check-v1:query_id), plus all 32 Korean translations, full corpus top10",
+  "paid_api_calls": 0,
+  "limits": [
+    "duplicate-question relevance, not repair correctness",
+    "English StackExchange snapshot from 2014",
+    "upstream text preprocessing retained",
+    "incomplete community judgments",
+    "no no-answer calibration",
+    "BM25 sees full text; dense context truncates at 512",
+    "Korean translations are an authored cross-language diagnostic, not native operations queries",
+    "no model training or parameter tuning on test scores"
+  ]
+}

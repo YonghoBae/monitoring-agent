@@ -1,0 +1,14 @@
+{
+  "recorded_at": "2026-11-17T13:04:37.466266+00:00",
+  "kind": "metadata correction before first retrieval score",
+  "original_protocol_unchanged": true,
+  "original_embedding_context_metadata": 512,
+  "observed_runtime_context": 256,
+  "reason": "Model maximum context metadata and active Ollama runtime context differ. /api/ps shows context_length=256. Requests always used truncate=true without a num_ctx override. No method, data, relevance label, query, pool, or embedding request was changed.",
+  "effective_limit_statement": "Dense uses the active 256-token context; BM25 uses full text. Exact truncated-document count was not measured.",
+  "retrieval_scores_existed_at_correction": false,
+  "matched_language_reporting_clarification": {
+    "recorded_at": "2026-11-17T13:06:59.176715+00:00",
+    "description": "Also report the original English versions of the already frozen 32 translated query IDs on the full corpus, so the Korean diagnostic compares the same questions. No new selection, labels, or rankings."
+  }
+}

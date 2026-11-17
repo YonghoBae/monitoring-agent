@@ -1,0 +1,343 @@
+{
+  "audited_at": "2026-11-17T13:01:19.061216+00:00",
+  "selection": "all existing gold targets of the 32 preselected Korean-control source query IDs",
+  "requested_question_count": 48,
+  "retrieved_question_count": 47,
+  "accepted_answer_count": 29,
+  "retrieved_accepted_answer_count": 29,
+  "missing_question_ids": [
+    "86793"
+  ],
+  "interpretation": "Current source threads with community/user-accepted answers; not independent verification of fixes and not the 2014 answer snapshot. Answers are not embedded or used to change relevance labels.",
+  "records": [
+    {
+      "question_id": "108177",
+      "source_url": "https://unix.stackexchange.com/questions/108177",
+      "answer_count": 1,
+      "accepted_answer_id": "108180",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "117150",
+      "source_url": "https://unix.stackexchange.com/questions/117150",
+      "answer_count": 7,
+      "accepted_answer_id": "117153",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "118314",
+      "source_url": "https://unix.stackexchange.com/questions/118314",
+      "answer_count": 1,
+      "accepted_answer_id": "118318",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "119151",
+      "source_url": "https://unix.stackexchange.com/questions/119151",
+      "answer_count": 3,
+      "accepted_answer_id": "119159",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "119450",
+      "source_url": "https://unix.stackexchange.com/questions/119450",
+      "answer_count": 1,
+      "accepted_answer_id": "119452",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "121904",
+      "source_url": "https://unix.stackexchange.com/questions/121904",
+      "answer_count": 2,
+      "accepted_answer_id": "121941",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "125785",
+      "source_url": "https://unix.stackexchange.com/questions/125785",
+      "answer_count": 1,
+      "accepted_answer_id": "125787",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "127979",
+      "source_url": "https://unix.stackexchange.com/questions/127979",
+      "answer_count": 0,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "128471",
+      "source_url": "https://unix.stackexchange.com/questions/128471",
+      "answer_count": 5,
+      "accepted_answer_id": "128472",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "128817",
+      "source_url": "https://unix.stackexchange.com/questions/128817",
+      "answer_count": 1,
+      "accepted_answer_id": "128819",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "130955",
+      "source_url": "https://unix.stackexchange.com/questions/130955",
+      "answer_count": 1,
+      "accepted_answer_id": "130970",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "1321",
+      "source_url": "https://unix.stackexchange.com/questions/1321",
+      "answer_count": 1,
+      "accepted_answer_id": "1334",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "134963",
+      "source_url": "https://unix.stackexchange.com/questions/134963",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "13816",
+      "source_url": "https://unix.stackexchange.com/questions/13816",
+      "answer_count": 1,
+      "accepted_answer_id": "13818",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "140911",
+      "source_url": "https://unix.stackexchange.com/questions/140911",
+      "answer_count": 2,
+      "accepted_answer_id": "140913",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "146255",
+      "source_url": "https://unix.stackexchange.com/questions/146255",
+      "answer_count": 1,
+      "accepted_answer_id": "146256",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "146518",
+      "source_url": "https://unix.stackexchange.com/questions/146518",
+      "answer_count": 0,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "150449",
+      "source_url": "https://unix.stackexchange.com/questions/150449",
+      "answer_count": 1,
+      "accepted_answer_id": "150456",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "150689",
+      "source_url": "https://unix.stackexchange.com/questions/150689",
+      "answer_count": 0,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "17334",
+      "source_url": "https://unix.stackexchange.com/questions/17334",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "20104",
+      "source_url": "https://unix.stackexchange.com/questions/20104",
+      "answer_count": 5,
+      "accepted_answer_id": "20106",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "21251",
+      "source_url": "https://unix.stackexchange.com/questions/21251",
+      "answer_count": 9,
+      "accepted_answer_id": "21252",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "23199",
+      "source_url": "https://unix.stackexchange.com/questions/23199",
+      "answer_count": 4,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "24026",
+      "source_url": "https://unix.stackexchange.com/questions/24026",
+      "answer_count": 4,
+      "accepted_answer_id": "24030",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "28851",
+      "source_url": "https://unix.stackexchange.com/questions/28851",
+      "answer_count": 6,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "29578",
+      "source_url": "https://unix.stackexchange.com/questions/29578",
+      "answer_count": 6,
+      "accepted_answer_id": "29582",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "3019",
+      "source_url": "https://unix.stackexchange.com/questions/3019",
+      "answer_count": 12,
+      "accepted_answer_id": "3021",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "34486",
+      "source_url": "https://unix.stackexchange.com/questions/34486",
+      "answer_count": 3,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "44733",
+      "source_url": "https://unix.stackexchange.com/questions/44733",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "46621",
+      "source_url": "https://unix.stackexchange.com/questions/46621",
+      "answer_count": 1,
+      "accepted_answer_id": "46624",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "47704",
+      "source_url": "https://unix.stackexchange.com/questions/47704",
+      "answer_count": 2,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "48649",
+      "source_url": "https://unix.stackexchange.com/questions/48649",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "49067",
+      "source_url": "https://unix.stackexchange.com/questions/49067",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "53607",
+      "source_url": "https://unix.stackexchange.com/questions/53607",
+      "answer_count": 2,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "5642",
+      "source_url": "https://unix.stackexchange.com/questions/5642",
+      "answer_count": 17,
+      "accepted_answer_id": "5648",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "5832",
+      "source_url": "https://unix.stackexchange.com/questions/5832",
+      "answer_count": 5,
+      "accepted_answer_id": "10259",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "60583",
+      "source_url": "https://unix.stackexchange.com/questions/60583",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "64306",
+      "source_url": "https://unix.stackexchange.com/questions/64306",
+      "answer_count": 2,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "75427",
+      "source_url": "https://unix.stackexchange.com/questions/75427",
+      "answer_count": 3,
+      "accepted_answer_id": "75437",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "78949",
+      "source_url": "https://unix.stackexchange.com/questions/78949",
+      "answer_count": 1,
+      "accepted_answer_id": "78950",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "79419",
+      "source_url": "https://unix.stackexchange.com/questions/79419",
+      "answer_count": 1,
+      "accepted_answer_id": "79425",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "80740",
+      "source_url": "https://unix.stackexchange.com/questions/80740",
+      "answer_count": 3,
+      "accepted_answer_id": "80762",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "86123",
+      "source_url": "https://unix.stackexchange.com/questions/86123",
+      "answer_count": 2,
+      "accepted_answer_id": "86124",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "88012",
+      "source_url": "https://unix.stackexchange.com/questions/88012",
+      "answer_count": 0,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "892",
+      "source_url": "https://unix.stackexchange.com/questions/892",
+      "answer_count": 10,
+      "accepted_answer_id": "901",
+      "accepted_answer_retrieved": true
+    },
+    {
+      "question_id": "92020",
+      "source_url": "https://unix.stackexchange.com/questions/92020",
+      "answer_count": 0,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    },
+    {
+      "question_id": "93349",
+      "source_url": "https://unix.stackexchange.com/questions/93349",
+      "answer_count": 1,
+      "accepted_answer_id": null,
+      "accepted_answer_retrieved": false
+    }
+  ]
+}

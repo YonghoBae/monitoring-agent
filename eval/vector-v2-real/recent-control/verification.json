@@ -1,0 +1,10 @@
+{
+  "verified_at": "2026-11-17T13:22:47.484940+00:00",
+  "status": "pass",
+  "ranking_rows": 300,
+  "external_per_query_metrics_checked": 2100,
+  "source_queries": 100,
+  "gold_pairs": 109,
+  "self_retrieval_excluded": true,
+  "numeric_replay_requires_api": false
+}

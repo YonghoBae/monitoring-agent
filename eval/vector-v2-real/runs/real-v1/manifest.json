@@ -1,0 +1,34 @@
+{
+  "created_at": "2026-11-17T13:09:50.289067+00:00",
+  "protocol_sha256": "26dae69a251855f5e662de6d84be2402b186fd5fd1683bd2e24469194e54f57d",
+  "protocol_amendment_sha256": "d8efe0430681e33c1e7d0e5a1c1a9de845faf8f75bf64ca29739fb8325b07805",
+  "runtime_observation_sha256": "224d5ec074aa9e7bb57dd9a04387877702099c0c57b0e8ef9c637c66fd52df5b",
+  "runner_sha256": "ec475525148b1ba1c1cb360de06d22c1c5f4484b86f883c60c960ef590b1b954",
+  "embedding_state_sha256": "dae8391a227635cc6348c83e9cc95fe5d3703120a383feddf82c967156fccd18",
+  "embedding_sha256": "ad1e1555e755868782c6d1b0e93049304df2969231627f8849d78f2cfc69f344",
+  "timings": [
+    {
+      "pool_size": 5000,
+      "index_build_seconds": 0.9326915660058148,
+      "total_seconds": 2.963293328997679
+    },
+    {
+      "pool_size": 20000,
+      "index_build_seconds": 3.809831085964106,
+      "total_seconds": 9.628438855987042
+    },
+    {
+      "pool_size": 47382,
+      "index_build_seconds": 8.70140485005686,
+      "total_seconds": 22.722035758022685
+    }
+  ],
+  "numpy_version": "2.2.6",
+  "paid_api_calls": 0,
+  "embedding_inputs": 48486,
+  "embedding_http_requests": 1516,
+  "embedding_elapsed_seconds": 567.9229171262705,
+  "ollama_version": {
+    "version": "0.32.9"
+  }
+}

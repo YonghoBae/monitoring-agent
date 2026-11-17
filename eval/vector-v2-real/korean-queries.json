@@ -1,0 +1,166 @@
+{
+  "description": "Korean translations authored before retrieval scores; 32 hash-selected existing operations query titles; original qrels unchanged. No independent human translation review. Cross-language diagnostic only.",
+  "attribution": "Original question IDs refer to unix.stackexchange.com; original CQADupStack terms apply to source titles.",
+  "queries": [
+    {
+      "_id": "45025",
+      "text": "백그라운드 프로세스를 일시 중지하고 포그라운드로 가져오려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/45025"
+    },
+    {
+      "_id": "116849",
+      "text": "CPU나 디스크 사용량이 높지 않은데도 부하가 높은 이유는 무엇인가요?",
+      "source_url": "https://unix.stackexchange.com/questions/116849"
+    },
+    {
+      "_id": "17316",
+      "text": "WebFaction에서 프로세스가 이미 실행 중인지 확인하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/17316"
+    },
+    {
+      "_id": "73",
+      "text": "Linux에서 프로세스의 프로세서 선호도(affinity)를 설정하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/73"
+    },
+    {
+      "_id": "33203",
+      "text": "최신 CPU에서 load average는 어떻게 동작하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/33203"
+    },
+    {
+      "_id": "29182",
+      "text": "cron 항목 \"* */1 * * *\"는 무슨 뜻인가요?",
+      "source_url": "https://unix.stackexchange.com/questions/29182"
+    },
+    {
+      "_id": "3757",
+      "text": "디렉터리와 그 안의 모든 파일이 사용하는 디스크 공간을 확인하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/3757"
+    },
+    {
+      "_id": "113774",
+      "text": "제가 소유한 파일의 gid(그룹)를 바꾸려는데 권한이 거부됩니다.",
+      "source_url": "https://unix.stackexchange.com/questions/113774"
+    },
+    {
+      "_id": "105402",
+      "text": "/dev/disk/에는 디스크가 나열되는데 /dev/net/에는 왜 네트워크 인터페이스가 나열되지 않나요?",
+      "source_url": "https://unix.stackexchange.com/questions/105402"
+    },
+    {
+      "_id": "53196",
+      "text": "iptables로 HTTPS Facebook 사이트를 차단하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/53196"
+    },
+    {
+      "_id": "123590",
+      "text": "원격 디렉터리에 대한 권한이 없을 때 원격 파일을 로컬로 복사하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/123590"
+    },
+    {
+      "_id": "81834",
+      "text": "Fedora 19에서 기본 네트워크 장치 이름 ens33을 예전 eth0으로 바꾸려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/81834"
+    },
+    {
+      "_id": "151566",
+      "text": "cron에서 퍼센트 기호(%)가 들어간 파일 이름을 셸 스크립트의 매개변수로 전달하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/151566"
+    },
+    {
+      "_id": "55195",
+      "text": "kill -9가 멈추고 프로세스를 종료할 수 없습니다.",
+      "source_url": "https://unix.stackexchange.com/questions/55195"
+    },
+    {
+      "_id": "75992",
+      "text": "네트워크 인터페이스 이름이 바뀌었습니다.",
+      "source_url": "https://unix.stackexchange.com/questions/75992"
+    },
+    {
+      "_id": "139501",
+      "text": "누가 프로세스를 시작했는지 확인하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/139501"
+    },
+    {
+      "_id": "118219",
+      "text": "계속 기록 중인 JBoss 로그 파일이 차지하는 디스크 공간을 확보하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/118219"
+    },
+    {
+      "_id": "88675",
+      "text": "df -k가 멈추는 현상이 NFS 마운트 문제 때문인지 확인할 방법이 있나요?",
+      "source_url": "https://unix.stackexchange.com/questions/88675"
+    },
+    {
+      "_id": "62109",
+      "text": "프로세스의 스레드 수를 확인하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/62109"
+    },
+    {
+      "_id": "86535",
+      "text": "Windows에서 Unix로 옮길 때 파일 권한은 어떻게 되나요?",
+      "source_url": "https://unix.stackexchange.com/questions/86535"
+    },
+    {
+      "_id": "102624",
+      "text": "파일 권한 비트 뒤에 붙은 점은 무슨 뜻인가요?",
+      "source_url": "https://unix.stackexchange.com/questions/102624"
+    },
+    {
+      "_id": "107541",
+      "text": "백업용으로 최소 권한의 SSH 사용자를 추가하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/107541"
+    },
+    {
+      "_id": "127978",
+      "text": "ext4를 btrfs로 변환할 때 전체 볼륨을 몇 번 읽나요?",
+      "source_url": "https://unix.stackexchange.com/questions/127978"
+    },
+    {
+      "_id": "33030",
+      "text": "디렉터리에 파일이 나타날 때마다 처리하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/33030"
+    },
+    {
+      "_id": "27271",
+      "text": "내 파일이 어떤 파일시스템 위에 있는지 확인하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/27271"
+    },
+    {
+      "_id": "5478",
+      "text": "이 X11 창을 만든 프로세스는 무엇인가요?",
+      "source_url": "https://unix.stackexchange.com/questions/5478"
+    },
+    {
+      "_id": "6790",
+      "text": "cron에서 sh 스크립트를 실행하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/6790"
+    },
+    {
+      "_id": "137955",
+      "text": "하위 항목을 읽고 쓰기 위한 디렉터리 권한은 어떻게 설정하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/137955"
+    },
+    {
+      "_id": "148420",
+      "text": "Tmux 출력을 로그로 남기려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/148420"
+    },
+    {
+      "_id": "121761",
+      "text": "세 번째 컴퓨터에서 원격 접속할 수 있도록 SSH가 자기 자신으로 터널링하게 하려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/121761"
+    },
+    {
+      "_id": "83127",
+      "text": "Ubuntu 디렉터리 권한과 sticky bit로 파일 삭제를 막으려면 어떻게 하나요?",
+      "source_url": "https://unix.stackexchange.com/questions/83127"
+    },
+    {
+      "_id": "119733",
+      "text": "root 권한이 있는 슈퍼유저가 서버에 설치된 데이터베이스의 데이터를 조작할 수 있나요?",
+      "source_url": "https://unix.stackexchange.com/questions/119733"
+    }
+  ]
+}

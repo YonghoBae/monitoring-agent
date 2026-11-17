@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-11-17T13:04:37.466266+00:00",
+  "model": "all-minilm:latest",
+  "digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+  "runtime_context_length": 256,
+  "size_bytes": 26738687,
+  "size_vram_bytes": 26738687,
+  "details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "bert",
+    "families": [
+      "bert"
+    ],
+    "parameter_size": "23M",
+    "quantization_level": "F16"
+  },
+  "model_context_metadata": {
+    "bert.context_length": 512,
+    "bert.embedding_length": 384
+  },
+  "parameters": "num_ctx                        256"
+}

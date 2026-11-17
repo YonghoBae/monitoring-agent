@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-11-17T13:10:19.656649+00:00",
+  "status": "pass",
+  "ranking_rows": 9744,
+  "independently_checked_per_query_metrics": 68208,
+  "independent_metric_implementation": "ir_measures 0.4.3 / pytrec_eval-terrier 0.5.11",
+  "summary_and_paired_bootstrap_replayed": true,
+  "dataset_statistics": {
+    "documents": 47382,
+    "queries": 1072,
+    "qrels": 1693,
+    "queries_with_multiple_positives": 271,
+    "text_char_quantiles": {
+      "p50": 612.0,
+      "p90": 1860.0,
+      "p95": 2790.899999999994,
+      "p99": 7340.090000000026,
+      "max": 32623.0
+    },
+    "documents_with_newlines_in_body": 0,
+    "documents_with_dollar_space": 4283,
+    "documents_with_possible_duplicate_phrase": 334
+  }
+}
