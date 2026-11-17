@@ -1,0 +1,32 @@
+[
+  {
+    "script": "verify_vector_improvement_results.py",
+    "arguments": [
+      "--write"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 1.2803980239550583,
+    "finished_at": "2026-11-17T19:29:40.888356+00:00"
+  },
+  {
+    "script": "analyze_vector_improvement_errors.py",
+    "arguments": [],
+    "exit_code": 0,
+    "elapsed_seconds": 0.07218795700464398,
+    "finished_at": "2026-11-17T19:29:40.960802+00:00"
+  },
+  {
+    "script": "verify_vector_improvement_pgvector.py",
+    "arguments": [],
+    "exit_code": 0,
+    "elapsed_seconds": 60.29274104296928,
+    "finished_at": "2026-11-17T19:30:41.253977+00:00"
+  },
+  {
+    "script": "probe_vector_pipeline_runtime.py",
+    "arguments": [],
+    "exit_code": 0,
+    "elapsed_seconds": 126.7054773879936,
+    "finished_at": "2026-11-17T19:32:47.959729+00:00"
+  }
+]

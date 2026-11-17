@@ -1,0 +1,86 @@
+{
+  "status": "pass",
+  "development_only": false,
+  "runs": [
+    {
+      "run": "baseline-dense",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "baseline-dense--bge-reranker--dense20",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "baseline-dense--qwen-reranker--dense20",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "bge-dense",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "bm25",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "e5-dense",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "e5-symmetric-dense",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-dense",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-dense--bge-reranker--dense20",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-dense--qwen-reranker--dense20",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-dense--qwen-reranker--dense50",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-dense--qwen-reranker--union50",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "qwen-headtail",
+      "ranking_rows": 164,
+      "independent_metrics": 1148
+    },
+    {
+      "run": "final",
+      "ranking_rows": 1100,
+      "independent_metrics": 7700
+    },
+    {
+      "run": "native-synthetic-regression",
+      "ranking_rows": 360,
+      "independent_metrics": 1080
+    }
+  ],
+  "ranking_rows": 3592,
+  "independent_metrics": 23704,
+  "api_calls": 0,
+  "gpu_required": false,
+  "models_required": false
+}

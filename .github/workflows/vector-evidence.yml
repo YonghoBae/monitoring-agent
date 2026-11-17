@@ -1,0 +1,59 @@
+name: Vector evidence (CPU)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/vector-evidence.yml'
+      - 'scripts/**'
+      - 'eval/vector-v3-improvement/**'
+      - 'eval/vector-v1/dataset.json'
+      - 'eval/vector-v1/runs/initial/embeddings.json'
+  pull_request:
+    paths:
+      - '.github/workflows/vector-evidence.yml'
+      - 'scripts/**'
+      - 'eval/vector-v3-improvement/**'
+      - 'eval/vector-v1/dataset.json'
+      - 'eval/vector-v1/runs/initial/embeddings.json'
+
+permissions:
+  contents: read
+
+jobs:
+  numeric-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements-vector-verify.txt
+      - name: Install numeric-only dependencies
+        run: python -m pip install -r scripts/requirements-vector-verify.txt
+      - name: Replay frozen rankings, metrics, selection and uncertainty
+        run: python scripts/verify_vector_improvement_results.py
+      - name: Check CPU evaluation contracts
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import unittest
+          assert importlib.util.find_spec('torch') is None
+          patterns = [
+              'test_vector_retrieval.py', 'test_real_vector_retrieval.py',
+              'test_recent_vector_control.py', 'test_retrieval_uncertainty.py',
+              'test_vector_error_diagnosis.py', 'test_vector_duplicate_links.py',
+          ]
+          loader = unittest.TestLoader()
+          suite = unittest.TestSuite()
+          for pattern in patterns:
+              suite.addTests(loader.discover('scripts/tests', pattern=pattern))
+          result = unittest.TextTestRunner(verbosity=1).run(suite)
+          raise SystemExit(not result.wasSuccessful())
+          PY

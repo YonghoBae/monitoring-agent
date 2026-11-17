@@ -1,0 +1,17 @@
+{
+  "reviewed_at": "2026-11-17T17:58:37.211314+00:00",
+  "reviewer": "The same working assistant; not an independent human or independent-agent review.",
+  "queries_reviewed": 20,
+  "scope": "Compared each frozen Korean query with its original English title, checking intent, versions, product names, paths and identifiers. No answer bodies or final model scores used for this review.",
+  "finding": "No material translation mismatch identified in this check. This subjective check does not establish complete semantic equivalence.",
+  "input_changes": 0,
+  "frozen_korean_control_sha256": "5fd0c04463a0f79aba31ff791a6364f8ce54a71b5cf58cdd9120c965daec770e",
+  "underspecified_original_title_examples": [
+    "au-ko:1566419",
+    "au-ko:1564564",
+    "au-ko:1570652",
+    "su-ko:1939453"
+  ],
+  "underspecification_note": "Examples lack the problem details or operating-system context in the title. Original ambiguity was retained, not repaired or excluded. This is not an exhaustive taxonomy.",
+  "final_scores_seen": false
+}

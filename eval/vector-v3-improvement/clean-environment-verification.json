@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "verified_at": "2026-11-17T19:42:29.825789+00:00",
+  "python": "3.12",
+  "packages": {
+    "numpy": "2.2.6",
+    "scipy": "1.18.1",
+    "ir_measures": "0.4.3",
+    "pytrec_eval-terrier": "0.5.11"
+  },
+  "torch_installed": false,
+  "gpu_inference": false,
+  "api_calls": 0,
+  "numeric_replay_independent_metrics": 23704,
+  "numeric_replay_ranking_rows": 3592,
+  "tests_run": 20,
+  "failures": 0,
+  "errors": 0,
+  "patterns": [
+    "test_vector_retrieval.py",
+    "test_real_vector_retrieval.py",
+    "test_recent_vector_control.py",
+    "test_retrieval_uncertainty.py",
+    "test_vector_error_diagnosis.py",
+    "test_vector_duplicate_links.py"
+  ],
+  "scope": "Separate newly created numeric-only virtualenv. Full public ranking replay exited 0 before these 20 CPU tests. This verifies metric reproduction, not model inference or label validity."
+}

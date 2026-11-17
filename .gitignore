@@ -134,6 +134,7 @@ TODO.md
 !/eval/vector-v3-improvement/
 /eval/vector-v3-improvement/**
 !/eval/vector-v3-improvement/
+!/eval/vector-v3-improvement/final/
 !/eval/vector-v3-improvement/holdout/
 !/eval/vector-v3-improvement/holdout-extension/
 !/eval/vector-v3-improvement/profiles/
@@ -152,6 +153,8 @@ TODO.md
 !/eval/vector-v3-improvement/runs/qwen-dense--qwen-reranker--union50/
 !/eval/vector-v3-improvement/runs/qwen-headtail/
 !/eval/vector-v3-improvement/README.md
+!/eval/vector-v3-improvement/artifact-sha256.json
+!/eval/vector-v3-improvement/clean-environment-verification.json
 !/eval/vector-v3-improvement/development-amendments.json
 !/eval/vector-v3-improvement/development-manifest.json
 !/eval/vector-v3-improvement/download-BAAI--bge-m3.json
@@ -161,6 +164,19 @@ TODO.md
 !/eval/vector-v3-improvement/download-intfloat--multilingual-e5-small.json
 !/eval/vector-v3-improvement/embedding-selection.json
 !/eval/vector-v3-improvement/environment.json
+!/eval/vector-v3-improvement/final/baseline-rankings.jsonl.gz
+!/eval/vector-v3-improvement/final/bm25-rankings.jsonl.gz
+!/eval/vector-v3-improvement/final/error-analysis.json
+!/eval/vector-v3-improvement/final/manifest.json
+!/eval/vector-v3-improvement/final/numeric-dataset.json
+!/eval/vector-v3-improvement/final/per-query-metrics.json
+!/eval/vector-v3-improvement/final/pgvector-verification.json
+!/eval/vector-v3-improvement/final/runtime.json
+!/eval/vector-v3-improvement/final/selected_encoder-rankings.jsonl.gz
+!/eval/vector-v3-improvement/final/selected_pipeline-rankings.jsonl.gz
+!/eval/vector-v3-improvement/final/sequential-runtime-probe.json
+!/eval/vector-v3-improvement/final/summary.json
+!/eval/vector-v3-improvement/final/verification.json
 !/eval/vector-v3-improvement/final-selection-lock.json
 !/eval/vector-v3-improvement/holdout/acquisition-plan.json
 !/eval/vector-v3-improvement/holdout/dataset-manifest.json
@@ -173,6 +189,9 @@ TODO.md
 !/eval/vector-v3-improvement/model-sources.json
 !/eval/vector-v3-improvement/model-temporal-provenance.json
 !/eval/vector-v3-improvement/native-regression-plan.json
+!/eval/vector-v3-improvement/native-regression.json
+!/eval/vector-v3-improvement/numeric-verification.json
+!/eval/vector-v3-improvement/postprocessing-execution.json
 !/eval/vector-v3-improvement/pretest-publication.json
 !/eval/vector-v3-improvement/profiles/bge-reranker.json
 !/eval/vector-v3-improvement/profiles/bge.json
@@ -234,5 +253,6 @@ TODO.md
 !/eval/vector-v3-improvement/runs/qwen-headtail/summary.json
 !/eval/vector-v3-improvement/stage-execution.json
 !/eval/vector-v3-improvement/test-verification.json
+!/eval/vector-v3-improvement/translation-review.json
 !/eval/vector-v3-improvement/weight-identity-verification.json
 !/eval/vector-v3-improvement/weight-temporal-provenance.json

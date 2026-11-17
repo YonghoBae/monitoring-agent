@@ -1,0 +1,244 @@
+{
+  "status": "complete",
+  "queries": 6,
+  "rows": [
+    {
+      "query_id": "au-en:1567916",
+      "candidate_count": 50,
+      "seconds": 18.86422049603425,
+      "stages": {
+        "encoder_load_seconds": 4.303428533021361,
+        "query_encoding_and_unload_seconds": 0.3384812080184929,
+        "in_memory_candidate_search_seconds": 0.012775217997841537,
+        "reranker_load_seconds": 2.0073962649912573,
+        "fresh_reranking_and_unload_seconds": 12.202127305965405
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "118987",
+        "au:1564671",
+        "au:1570869",
+        "132058",
+        "24966",
+        "78866",
+        "117877",
+        "au:1565980",
+        "au:1567097",
+        "40631"
+      ],
+      "expected_top10": [
+        "118987",
+        "au:1564671",
+        "au:1570869",
+        "132058",
+        "24966",
+        "78866",
+        "117877",
+        "au:1565980",
+        "au:1567097",
+        "40631"
+      ]
+    },
+    {
+      "query_id": "su-en:1930784",
+      "candidate_count": 50,
+      "seconds": 21.952596887014806,
+      "stages": {
+        "encoder_load_seconds": 1.7907972739776596,
+        "query_encoding_and_unload_seconds": 0.19686688698129728,
+        "in_memory_candidate_search_seconds": 0.012612346035894006,
+        "reranker_load_seconds": 1.866097461024765,
+        "fresh_reranking_and_unload_seconds": 18.08621228602715
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "81112",
+        "su:1917019",
+        "44103",
+        "37367",
+        "144981",
+        "su:1930391",
+        "65137",
+        "145716",
+        "140817",
+        "150211"
+      ],
+      "expected_top10": [
+        "81112",
+        "su:1917019",
+        "44103",
+        "37367",
+        "144981",
+        "su:1930391",
+        "65137",
+        "145716",
+        "140817",
+        "150211"
+      ]
+    },
+    {
+      "query_id": "au-en:1561905",
+      "candidate_count": 50,
+      "seconds": 23.036720781994518,
+      "stages": {
+        "encoder_load_seconds": 1.962326550972648,
+        "query_encoding_and_unload_seconds": 0.19872236804803833,
+        "in_memory_candidate_search_seconds": 0.012608736986294389,
+        "reranker_load_seconds": 2.4779528740327805,
+        "fresh_reranking_and_unload_seconds": 18.385101276042406
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "7722",
+        "75385",
+        "116808",
+        "87238",
+        "92393",
+        "94442",
+        "78677",
+        "141374",
+        "61520",
+        "au:1570782"
+      ],
+      "expected_top10": [
+        "7722",
+        "75385",
+        "116808",
+        "87238",
+        "92393",
+        "94442",
+        "78677",
+        "141374",
+        "61520",
+        "au:1570782"
+      ]
+    },
+    {
+      "query_id": "su-ko:1935197",
+      "candidate_count": 50,
+      "seconds": 16.61755294899922,
+      "stages": {
+        "encoder_load_seconds": 1.911296272999607,
+        "query_encoding_and_unload_seconds": 0.22174356901086867,
+        "in_memory_candidate_search_seconds": 0.012866535980720073,
+        "reranker_load_seconds": 1.9803167859790847,
+        "fresh_reranking_and_unload_seconds": 12.491320180997718
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "su:949421",
+        "su:1941569",
+        "76285",
+        "45995",
+        "119451",
+        "136880",
+        "29821",
+        "47573",
+        "57444",
+        "93462"
+      ],
+      "expected_top10": [
+        "su:949421",
+        "su:1941569",
+        "76285",
+        "45995",
+        "119451",
+        "136880",
+        "29821",
+        "47573",
+        "57444",
+        "93462"
+      ]
+    },
+    {
+      "query_id": "au-ko:1564806",
+      "candidate_count": 50,
+      "seconds": 20.665762309043203,
+      "stages": {
+        "encoder_load_seconds": 1.9179102810448967,
+        "query_encoding_and_unload_seconds": 0.19165554601931944,
+        "in_memory_candidate_search_seconds": 0.013178247027099133,
+        "reranker_load_seconds": 1.9635365179856308,
+        "fresh_reranking_and_unload_seconds": 16.579472705023363
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "67187",
+        "au:145165",
+        "107888",
+        "91460",
+        "92785",
+        "151182",
+        "22228",
+        "89744",
+        "66450",
+        "86201"
+      ],
+      "expected_top10": [
+        "67187",
+        "au:145165",
+        "107888",
+        "91460",
+        "92785",
+        "151182",
+        "22228",
+        "89744",
+        "66450",
+        "86201"
+      ]
+    },
+    {
+      "query_id": "au-ko:1560781",
+      "candidate_count": 50,
+      "seconds": 20.73690960201202,
+      "stages": {
+        "encoder_load_seconds": 1.9653688870021142,
+        "query_encoding_and_unload_seconds": 0.22115355299320072,
+        "in_memory_candidate_search_seconds": 0.012842327996622771,
+        "reranker_load_seconds": 1.9692461409722455,
+        "fresh_reranking_and_unload_seconds": 16.568289595015813
+      },
+      "peak_allocated_mib": 2391.35205078125,
+      "top10_matches_frozen_result": true,
+      "observed_top10": [
+        "106166",
+        "au:1508263",
+        "100635",
+        "84453",
+        "52433",
+        "34099",
+        "151434",
+        "64551",
+        "2207",
+        "1367"
+      ],
+      "expected_top10": [
+        "106166",
+        "au:1508263",
+        "100635",
+        "84453",
+        "52433",
+        "34099",
+        "151434",
+        "64551",
+        "2207",
+        "1367"
+      ]
+    }
+  ],
+  "median_seconds": 20.70133595552761,
+  "range_seconds": [
+    16.61755294899922,
+    23.036720781994518
+  ],
+  "matching_top10_orders": 6,
+  "selection_lock_sha256": "a3a610b6671dcf998fc3a6c7d3824099cdb6a1a91837c06cc0def87d54a18afb",
+  "runner_sha256": "8792d2f8c90dabe378136d67a81eab683a14ba3e2b4388d4ade96b33acbd7f30",
+  "paid_api_calls": 0,
+  "scope": "Six ID-hash-selected requests, 3 English and 3 translated Korean. Sequential GPU loading with warm filesystem caches; full-corpus in-memory search. No server, database request, answer LLM, concurrent load or production SLA measurement. Too few observations for a reliable p95."
+}
