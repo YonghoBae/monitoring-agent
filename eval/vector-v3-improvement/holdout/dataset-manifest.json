@@ -1,0 +1,169 @@
+{
+  "frozen_at": "2026-11-17T13:58:45.691077+00:00",
+  "plan_sha256": "5dd3cdca3dc9971f32876450ffb556d7222ea9140db1bbd7c5bb25bb33bdf77d",
+  "questions_collected": 100,
+  "eligible_duplicate_questions": 9,
+  "selected_queries": 9,
+  "excluded_missing_targets": [],
+  "candidate_count": 47571,
+  "gold_pairs": 9,
+  "korean_control_source_ids": [
+    "sf-en:1198662",
+    "sf-en:1199746",
+    "sf-en:1195774",
+    "sf-en:1196226",
+    "sf-en:1192974",
+    "sf-en:1195688",
+    "sf-en:1199826",
+    "sf-en:1195670",
+    "sf-en:1199492"
+  ],
+  "queries": [
+    {
+      "id": "sf-en:1192974",
+      "source_id": "sf:1192974",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:1109191"
+      ],
+      "creation_date": 1758615044,
+      "tags": [
+        "iptables"
+      ],
+      "source_url": "https://serverfault.com/questions/1192974"
+    },
+    {
+      "id": "sf-en:1195670",
+      "source_id": "sf:1195670",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:449651"
+      ],
+      "creation_date": 1761865017,
+      "tags": [
+        "linux",
+        "bash",
+        "scripting",
+        "shell-scripting",
+        "sap"
+      ],
+      "source_url": "https://serverfault.com/questions/1195670"
+    },
+    {
+      "id": "sf-en:1195688",
+      "source_id": "sf:1195688",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:214242"
+      ],
+      "creation_date": 1761935108,
+      "tags": [
+        "nginx"
+      ],
+      "source_url": "https://serverfault.com/questions/1195688"
+    },
+    {
+      "id": "sf-en:1195774",
+      "source_id": "sf:1195774",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:1082399"
+      ],
+      "creation_date": 1762360949,
+      "tags": [
+        "nginx",
+        "docker",
+        "fedora",
+        "selinux",
+        "podman"
+      ],
+      "source_url": "https://serverfault.com/questions/1195774"
+    },
+    {
+      "id": "sf-en:1196226",
+      "source_id": "sf:1196226",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:853430"
+      ],
+      "creation_date": 1765169289,
+      "tags": [
+        "docker",
+        "apache2",
+        "journald",
+        "journalctl"
+      ],
+      "source_url": "https://serverfault.com/questions/1196226"
+    },
+    {
+      "id": "sf-en:1198662",
+      "source_id": "sf:1198662",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:932628"
+      ],
+      "creation_date": 1775371739,
+      "tags": [
+        "nginx"
+      ],
+      "source_url": "https://serverfault.com/questions/1198662"
+    },
+    {
+      "id": "sf-en:1199492",
+      "source_id": "sf:1199492",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:218005"
+      ],
+      "creation_date": 1784112845,
+      "tags": [
+        "ubuntu",
+        "linux-networking",
+        "fail2ban"
+      ],
+      "source_url": "https://serverfault.com/questions/1199492"
+    },
+    {
+      "id": "sf-en:1199746",
+      "source_id": "sf:1199746",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:384686"
+      ],
+      "creation_date": 1788178386,
+      "tags": [
+        "networking",
+        "switch",
+        "vlan",
+        "ethernet",
+        "network-design"
+      ],
+      "source_url": "https://serverfault.com/questions/1199746"
+    },
+    {
+      "id": "sf-en:1199826",
+      "source_id": "sf:1199826",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:384686"
+      ],
+      "creation_date": 1789380890,
+      "tags": [
+        "linux",
+        "nginx",
+        "apache-2.4",
+        "web-server",
+        "devops"
+      ],
+      "source_url": "https://serverfault.com/questions/1199826"
+    }
+  ],
+  "file_sha256": {
+    "closed-1.json": "09cf29db4845c15e467075b519699eb3f8a3156a3ce29f662f741396946fb38d",
+    "documents.json": "2e2d72ac96bb88f59a0a7a42b6b905f9bd8b86702a2461bc0bf770c4e6344800",
+    "filter.json": "084b0cd6950a52f4a6b2ed7a095c868642f26c6f0230341fce261de9e466f119",
+    "queries.json": "86a1270d7ec8f668c06b0cd66a9ee482645f40faddd0ec85c07750f6253cf323",
+    "targets-0.json": "1745a1603e9437d56887aa145c910f8376fa7070d9f0bf91f9861b6137dddfbf"
+  },
+  "limitations": "Real community duplicate labels; later creation dates reduce specific older-source overlap but do not prove all-model training independence."
+}

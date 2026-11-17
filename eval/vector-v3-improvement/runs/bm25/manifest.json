@@ -1,0 +1,13 @@
+{
+  "completed_at": "2026-11-17T14:03:42.025383+00:00",
+  "name": "bm25",
+  "candidate_count": 5000,
+  "query_count": 164,
+  "protocol_sha256": "d37b951f14e38ab6614319fb9c3ca8866fc84cb0f52fd2bcf5857b9e522f5320",
+  "dataset_manifest_sha256": "d22598db2d5a69b8cf4a00005b885b17396e0ff18b92e6cb3e50a7b95ec6816e",
+  "runner_sha256": "826bdc70d7ea81181f454cd89698fe083cb158ef9df4272b48fd658106f81669",
+  "adapter_sha256": "6a3c7b6e592a7227d1b7a4ea8508ad0c7be5a88089826142b4fd3087cbc8eb87",
+  "independent_metrics_checked": 1148,
+  "paid_api_calls": 0,
+  "implementation": "unchanged v2 formula"
+}

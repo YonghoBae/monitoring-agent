@@ -1,0 +1,98 @@
+[
+  {
+    "finished_at": "2026-11-17T14:35:48.525403+00:00",
+    "script": "eval_e5_symmetric.py",
+    "arguments": [],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T14:50:40.655314+00:00",
+    "script": "eval_vector_improvements.py",
+    "arguments": [
+      "dense",
+      "--model",
+      "qwen",
+      "--tail"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T15:01:19.711505+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "bge-reranker",
+      "--source",
+      "baseline-dense",
+      "--depth",
+      "20"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T15:07:28.725210+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "bge-reranker",
+      "--source",
+      "qwen-dense",
+      "--depth",
+      "20"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T15:24:08.653428+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "qwen-reranker",
+      "--source",
+      "baseline-dense",
+      "--depth",
+      "20"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T15:33:54.998578+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "qwen-reranker",
+      "--source",
+      "qwen-dense",
+      "--depth",
+      "20"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T15:55:31.123496+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "qwen-reranker",
+      "--source",
+      "qwen-dense",
+      "--depth",
+      "50"
+    ],
+    "exit_code": 0
+  },
+  {
+    "finished_at": "2026-11-17T16:09:58.147017+00:00",
+    "script": "eval_cached_vector_reranker.py",
+    "arguments": [
+      "--model",
+      "qwen-reranker",
+      "--source",
+      "qwen-dense",
+      "--depth",
+      "50",
+      "--union"
+    ],
+    "exit_code": 0
+  }
+]

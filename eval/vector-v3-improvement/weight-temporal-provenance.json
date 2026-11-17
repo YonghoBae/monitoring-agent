@@ -1,0 +1,87 @@
+[
+  {
+    "model_id": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "file": "model.safetensors",
+    "source_url": "https://huggingface.co/api/models/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3?expand=true",
+    "blob_oid": "fe4cbb2a14318b79019748874f6ca4a61a02c6f6",
+    "lfs": {
+      "oid": "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477",
+      "size": 470641600,
+      "pointerSize": 134
+    },
+    "last_commit": {
+      "id": "7cf867cae19b6df205046e9c11907797649fb552",
+      "title": "Adding `safetensors` variant of this model (#1)",
+      "date": "2023-07-03T02:15:18.000Z"
+    }
+  },
+  {
+    "model_id": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "file": "pytorch_model.bin",
+    "source_url": "https://huggingface.co/api/models/BAAI/bge-m3/tree/5617a9f61b028005a4858fdac845db406aefb181?expand=true",
+    "blob_oid": "88e71f33b1af45aa960f3fbf6883edc6f014452a",
+    "lfs": {
+      "oid": "b5e0ce3470abf5ef3831aa1bd5553b486803e83251590ab7ff35a117cf6aad38",
+      "size": 2271145830,
+      "pointerSize": 135
+    },
+    "last_commit": {
+      "id": "29fbe26ba08e5b2a5f06bac3632195bc85d3d690",
+      "title": "upload",
+      "date": "2024-01-28T10:36:42.000Z"
+    }
+  },
+  {
+    "model_id": "Qwen/Qwen3-Embedding-0.6B",
+    "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+    "file": "model.safetensors",
+    "source_url": "https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B/tree/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3?expand=true",
+    "blob_oid": "9116264a405846ebfe4e95556b63b1ca07c892a0",
+    "lfs": {
+      "oid": "0437e45c94563b09e13cb7a64478fc406947a93cb34a7e05870fc8dcd48e23fd",
+      "size": 1191586416,
+      "pointerSize": 135
+    },
+    "last_commit": {
+      "id": "99cabfa1346cbf4ac8b0e73079bb2e286cff3a1f",
+      "title": "Upload folder using huggingface_hub",
+      "date": "2025-06-03T14:30:44.000Z"
+    }
+  },
+  {
+    "model_id": "BAAI/bge-reranker-v2-m3",
+    "revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "file": "model.safetensors",
+    "source_url": "https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e?expand=true",
+    "blob_oid": "773a0a7d7cc8a010835938a3a82a87eac8b21909",
+    "lfs": {
+      "oid": "d9e3e081faff1eefb84019509b2f5558fd74c1a05a2c7db22f74174fcedb5286",
+      "size": 2271071852,
+      "pointerSize": 135
+    },
+    "last_commit": {
+      "id": "c4b98d26050227d7b53a54437302be5aa412b70e",
+      "title": "Upload XLMRobertaForSequenceClassification",
+      "date": "2024-03-16T13:48:42.000Z"
+    }
+  },
+  {
+    "model_id": "Qwen/Qwen3-Reranker-0.6B",
+    "revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
+    "file": "model.safetensors",
+    "source_url": "https://huggingface.co/api/models/Qwen/Qwen3-Reranker-0.6B/tree/e61197ed45024b0ed8a2d74b80b4d909f1255473?expand=true",
+    "blob_oid": "c2009afdaf622dc596bec224a625daa46a2b4cc9",
+    "lfs": {
+      "oid": "27cd75a405b9c1b46b59abfd88aaa209e6fed2a1972cde9b70e7659537c5e65b",
+      "size": 1191588280,
+      "pointerSize": 135
+    },
+    "last_commit": {
+      "id": "c97ad572749d5203e6c46b4ff7e518c223b87219",
+      "title": "Upload folder using huggingface_hub",
+      "date": "2025-05-29T13:32:32.000Z"
+    }
+  }
+]

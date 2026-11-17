@@ -1,0 +1,39 @@
+{
+  "alias": "bge",
+  "model_id": "BAAI/bge-m3",
+  "gpu": "NVIDIA GeForce GTX 1050 with Max-Q Design",
+  "measurements": [
+    {
+      "precision": "float32",
+      "status": "pass",
+      "items": 32,
+      "seconds": 4.761195157014299,
+      "seconds_per_item": 0.14878734865669685,
+      "batch_size": 2,
+      "load_seconds": 5.032957752002403,
+      "peak_allocated_mib": 2204.0732421875
+    },
+    {
+      "precision": "float16",
+      "status": "pass",
+      "items": 32,
+      "seconds": 4.264111029973719,
+      "seconds_per_item": 0.13325346968667873,
+      "batch_size": 2,
+      "load_seconds": 2.726586306001991,
+      "peak_allocated_mib": 1106.166015625
+    }
+  ],
+  "selected": {
+    "precision": "float16",
+    "status": "pass",
+    "items": 32,
+    "seconds": 4.264111029973719,
+    "seconds_per_item": 0.13325346968667873,
+    "batch_size": 2,
+    "load_seconds": 2.726586306001991,
+    "peak_allocated_mib": 1106.166015625
+  },
+  "selection": "fastest finite precision on same 32 smoke inputs, before relevance scores",
+  "task_instruction": "Given a server troubleshooting query, retrieve existing questions describing the same underlying problem."
+}

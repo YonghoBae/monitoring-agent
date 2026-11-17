@@ -1,0 +1,27 @@
+[
+  {
+    "model_id": "intfloat/multilingual-e5-small",
+    "download_sha256_equals_official_lfs_oid": true,
+    "weight_last_commit_date": "2023-07-03T02:15:18.000Z"
+  },
+  {
+    "model_id": "BAAI/bge-m3",
+    "download_sha256_equals_official_lfs_oid": true,
+    "weight_last_commit_date": "2024-01-28T10:36:42.000Z"
+  },
+  {
+    "model_id": "Qwen/Qwen3-Embedding-0.6B",
+    "download_sha256_equals_official_lfs_oid": true,
+    "weight_last_commit_date": "2025-06-03T14:30:44.000Z"
+  },
+  {
+    "model_id": "BAAI/bge-reranker-v2-m3",
+    "download_sha256_equals_official_lfs_oid": true,
+    "weight_last_commit_date": "2024-03-16T13:48:42.000Z"
+  },
+  {
+    "model_id": "Qwen/Qwen3-Reranker-0.6B",
+    "download_sha256_equals_official_lfs_oid": true,
+    "weight_last_commit_date": "2025-05-29T13:32:32.000Z"
+  }
+]

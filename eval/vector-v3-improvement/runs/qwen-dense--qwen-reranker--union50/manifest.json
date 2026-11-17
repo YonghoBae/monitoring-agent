@@ -1,0 +1,1174 @@
+{
+  "completed_at": "2026-11-17T16:09:57.272477+00:00",
+  "name": "qwen-dense--qwen-reranker--union50",
+  "candidate_count": 5000,
+  "query_count": 164,
+  "protocol_sha256": "d37b951f14e38ab6614319fb9c3ca8866fc84cb0f52fd2bcf5857b9e522f5320",
+  "dataset_manifest_sha256": "d22598db2d5a69b8cf4a00005b885b17396e0ff18b92e6cb3e50a7b95ec6816e",
+  "runner_sha256": "826bdc70d7ea81181f454cd89698fe083cb158ef9df4272b48fd658106f81669",
+  "adapter_sha256": "6a3c7b6e592a7227d1b7a4ea8508ad0c7be5a88089826142b4fd3087cbc8eb87",
+  "independent_metrics_checked": 1148,
+  "paid_api_calls": 0,
+  "variant_runner_sha256": "fe2afc2909ca6313f03bf292be2b899e347f3d43ded1183cd312f5ae75761192",
+  "candidate_source": "qwen-dense",
+  "reranker": "qwen-reranker",
+  "depth": 50,
+  "union": true,
+  "query_runtime": [
+    {
+      "query_id": "hist-en:102624",
+      "pairs": 43,
+      "cached_pairs": 28,
+      "new_pairs": 15,
+      "new_inference_seconds": 3.808177620987408
+    },
+    {
+      "query_id": "hist-en:105402",
+      "pairs": 45,
+      "cached_pairs": 30,
+      "new_pairs": 15,
+      "new_inference_seconds": 6.030348405998666
+    },
+    {
+      "query_id": "hist-en:107541",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.425938626984134
+    },
+    {
+      "query_id": "hist-en:113774",
+      "pairs": 43,
+      "cached_pairs": 30,
+      "new_pairs": 13,
+      "new_inference_seconds": 4.401646524958778
+    },
+    {
+      "query_id": "hist-en:116849",
+      "pairs": 38,
+      "cached_pairs": 28,
+      "new_pairs": 10,
+      "new_inference_seconds": 3.296384248009417
+    },
+    {
+      "query_id": "hist-en:118219",
+      "pairs": 45,
+      "cached_pairs": 29,
+      "new_pairs": 16,
+      "new_inference_seconds": 6.165331139985938
+    },
+    {
+      "query_id": "hist-en:119733",
+      "pairs": 43,
+      "cached_pairs": 26,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.231038160040043
+    },
+    {
+      "query_id": "hist-en:121761",
+      "pairs": 41,
+      "cached_pairs": 30,
+      "new_pairs": 11,
+      "new_inference_seconds": 3.391727729991544
+    },
+    {
+      "query_id": "hist-en:123590",
+      "pairs": 44,
+      "cached_pairs": 30,
+      "new_pairs": 14,
+      "new_inference_seconds": 3.4502282040193677
+    },
+    {
+      "query_id": "hist-en:127978",
+      "pairs": 42,
+      "cached_pairs": 25,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.67173908802215
+    },
+    {
+      "query_id": "hist-en:137955",
+      "pairs": 39,
+      "cached_pairs": 29,
+      "new_pairs": 10,
+      "new_inference_seconds": 2.875199247035198
+    },
+    {
+      "query_id": "hist-en:139501",
+      "pairs": 45,
+      "cached_pairs": 25,
+      "new_pairs": 20,
+      "new_inference_seconds": 5.895737370999996
+    },
+    {
+      "query_id": "hist-en:148420",
+      "pairs": 33,
+      "cached_pairs": 30,
+      "new_pairs": 3,
+      "new_inference_seconds": 1.09240432997467
+    },
+    {
+      "query_id": "hist-en:151566",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.651398189016618
+    },
+    {
+      "query_id": "hist-en:17316",
+      "pairs": 44,
+      "cached_pairs": 28,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.725359270989429
+    },
+    {
+      "query_id": "hist-en:27271",
+      "pairs": 43,
+      "cached_pairs": 30,
+      "new_pairs": 13,
+      "new_inference_seconds": 4.168753146019299
+    },
+    {
+      "query_id": "hist-en:29182",
+      "pairs": 44,
+      "cached_pairs": 29,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.649379559967201
+    },
+    {
+      "query_id": "hist-en:33030",
+      "pairs": 49,
+      "cached_pairs": 29,
+      "new_pairs": 20,
+      "new_inference_seconds": 6.2940983310109
+    },
+    {
+      "query_id": "hist-en:33203",
+      "pairs": 39,
+      "cached_pairs": 28,
+      "new_pairs": 11,
+      "new_inference_seconds": 4.453876790008508
+    },
+    {
+      "query_id": "hist-en:3757",
+      "pairs": 43,
+      "cached_pairs": 26,
+      "new_pairs": 17,
+      "new_inference_seconds": 4.816028422967065
+    },
+    {
+      "query_id": "hist-en:45025",
+      "pairs": 38,
+      "cached_pairs": 29,
+      "new_pairs": 9,
+      "new_inference_seconds": 2.468980356992688
+    },
+    {
+      "query_id": "hist-en:53196",
+      "pairs": 39,
+      "cached_pairs": 30,
+      "new_pairs": 9,
+      "new_inference_seconds": 2.990463267022278
+    },
+    {
+      "query_id": "hist-en:5478",
+      "pairs": 43,
+      "cached_pairs": 29,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.5604110740241595
+    },
+    {
+      "query_id": "hist-en:55195",
+      "pairs": 35,
+      "cached_pairs": 28,
+      "new_pairs": 7,
+      "new_inference_seconds": 1.7334847659803927
+    },
+    {
+      "query_id": "hist-en:62109",
+      "pairs": 47,
+      "cached_pairs": 25,
+      "new_pairs": 22,
+      "new_inference_seconds": 7.735936676966958
+    },
+    {
+      "query_id": "hist-en:6790",
+      "pairs": 38,
+      "cached_pairs": 28,
+      "new_pairs": 10,
+      "new_inference_seconds": 3.2086101879831403
+    },
+    {
+      "query_id": "hist-en:73",
+      "pairs": 46,
+      "cached_pairs": 30,
+      "new_pairs": 16,
+      "new_inference_seconds": 6.137111633957829
+    },
+    {
+      "query_id": "hist-en:75992",
+      "pairs": 41,
+      "cached_pairs": 28,
+      "new_pairs": 13,
+      "new_inference_seconds": 4.449362120998558
+    },
+    {
+      "query_id": "hist-en:81834",
+      "pairs": 40,
+      "cached_pairs": 27,
+      "new_pairs": 13,
+      "new_inference_seconds": 5.3908142219879664
+    },
+    {
+      "query_id": "hist-en:83127",
+      "pairs": 45,
+      "cached_pairs": 30,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.715984117996413
+    },
+    {
+      "query_id": "hist-en:86535",
+      "pairs": 46,
+      "cached_pairs": 30,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.142064708983526
+    },
+    {
+      "query_id": "hist-en:88675",
+      "pairs": 44,
+      "cached_pairs": 32,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.456441996968351
+    },
+    {
+      "query_id": "hist-ko:102624",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.778340665972792
+    },
+    {
+      "query_id": "hist-ko:105402",
+      "pairs": 50,
+      "cached_pairs": 29,
+      "new_pairs": 21,
+      "new_inference_seconds": 9.368272129970137
+    },
+    {
+      "query_id": "hist-ko:107541",
+      "pairs": 48,
+      "cached_pairs": 31,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.571608352998737
+    },
+    {
+      "query_id": "hist-ko:113774",
+      "pairs": 46,
+      "cached_pairs": 29,
+      "new_pairs": 17,
+      "new_inference_seconds": 7.552163177984767
+    },
+    {
+      "query_id": "hist-ko:116849",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.157070001005195
+    },
+    {
+      "query_id": "hist-ko:118219",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.72061608202057
+    },
+    {
+      "query_id": "hist-ko:119733",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 9.762578880996443
+    },
+    {
+      "query_id": "hist-ko:121761",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.12516311899526
+    },
+    {
+      "query_id": "hist-ko:123590",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.98650257603731
+    },
+    {
+      "query_id": "hist-ko:127978",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.097550140984822
+    },
+    {
+      "query_id": "hist-ko:137955",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.103255509980954
+    },
+    {
+      "query_id": "hist-ko:139501",
+      "pairs": 49,
+      "cached_pairs": 25,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.895840276964009
+    },
+    {
+      "query_id": "hist-ko:148420",
+      "pairs": 39,
+      "cached_pairs": 30,
+      "new_pairs": 9,
+      "new_inference_seconds": 2.985300171014387
+    },
+    {
+      "query_id": "hist-ko:151566",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.263820990978274
+    },
+    {
+      "query_id": "hist-ko:17316",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.030264439992607
+    },
+    {
+      "query_id": "hist-ko:27271",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 7.932267658005003
+    },
+    {
+      "query_id": "hist-ko:29182",
+      "pairs": 37,
+      "cached_pairs": 34,
+      "new_pairs": 3,
+      "new_inference_seconds": 0.9726786849787459
+    },
+    {
+      "query_id": "hist-ko:33030",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.889993343967944
+    },
+    {
+      "query_id": "hist-ko:33203",
+      "pairs": 47,
+      "cached_pairs": 26,
+      "new_pairs": 21,
+      "new_inference_seconds": 6.006167814019136
+    },
+    {
+      "query_id": "hist-ko:3757",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.112721944984514
+    },
+    {
+      "query_id": "hist-ko:45025",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 8.12045411003055
+    },
+    {
+      "query_id": "hist-ko:53196",
+      "pairs": 45,
+      "cached_pairs": 26,
+      "new_pairs": 19,
+      "new_inference_seconds": 6.462844811961986
+    },
+    {
+      "query_id": "hist-ko:5478",
+      "pairs": 47,
+      "cached_pairs": 27,
+      "new_pairs": 20,
+      "new_inference_seconds": 6.70071701501729
+    },
+    {
+      "query_id": "hist-ko:55195",
+      "pairs": 37,
+      "cached_pairs": 29,
+      "new_pairs": 8,
+      "new_inference_seconds": 2.4334622290334664
+    },
+    {
+      "query_id": "hist-ko:62109",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 7.9373870299896225
+    },
+    {
+      "query_id": "hist-ko:6790",
+      "pairs": 45,
+      "cached_pairs": 29,
+      "new_pairs": 16,
+      "new_inference_seconds": 4.636436406988651
+    },
+    {
+      "query_id": "hist-ko:73",
+      "pairs": 47,
+      "cached_pairs": 25,
+      "new_pairs": 22,
+      "new_inference_seconds": 6.785187507979572
+    },
+    {
+      "query_id": "hist-ko:75992",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 7.933055133966263
+    },
+    {
+      "query_id": "hist-ko:81834",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 6.312072753033135
+    },
+    {
+      "query_id": "hist-ko:83127",
+      "pairs": 50,
+      "cached_pairs": 26,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.51656430499861
+    },
+    {
+      "query_id": "hist-ko:86535",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 7.938002895039972
+    },
+    {
+      "query_id": "hist-ko:88675",
+      "pairs": 39,
+      "cached_pairs": 32,
+      "new_pairs": 7,
+      "new_inference_seconds": 2.3432923250366002
+    },
+    {
+      "query_id": "recent:793015",
+      "pairs": 38,
+      "cached_pairs": 27,
+      "new_pairs": 11,
+      "new_inference_seconds": 3.33384371799184
+    },
+    {
+      "query_id": "recent:793165",
+      "pairs": 38,
+      "cached_pairs": 30,
+      "new_pairs": 8,
+      "new_inference_seconds": 2.276166566007305
+    },
+    {
+      "query_id": "recent:793253",
+      "pairs": 48,
+      "cached_pairs": 30,
+      "new_pairs": 18,
+      "new_inference_seconds": 5.627993002999574
+    },
+    {
+      "query_id": "recent:793306",
+      "pairs": 46,
+      "cached_pairs": 29,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.810430545010604
+    },
+    {
+      "query_id": "recent:793466",
+      "pairs": 39,
+      "cached_pairs": 28,
+      "new_pairs": 11,
+      "new_inference_seconds": 4.21234413201455
+    },
+    {
+      "query_id": "recent:793469",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.554680893023033
+    },
+    {
+      "query_id": "recent:793552",
+      "pairs": 47,
+      "cached_pairs": 26,
+      "new_pairs": 21,
+      "new_inference_seconds": 5.19785190699622
+    },
+    {
+      "query_id": "recent:793867",
+      "pairs": 40,
+      "cached_pairs": 28,
+      "new_pairs": 12,
+      "new_inference_seconds": 2.736385391035583
+    },
+    {
+      "query_id": "recent:793873",
+      "pairs": 39,
+      "cached_pairs": 31,
+      "new_pairs": 8,
+      "new_inference_seconds": 3.404022010974586
+    },
+    {
+      "query_id": "recent:793935",
+      "pairs": 49,
+      "cached_pairs": 25,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.411032895965036
+    },
+    {
+      "query_id": "recent:793965",
+      "pairs": 43,
+      "cached_pairs": 26,
+      "new_pairs": 17,
+      "new_inference_seconds": 4.811458267038688
+    },
+    {
+      "query_id": "recent:794136",
+      "pairs": 44,
+      "cached_pairs": 29,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.548171886999626
+    },
+    {
+      "query_id": "recent:794172",
+      "pairs": 41,
+      "cached_pairs": 31,
+      "new_pairs": 10,
+      "new_inference_seconds": 4.166984878946096
+    },
+    {
+      "query_id": "recent:794277",
+      "pairs": 50,
+      "cached_pairs": 25,
+      "new_pairs": 25,
+      "new_inference_seconds": 7.244164659001399
+    },
+    {
+      "query_id": "recent:794326",
+      "pairs": 46,
+      "cached_pairs": 28,
+      "new_pairs": 18,
+      "new_inference_seconds": 6.921172654023394
+    },
+    {
+      "query_id": "recent:794335",
+      "pairs": 45,
+      "cached_pairs": 27,
+      "new_pairs": 18,
+      "new_inference_seconds": 5.245730359980371
+    },
+    {
+      "query_id": "recent:794408",
+      "pairs": 44,
+      "cached_pairs": 29,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.525463721016422
+    },
+    {
+      "query_id": "recent:794505",
+      "pairs": 40,
+      "cached_pairs": 33,
+      "new_pairs": 7,
+      "new_inference_seconds": 2.862478655006271
+    },
+    {
+      "query_id": "recent:794672",
+      "pairs": 46,
+      "cached_pairs": 25,
+      "new_pairs": 21,
+      "new_inference_seconds": 7.883855564985424
+    },
+    {
+      "query_id": "recent:794684",
+      "pairs": 44,
+      "cached_pairs": 28,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.247912432998419
+    },
+    {
+      "query_id": "recent:794694",
+      "pairs": 40,
+      "cached_pairs": 31,
+      "new_pairs": 9,
+      "new_inference_seconds": 1.7195059309597127
+    },
+    {
+      "query_id": "recent:794698",
+      "pairs": 46,
+      "cached_pairs": 32,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.736447915027384
+    },
+    {
+      "query_id": "recent:794786",
+      "pairs": 43,
+      "cached_pairs": 29,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.3789113679667935
+    },
+    {
+      "query_id": "recent:794947",
+      "pairs": 44,
+      "cached_pairs": 30,
+      "new_pairs": 14,
+      "new_inference_seconds": 5.271469519007951
+    },
+    {
+      "query_id": "recent:794952",
+      "pairs": 42,
+      "cached_pairs": 30,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.31473682099022
+    },
+    {
+      "query_id": "recent:794987",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 4.80263864598237
+    },
+    {
+      "query_id": "recent:796374",
+      "pairs": 46,
+      "cached_pairs": 27,
+      "new_pairs": 19,
+      "new_inference_seconds": 6.60194252000656
+    },
+    {
+      "query_id": "recent:796415",
+      "pairs": 46,
+      "cached_pairs": 27,
+      "new_pairs": 19,
+      "new_inference_seconds": 6.37718449300155
+    },
+    {
+      "query_id": "recent:796435",
+      "pairs": 45,
+      "cached_pairs": 27,
+      "new_pairs": 18,
+      "new_inference_seconds": 6.073539513978176
+    },
+    {
+      "query_id": "recent:796518",
+      "pairs": 43,
+      "cached_pairs": 27,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.491530264960602
+    },
+    {
+      "query_id": "recent:796556",
+      "pairs": 44,
+      "cached_pairs": 28,
+      "new_pairs": 16,
+      "new_inference_seconds": 4.5346237879712135
+    },
+    {
+      "query_id": "recent:796789",
+      "pairs": 42,
+      "cached_pairs": 27,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.341814933985006
+    },
+    {
+      "query_id": "recent:796899",
+      "pairs": 48,
+      "cached_pairs": 27,
+      "new_pairs": 21,
+      "new_inference_seconds": 7.301408145984169
+    },
+    {
+      "query_id": "recent:796927",
+      "pairs": 45,
+      "cached_pairs": 30,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.654836706991773
+    },
+    {
+      "query_id": "recent:797082",
+      "pairs": 48,
+      "cached_pairs": 27,
+      "new_pairs": 21,
+      "new_inference_seconds": 7.2349261160125025
+    },
+    {
+      "query_id": "recent:797349",
+      "pairs": 42,
+      "cached_pairs": 25,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.838539047981612
+    },
+    {
+      "query_id": "recent:797379",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 4.810654449975118
+    },
+    {
+      "query_id": "recent:797381",
+      "pairs": 46,
+      "cached_pairs": 27,
+      "new_pairs": 19,
+      "new_inference_seconds": 4.7129149849643
+    },
+    {
+      "query_id": "recent:797444",
+      "pairs": 43,
+      "cached_pairs": 33,
+      "new_pairs": 10,
+      "new_inference_seconds": 2.1224205550388433
+    },
+    {
+      "query_id": "recent:797626",
+      "pairs": 40,
+      "cached_pairs": 30,
+      "new_pairs": 10,
+      "new_inference_seconds": 2.7724046370130964
+    },
+    {
+      "query_id": "recent:797658",
+      "pairs": 42,
+      "cached_pairs": 32,
+      "new_pairs": 10,
+      "new_inference_seconds": 3.432724042038899
+    },
+    {
+      "query_id": "recent:797815",
+      "pairs": 42,
+      "cached_pairs": 29,
+      "new_pairs": 13,
+      "new_inference_seconds": 5.78752692299895
+    },
+    {
+      "query_id": "recent:797831",
+      "pairs": 42,
+      "cached_pairs": 27,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.245383367990144
+    },
+    {
+      "query_id": "recent:797871",
+      "pairs": 42,
+      "cached_pairs": 30,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.424154520966113
+    },
+    {
+      "query_id": "recent:798065",
+      "pairs": 49,
+      "cached_pairs": 26,
+      "new_pairs": 23,
+      "new_inference_seconds": 7.732511459034868
+    },
+    {
+      "query_id": "recent:798207",
+      "pairs": 42,
+      "cached_pairs": 29,
+      "new_pairs": 13,
+      "new_inference_seconds": 4.354750510014128
+    },
+    {
+      "query_id": "recent:798325",
+      "pairs": 49,
+      "cached_pairs": 29,
+      "new_pairs": 20,
+      "new_inference_seconds": 6.338816310046241
+    },
+    {
+      "query_id": "recent:798717",
+      "pairs": 40,
+      "cached_pairs": 29,
+      "new_pairs": 11,
+      "new_inference_seconds": 4.342922366980929
+    },
+    {
+      "query_id": "recent:798822",
+      "pairs": 43,
+      "cached_pairs": 32,
+      "new_pairs": 11,
+      "new_inference_seconds": 3.1439689969993196
+    },
+    {
+      "query_id": "recent:799299",
+      "pairs": 43,
+      "cached_pairs": 30,
+      "new_pairs": 13,
+      "new_inference_seconds": 3.603683516033925
+    },
+    {
+      "query_id": "recent:799312",
+      "pairs": 40,
+      "cached_pairs": 26,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.141861091949977
+    },
+    {
+      "query_id": "recent:799640",
+      "pairs": 42,
+      "cached_pairs": 27,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.184307807008736
+    },
+    {
+      "query_id": "recent:799661",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 6.639362006972078
+    },
+    {
+      "query_id": "recent:799948",
+      "pairs": 47,
+      "cached_pairs": 28,
+      "new_pairs": 19,
+      "new_inference_seconds": 6.193036295007914
+    },
+    {
+      "query_id": "recent:800019",
+      "pairs": 42,
+      "cached_pairs": 26,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.545095105015207
+    },
+    {
+      "query_id": "recent:800099",
+      "pairs": 45,
+      "cached_pairs": 27,
+      "new_pairs": 18,
+      "new_inference_seconds": 6.445776500971988
+    },
+    {
+      "query_id": "recent:800111",
+      "pairs": 39,
+      "cached_pairs": 27,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.136346751998644
+    },
+    {
+      "query_id": "recent:800339",
+      "pairs": 43,
+      "cached_pairs": 28,
+      "new_pairs": 15,
+      "new_inference_seconds": 5.41774364298908
+    },
+    {
+      "query_id": "recent:800425",
+      "pairs": 47,
+      "cached_pairs": 26,
+      "new_pairs": 21,
+      "new_inference_seconds": 6.6790647730231285
+    },
+    {
+      "query_id": "recent:800493",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 7.003966074960772
+    },
+    {
+      "query_id": "recent:800620",
+      "pairs": 41,
+      "cached_pairs": 26,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.9746577750192955
+    },
+    {
+      "query_id": "recent:800894",
+      "pairs": 41,
+      "cached_pairs": 26,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.390251035045367
+    },
+    {
+      "query_id": "recent:800935",
+      "pairs": 46,
+      "cached_pairs": 28,
+      "new_pairs": 18,
+      "new_inference_seconds": 6.3301863159867935
+    },
+    {
+      "query_id": "recent:801319",
+      "pairs": 43,
+      "cached_pairs": 28,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.231329343980178
+    },
+    {
+      "query_id": "recent:801342",
+      "pairs": 43,
+      "cached_pairs": 29,
+      "new_pairs": 14,
+      "new_inference_seconds": 5.1916478329803795
+    },
+    {
+      "query_id": "recent:801345",
+      "pairs": 41,
+      "cached_pairs": 29,
+      "new_pairs": 12,
+      "new_inference_seconds": 5.1838281189557165
+    },
+    {
+      "query_id": "recent:801534",
+      "pairs": 45,
+      "cached_pairs": 29,
+      "new_pairs": 16,
+      "new_inference_seconds": 3.6016737290192395
+    },
+    {
+      "query_id": "recent:801582",
+      "pairs": 47,
+      "cached_pairs": 27,
+      "new_pairs": 20,
+      "new_inference_seconds": 5.127767375030089
+    },
+    {
+      "query_id": "recent:801606",
+      "pairs": 42,
+      "cached_pairs": 27,
+      "new_pairs": 15,
+      "new_inference_seconds": 4.782243560999632
+    },
+    {
+      "query_id": "recent:801673",
+      "pairs": 43,
+      "cached_pairs": 31,
+      "new_pairs": 12,
+      "new_inference_seconds": 3.5063326329691336
+    },
+    {
+      "query_id": "recent:801730",
+      "pairs": 48,
+      "cached_pairs": 27,
+      "new_pairs": 21,
+      "new_inference_seconds": 7.124256533046719
+    },
+    {
+      "query_id": "recent:801764",
+      "pairs": 40,
+      "cached_pairs": 29,
+      "new_pairs": 11,
+      "new_inference_seconds": 3.745911205012817
+    },
+    {
+      "query_id": "recent:801796",
+      "pairs": 44,
+      "cached_pairs": 30,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.364211713022087
+    },
+    {
+      "query_id": "recent:801814",
+      "pairs": 44,
+      "cached_pairs": 26,
+      "new_pairs": 18,
+      "new_inference_seconds": 5.996829439012799
+    },
+    {
+      "query_id": "recent:802006",
+      "pairs": 42,
+      "cached_pairs": 25,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.18672186502954
+    },
+    {
+      "query_id": "recent:803243",
+      "pairs": 45,
+      "cached_pairs": 28,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.489078729005996
+    },
+    {
+      "query_id": "recent:803441",
+      "pairs": 49,
+      "cached_pairs": 25,
+      "new_pairs": 24,
+      "new_inference_seconds": 7.231909721973352
+    },
+    {
+      "query_id": "recent:803623",
+      "pairs": 43,
+      "cached_pairs": 28,
+      "new_pairs": 15,
+      "new_inference_seconds": 5.284929510962684
+    },
+    {
+      "query_id": "recent:803729",
+      "pairs": 46,
+      "cached_pairs": 26,
+      "new_pairs": 20,
+      "new_inference_seconds": 6.151171184959821
+    },
+    {
+      "query_id": "recent:804238",
+      "pairs": 48,
+      "cached_pairs": 27,
+      "new_pairs": 21,
+      "new_inference_seconds": 7.574712201021612
+    },
+    {
+      "query_id": "recent:804348",
+      "pairs": 41,
+      "cached_pairs": 27,
+      "new_pairs": 14,
+      "new_inference_seconds": 4.841764240001794
+    },
+    {
+      "query_id": "recent:804881",
+      "pairs": 43,
+      "cached_pairs": 26,
+      "new_pairs": 17,
+      "new_inference_seconds": 5.156784706981853
+    },
+    {
+      "query_id": "recent:804906",
+      "pairs": 44,
+      "cached_pairs": 30,
+      "new_pairs": 14,
+      "new_inference_seconds": 5.552664876973722
+    },
+    {
+      "query_id": "recent:805033",
+      "pairs": 49,
+      "cached_pairs": 25,
+      "new_pairs": 24,
+      "new_inference_seconds": 6.618669374031015
+    },
+    {
+      "query_id": "recent:805134",
+      "pairs": 41,
+      "cached_pairs": 29,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.519720106036402
+    },
+    {
+      "query_id": "recent:805161",
+      "pairs": 46,
+      "cached_pairs": 28,
+      "new_pairs": 18,
+      "new_inference_seconds": 5.959159972029738
+    },
+    {
+      "query_id": "recent:805221",
+      "pairs": 48,
+      "cached_pairs": 32,
+      "new_pairs": 16,
+      "new_inference_seconds": 5.346965888980776
+    },
+    {
+      "query_id": "recent:805301",
+      "pairs": 40,
+      "cached_pairs": 31,
+      "new_pairs": 9,
+      "new_inference_seconds": 2.9188926920178346
+    },
+    {
+      "query_id": "recent:805339",
+      "pairs": 44,
+      "cached_pairs": 28,
+      "new_pairs": 16,
+      "new_inference_seconds": 4.336462787003256
+    },
+    {
+      "query_id": "recent:805591",
+      "pairs": 40,
+      "cached_pairs": 27,
+      "new_pairs": 13,
+      "new_inference_seconds": 4.284271210955922
+    },
+    {
+      "query_id": "recent:806034",
+      "pairs": 44,
+      "cached_pairs": 29,
+      "new_pairs": 15,
+      "new_inference_seconds": 5.137708680995274
+    },
+    {
+      "query_id": "recent:806786",
+      "pairs": 37,
+      "cached_pairs": 30,
+      "new_pairs": 7,
+      "new_inference_seconds": 2.343759955954738
+    },
+    {
+      "query_id": "recent:806911",
+      "pairs": 38,
+      "cached_pairs": 26,
+      "new_pairs": 12,
+      "new_inference_seconds": 4.171373195014894
+    },
+    {
+      "query_id": "recent:807072",
+      "pairs": 39,
+      "cached_pairs": 29,
+      "new_pairs": 10,
+      "new_inference_seconds": 3.7788931709947065
+    },
+    {
+      "query_id": "recent:807130",
+      "pairs": 38,
+      "cached_pairs": 30,
+      "new_pairs": 8,
+      "new_inference_seconds": 2.933346015983261
+    },
+    {
+      "query_id": "recent:807184",
+      "pairs": 42,
+      "cached_pairs": 30,
+      "new_pairs": 12,
+      "new_inference_seconds": 3.656647255003918
+    },
+    {
+      "query_id": "recent:807252",
+      "pairs": 37,
+      "cached_pairs": 27,
+      "new_pairs": 10,
+      "new_inference_seconds": 2.4591975189978257
+    },
+    {
+      "query_id": "recent:807492",
+      "pairs": 39,
+      "cached_pairs": 27,
+      "new_pairs": 12,
+      "new_inference_seconds": 5.321060417976696
+    },
+    {
+      "query_id": "recent:807530",
+      "pairs": 41,
+      "cached_pairs": 29,
+      "new_pairs": 12,
+      "new_inference_seconds": 3.735472373024095
+    },
+    {
+      "query_id": "recent:808005",
+      "pairs": 42,
+      "cached_pairs": 33,
+      "new_pairs": 9,
+      "new_inference_seconds": 2.8702982750255615
+    }
+  ],
+  "new_pairs": 2632,
+  "cached_pairs": 4587,
+  "fully_uncached_latency_query_count": 0,
+  "uncached_rerank_p50_seconds": null,
+  "uncached_rerank_p95_seconds": null,
+  "peak_allocated_mib": 2391.35205078125,
+  "latency_scope": "Loaded model reranking only; reused scores do not count as fresh inference or represent latency improvement."
+}

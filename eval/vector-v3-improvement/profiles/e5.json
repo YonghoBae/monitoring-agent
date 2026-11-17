@@ -1,0 +1,39 @@
+{
+  "alias": "e5",
+  "model_id": "intfloat/multilingual-e5-small",
+  "gpu": "NVIDIA GeForce GTX 1050 with Max-Q Design",
+  "measurements": [
+    {
+      "precision": "float32",
+      "status": "pass",
+      "items": 32,
+      "seconds": 0.5628998799948022,
+      "seconds_per_item": 0.017590621249837568,
+      "batch_size": 4,
+      "load_seconds": 3.7557752010179684,
+      "peak_allocated_mib": 493.20068359375
+    },
+    {
+      "precision": "float16",
+      "status": "pass",
+      "items": 32,
+      "seconds": 0.5738902380107902,
+      "seconds_per_item": 0.017934069937837194,
+      "batch_size": 4,
+      "load_seconds": 1.1388883980107494,
+      "peak_allocated_mib": 251.32666015625
+    }
+  ],
+  "selected": {
+    "precision": "float32",
+    "status": "pass",
+    "items": 32,
+    "seconds": 0.5628998799948022,
+    "seconds_per_item": 0.017590621249837568,
+    "batch_size": 4,
+    "load_seconds": 3.7557752010179684,
+    "peak_allocated_mib": 493.20068359375
+  },
+  "selection": "fastest finite precision on same 32 smoke inputs, before relevance scores",
+  "task_instruction": "Given a server troubleshooting query, retrieve existing questions describing the same underlying problem."
+}

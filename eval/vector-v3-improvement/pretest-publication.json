@@ -1,0 +1,19 @@
+{
+  "prepared_at": "2026-11-17T17:15:49.102284+00:00",
+  "final_summary_exists": false,
+  "final_reranking_started": false,
+  "selected_full_encoder_complete": false,
+  "new_embeddings_complete": 22144,
+  "new_embeddings_total": 43346,
+  "sha256": {
+    "protocol.json": "d37b951f14e38ab6614319fb9c3ca8866fc84cb0f52fd2bcf5857b9e522f5320",
+    "development-amendments.json": "822efb38b9c0ce3d1c964b58b679e4ca908a631e4ab4b2188fa6deb24ff9e230",
+    "development-manifest.json": "d22598db2d5a69b8cf4a00005b885b17396e0ff18b92e6cb3e50a7b95ec6816e",
+    "holdout-extension/dataset-manifest.json": "e922099fe839b12d6c6eec32586e2adfe0c3228ab59cee6c67a0546006fbd376",
+    "holdout-extension/korean-control.json": "5fd0c04463a0f79aba31ff791a6364f8ce54a71b5cf58cdd9120c965daec770e",
+    "final-selection-lock.json": "a3a610b6671dcf998fc3a6c7d3824099cdb6a1a91837c06cc0def87d54a18afb",
+    "known-duplicate-links.json": "edbbc70b69465717f2d407f2ff6365434c64e5e3afcd990efbd74f238527cc03",
+    "native-regression-plan.json": "35e97f6d5ab6d5a87d477fbfa405314acd1e517ef2b992bec3818aab43458790"
+  },
+  "scope": "Observed state for a public pre-result checkpoint. Selection was already locked; full-corpus encoding was still running. Final scores and report will be a later commit. This is an audit trail, not a proof of statistical validity."
+}

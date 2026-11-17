@@ -1,0 +1,39 @@
+{
+  "alias": "qwen",
+  "model_id": "Qwen/Qwen3-Embedding-0.6B",
+  "gpu": "NVIDIA GeForce GTX 1050 with Max-Q Design",
+  "measurements": [
+    {
+      "precision": "float32",
+      "status": "pass",
+      "items": 32,
+      "seconds": 5.641898870002478,
+      "seconds_per_item": 0.17630933968757745,
+      "batch_size": 2,
+      "load_seconds": 4.2166127800010145,
+      "peak_allocated_mib": 2319.59228515625
+    },
+    {
+      "precision": "float16",
+      "status": "pass",
+      "items": 32,
+      "seconds": 6.608665322011802,
+      "seconds_per_item": 0.20652079131286882,
+      "batch_size": 2,
+      "load_seconds": 1.295464888040442,
+      "peak_allocated_mib": 1171.87744140625
+    }
+  ],
+  "selected": {
+    "precision": "float32",
+    "status": "pass",
+    "items": 32,
+    "seconds": 5.641898870002478,
+    "seconds_per_item": 0.17630933968757745,
+    "batch_size": 2,
+    "load_seconds": 4.2166127800010145,
+    "peak_allocated_mib": 2319.59228515625
+  },
+  "selection": "fastest finite precision on same 32 smoke inputs, before relevance scores",
+  "task_instruction": "Given a server troubleshooting query, retrieve existing questions describing the same underlying problem."
+}

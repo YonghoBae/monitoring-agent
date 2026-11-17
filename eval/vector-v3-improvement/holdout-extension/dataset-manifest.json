@@ -1,0 +1,1470 @@
+{
+  "frozen_at": "2026-11-17T14:02:37.178020+00:00",
+  "plan_sha256": "92fb0e99a01aebf3e3eb17311da4478723aea6a2588a0cd242a8329cb0fbb71a",
+  "serverfault_manifest_sha256": "ecd61f8e64d9a64472e4870ee7804044f273e5c9f95a78b7e06b8ccfb85e4784",
+  "candidate_count": 48235,
+  "query_count": 91,
+  "source_manifests": [
+    {
+      "site": "askubuntu",
+      "collected": 300,
+      "eligible": 87,
+      "accepted": 59,
+      "excluded_missing_targets": [
+        "1569031"
+      ],
+      "file_sha256": {
+        "askubuntu/cache/closed-1.json": "16435e3c1f6fa46424328d7f20757f169c1cffdd874062dcf4809421a7282de7",
+        "askubuntu/cache/closed-2.json": "a6aacbaa7ee5c2fb02aa1097468b1d9cd37624b529c99704e408c7371f1eba8e",
+        "askubuntu/cache/closed-3.json": "49945f50f33c84168e9942564011ae80868c99b35f716e78f9f3b48a2a0f9f18",
+        "askubuntu/cache/filter.json": "69d3704adcde7746d61f11bf8c25e4a7786148153ccbf7cbc14753eb810a5b85",
+        "askubuntu/cache/targets-0.json": "f4fd2465f7cc423d8893cf3d7c6eb3fcc11e1d7c3b3623932eeaa72aa099189a"
+      }
+    },
+    {
+      "site": "superuser",
+      "collected": 274,
+      "eligible": 23,
+      "accepted": 23,
+      "excluded_missing_targets": [],
+      "file_sha256": {
+        "superuser/cache/closed-1.json": "e9e584b92b026a424b6e9cb61aa09b479f281c52f201389b805f6fd9c883afee",
+        "superuser/cache/closed-2.json": "c90d707aba64f492e4ee05f9747b1a76514c65f050fa85e30834c8d2286fde15",
+        "superuser/cache/closed-3.json": "3d9c829308abc2d35209fdc5b96ced57a59b36b13a1cd6ea0186f0102b3cb81f",
+        "superuser/cache/filter.json": "4830cc397b2654225b430f719da6e18697bae02937d30a01d52d3bf2450b8d6c",
+        "superuser/cache/targets-0.json": "b75ccc3cd5f34952e9038abc0b3a9ff11a8c3825cc1c9a6de27d94a40e0e99ec"
+      }
+    }
+  ],
+  "korean_control_source_ids": [
+    "sf-en:1198662",
+    "su-en:1939453",
+    "au-en:1569506",
+    "su-en:1936374",
+    "sf-en:1196226",
+    "au-en:1566419",
+    "au-en:1564338",
+    "au-en:1564806",
+    "au-en:1566306",
+    "au-en:1564564",
+    "au-en:1568131",
+    "sf-en:1199746",
+    "au-en:1570652",
+    "au-en:1565703",
+    "su-en:1935197",
+    "au-en:1569868",
+    "au-en:1566186",
+    "su-en:1930948",
+    "au-en:1560781",
+    "au-en:1564020"
+  ],
+  "queries": [
+    {
+      "id": "au-en:1560453",
+      "source_id": "au:1560453",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1129025",
+        "au:1133199"
+      ],
+      "creation_date": 1764834022,
+      "tags": [
+        "apt",
+        "updates",
+        "24.04"
+      ],
+      "source_url": "https://askubuntu.com/questions/1560453"
+    },
+    {
+      "id": "au-en:1560492",
+      "source_id": "au:1560492",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1348780"
+      ],
+      "creation_date": 1764875486,
+      "tags": [
+        "server",
+        "samba"
+      ],
+      "source_url": "https://askubuntu.com/questions/1560492"
+    },
+    {
+      "id": "au-en:1560781",
+      "source_id": "au:1560781",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1508263"
+      ],
+      "creation_date": 1765562100,
+      "tags": [
+        "partitioning",
+        "swap"
+      ],
+      "source_url": "https://askubuntu.com/questions/1560781"
+    },
+    {
+      "id": "au-en:1561905",
+      "source_id": "au:1561905",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:674441",
+        "au:811299"
+      ],
+      "creation_date": 1765899951,
+      "tags": [
+        "boot",
+        "system-installation",
+        "usb",
+        "24.04",
+        "iso"
+      ],
+      "source_url": "https://askubuntu.com/questions/1561905"
+    },
+    {
+      "id": "au-en:1561971",
+      "source_id": "au:1561971",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:42436",
+        "au:852562"
+      ],
+      "creation_date": 1766038053,
+      "tags": [
+        "apt",
+        "package-management",
+        "mysql",
+        "dependencies"
+      ],
+      "source_url": "https://askubuntu.com/questions/1561971"
+    },
+    {
+      "id": "au-en:1562295",
+      "source_id": "au:1562295",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:162075"
+      ],
+      "creation_date": 1766978570,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562295"
+    },
+    {
+      "id": "au-en:1562382",
+      "source_id": "au:1562382",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1156409"
+      ],
+      "creation_date": 1767220732,
+      "tags": [
+        "apt"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562382"
+    },
+    {
+      "id": "au-en:1562517",
+      "source_id": "au:1562517",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:741410"
+      ],
+      "creation_date": 1767560828,
+      "tags": [
+        "apt",
+        "docker"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562517"
+    },
+    {
+      "id": "au-en:1562625",
+      "source_id": "au:1562625",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:13065"
+      ],
+      "creation_date": 1767805787,
+      "tags": [
+        "apt",
+        "updates",
+        "kubuntu",
+        "24.04",
+        "visual-studio-code"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562625"
+    },
+    {
+      "id": "au-en:1562656",
+      "source_id": "au:1562656",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1527119",
+        "au:78951"
+      ],
+      "creation_date": 1767892757,
+      "tags": [
+        "command-line",
+        "apt",
+        "software-installation",
+        "deb"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562656"
+    },
+    {
+      "id": "au-en:1562850",
+      "source_id": "au:1562850",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1049411"
+      ],
+      "creation_date": 1768391604,
+      "tags": [
+        "apt",
+        "package-management",
+        "updates"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562850"
+    },
+    {
+      "id": "au-en:1562899",
+      "source_id": "au:1562899",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:91815"
+      ],
+      "creation_date": 1768499050,
+      "tags": [
+        "apt",
+        "upgrade",
+        "24.10"
+      ],
+      "source_url": "https://askubuntu.com/questions/1562899"
+    },
+    {
+      "id": "au-en:1563062",
+      "source_id": "au:1563062",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1420641"
+      ],
+      "creation_date": 1768927382,
+      "tags": [
+        "server",
+        "system-installation",
+        "22.04",
+        "pxe",
+        "cloud-init"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563062"
+    },
+    {
+      "id": "au-en:1563231",
+      "source_id": "au:1563231",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1208449"
+      ],
+      "creation_date": 1769294351,
+      "tags": [
+        "apt",
+        "updates",
+        "sudo",
+        "gnupg"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563231"
+    },
+    {
+      "id": "au-en:1563393",
+      "source_id": "au:1563393",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:96967"
+      ],
+      "creation_date": 1769691938,
+      "tags": [
+        "apt",
+        "update-manager"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563393"
+    },
+    {
+      "id": "au-en:1563594",
+      "source_id": "au:1563594",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1260939"
+      ],
+      "creation_date": 1770242128,
+      "tags": [
+        "apt",
+        "package-management",
+        "updates",
+        "update-manager"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563594"
+    },
+    {
+      "id": "au-en:1563601",
+      "source_id": "au:1563601",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:986878"
+      ],
+      "creation_date": 1770249645,
+      "tags": [
+        "server",
+        "24.04",
+        "dell",
+        "support"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563601"
+    },
+    {
+      "id": "au-en:1563926",
+      "source_id": "au:1563926",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:55868"
+      ],
+      "creation_date": 1770954009,
+      "tags": [
+        "drivers",
+        "apt",
+        "24.04",
+        "broadcom"
+      ],
+      "source_url": "https://askubuntu.com/questions/1563926"
+    },
+    {
+      "id": "au-en:1564020",
+      "source_id": "au:1564020",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1269493"
+      ],
+      "creation_date": 1771200566,
+      "tags": [
+        "partitioning",
+        "24.04",
+        "df",
+        "du"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564020"
+    },
+    {
+      "id": "au-en:1564338",
+      "source_id": "au:1564338",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1469713",
+        "au:223237"
+      ],
+      "creation_date": 1772013941,
+      "tags": [
+        "apt",
+        "dependencies",
+        "steam"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564338"
+    },
+    {
+      "id": "au-en:1564382",
+      "source_id": "au:1564382",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:176121"
+      ],
+      "creation_date": 1772118462,
+      "tags": [
+        "apt",
+        "nvidia",
+        "package-management",
+        "dpkg"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564382"
+    },
+    {
+      "id": "au-en:1564547",
+      "source_id": "au:1564547",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1564103"
+      ],
+      "creation_date": 1772633047,
+      "tags": [
+        "package-management",
+        "software-installation",
+        "virtualbox",
+        "24.04"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564547"
+    },
+    {
+      "id": "au-en:1564564",
+      "source_id": "au:1564564",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1029198"
+      ],
+      "creation_date": 1772678581,
+      "tags": [
+        "apt",
+        "upgrade",
+        "updates",
+        "24.04",
+        "update-manager"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564564"
+    },
+    {
+      "id": "au-en:1564577",
+      "source_id": "au:1564577",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:124017",
+        "au:65911",
+        "au:866901"
+      ],
+      "creation_date": 1772721117,
+      "tags": [
+        "apt",
+        "python3",
+        "pip"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564577"
+    },
+    {
+      "id": "au-en:1564707",
+      "source_id": "au:1564707",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:34430"
+      ],
+      "creation_date": 1773177778,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564707"
+    },
+    {
+      "id": "au-en:1564806",
+      "source_id": "au:1564806",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:124017",
+        "au:145165",
+        "au:223237"
+      ],
+      "creation_date": 1773466233,
+      "tags": [
+        "apt",
+        "perl",
+        "webmin"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564806"
+    },
+    {
+      "id": "au-en:1564824",
+      "source_id": "au:1564824",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1528443"
+      ],
+      "creation_date": 1773502769,
+      "tags": [
+        "apt",
+        "package-management",
+        "dpkg",
+        "xfce"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564824"
+    },
+    {
+      "id": "au-en:1565006",
+      "source_id": "au:1565006",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1538841",
+        "au:307",
+        "au:443036"
+      ],
+      "creation_date": 1774015549,
+      "tags": [
+        "apt",
+        "updates",
+        "24.04",
+        "repository",
+        "gnupg"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565006"
+    },
+    {
+      "id": "au-en:1565036",
+      "source_id": "au:1565036",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1565058"
+      ],
+      "creation_date": 1774091887,
+      "tags": [
+        "networking",
+        "server",
+        "ssl"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565036"
+    },
+    {
+      "id": "au-en:1565041",
+      "source_id": "au:1565041",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1565058"
+      ],
+      "creation_date": 1774107818,
+      "tags": [
+        "wireless",
+        "network-manager",
+        "icons"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565041"
+    },
+    {
+      "id": "au-en:1565062",
+      "source_id": "au:1565062",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1565058"
+      ],
+      "creation_date": 1774149552,
+      "tags": [
+        "networking",
+        "windows-11"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565062"
+    },
+    {
+      "id": "au-en:1565073",
+      "source_id": "au:1565073",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1565058"
+      ],
+      "creation_date": 1774183595,
+      "tags": [
+        "networking"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565073"
+    },
+    {
+      "id": "au-en:1565334",
+      "source_id": "au:1565334",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1565058"
+      ],
+      "creation_date": 1775036513,
+      "tags": [
+        "wireless",
+        "gnome",
+        "network-manager"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565334"
+    },
+    {
+      "id": "au-en:1565467",
+      "source_id": "au:1565467",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:930593"
+      ],
+      "creation_date": 1775426847,
+      "tags": [
+        "apt",
+        "unattended-upgrades",
+        "app-center",
+        "clion"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565467"
+    },
+    {
+      "id": "au-en:1565637",
+      "source_id": "au:1565637",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:337953"
+      ],
+      "creation_date": 1775976339,
+      "tags": [
+        "apt"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565637"
+    },
+    {
+      "id": "au-en:1565703",
+      "source_id": "au:1565703",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:248"
+      ],
+      "creation_date": 1776189126,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565703"
+    },
+    {
+      "id": "au-en:1565772",
+      "source_id": "au:1565772",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1198621"
+      ],
+      "creation_date": 1776412792,
+      "tags": [
+        "apt",
+        "updates"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565772"
+    },
+    {
+      "id": "au-en:1566186",
+      "source_id": "au:1566186",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1514281"
+      ],
+      "creation_date": 1777388878,
+      "tags": [
+        "apt",
+        "package-management",
+        "google-chrome",
+        "software-sources"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566186"
+    },
+    {
+      "id": "au-en:1566225",
+      "source_id": "au:1566225",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:308237",
+        "au:672892"
+      ],
+      "creation_date": 1777459176,
+      "tags": [
+        "apt"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566225"
+    },
+    {
+      "id": "au-en:1566306",
+      "source_id": "au:1566306",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1566282"
+      ],
+      "creation_date": 1777629310,
+      "tags": [
+        "networking",
+        "snap",
+        "25.10"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566306"
+    },
+    {
+      "id": "au-en:1566419",
+      "source_id": "au:1566419",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1566282"
+      ],
+      "creation_date": 1777959939,
+      "tags": [
+        "apt",
+        "updates",
+        "php",
+        "ppa"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566419"
+    },
+    {
+      "id": "au-en:1566498",
+      "source_id": "au:1566498",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:974"
+      ],
+      "creation_date": 1778071570,
+      "tags": [
+        "apt",
+        "22.04",
+        "linux-headers",
+        "add-apt-repository",
+        "apt-offline"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566498"
+    },
+    {
+      "id": "au-en:1566963",
+      "source_id": "au:1566963",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:563408"
+      ],
+      "creation_date": 1779196154,
+      "tags": [
+        "updates",
+        "ssh",
+        "security"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566963"
+    },
+    {
+      "id": "au-en:1567040",
+      "source_id": "au:1567040",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:394067"
+      ],
+      "creation_date": 1779365657,
+      "tags": [
+        "permissions",
+        "samba",
+        "php"
+      ],
+      "source_url": "https://askubuntu.com/questions/1567040"
+    },
+    {
+      "id": "au-en:1567191",
+      "source_id": "au:1567191",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1109982"
+      ],
+      "creation_date": 1779800861,
+      "tags": [
+        "apt",
+        "package-management",
+        "upgrade",
+        "dependencies",
+        "flatpak"
+      ],
+      "source_url": "https://askubuntu.com/questions/1567191"
+    },
+    {
+      "id": "au-en:1567431",
+      "source_id": "au:1567431",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1337580"
+      ],
+      "creation_date": 1780436638,
+      "tags": [
+        "apt",
+        "grub2",
+        "uefi"
+      ],
+      "source_url": "https://askubuntu.com/questions/1567431"
+    },
+    {
+      "id": "au-en:1567707",
+      "source_id": "au:1567707",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:162075"
+      ],
+      "creation_date": 1781432124,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1567707"
+    },
+    {
+      "id": "au-en:1567916",
+      "source_id": "au:1567916",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1278057"
+      ],
+      "creation_date": 1782187182,
+      "tags": [
+        "apt",
+        "gnome",
+        "kubuntu",
+        "kde"
+      ],
+      "source_url": "https://askubuntu.com/questions/1567916"
+    },
+    {
+      "id": "au-en:1568131",
+      "source_id": "au:1568131",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:958014"
+      ],
+      "creation_date": 1783060477,
+      "tags": [
+        "apt",
+        "22.04",
+        "chromium",
+        "glibc"
+      ],
+      "source_url": "https://askubuntu.com/questions/1568131"
+    },
+    {
+      "id": "au-en:1568170",
+      "source_id": "au:1568170",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:290630"
+      ],
+      "creation_date": 1783247625,
+      "tags": [
+        "partitioning",
+        "mount",
+        "hard-drive"
+      ],
+      "source_url": "https://askubuntu.com/questions/1568170"
+    },
+    {
+      "id": "au-en:1568383",
+      "source_id": "au:1568383",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:182248"
+      ],
+      "creation_date": 1784061987,
+      "tags": [
+        "boot",
+        "command-line",
+        "dual-boot",
+        "windows",
+        "grub-legacy"
+      ],
+      "source_url": "https://askubuntu.com/questions/1568383"
+    },
+    {
+      "id": "au-en:1568626",
+      "source_id": "au:1568626",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:2007"
+      ],
+      "creation_date": 1785058380,
+      "tags": [
+        "boot",
+        "plymouth"
+      ],
+      "source_url": "https://askubuntu.com/questions/1568626"
+    },
+    {
+      "id": "au-en:1569279",
+      "source_id": "au:1569279",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:923691"
+      ],
+      "creation_date": 1787850463,
+      "tags": [
+        "permissions",
+        "kde",
+        "ssd",
+        "plasma"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569279"
+    },
+    {
+      "id": "au-en:1569506",
+      "source_id": "au:1569506",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:43621"
+      ],
+      "creation_date": 1788833494,
+      "tags": [
+        "permissions",
+        "directory",
+        "default"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569506"
+    },
+    {
+      "id": "au-en:1569629",
+      "source_id": "au:1569629",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:223237"
+      ],
+      "creation_date": 1789470081,
+      "tags": [
+        "apt",
+        "python"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569629"
+    },
+    {
+      "id": "au-en:1569868",
+      "source_id": "au:1569868",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1566029",
+        "au:1569290"
+      ],
+      "creation_date": 1790512558,
+      "tags": [
+        "server"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569868"
+    },
+    {
+      "id": "au-en:1569882",
+      "source_id": "au:1569882",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:954966"
+      ],
+      "creation_date": 1790542550,
+      "tags": [
+        "boot",
+        "mount",
+        "raid",
+        "fstab"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569882"
+    },
+    {
+      "id": "au-en:1570183",
+      "source_id": "au:1570183",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:1566114"
+      ],
+      "creation_date": 1791498072,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1570183"
+    },
+    {
+      "id": "au-en:1570652",
+      "source_id": "au:1570652",
+      "group": "askubuntu_en",
+      "gold": [
+        "au:866901"
+      ],
+      "creation_date": 1793180164,
+      "tags": [
+        "apt",
+        "updates",
+        "software-sources"
+      ],
+      "source_url": "https://askubuntu.com/questions/1570652"
+    },
+    {
+      "id": "sf-en:1192974",
+      "source_id": "sf:1192974",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:1109191"
+      ],
+      "creation_date": 1758615044,
+      "tags": [
+        "iptables"
+      ],
+      "source_url": "https://serverfault.com/questions/1192974"
+    },
+    {
+      "id": "sf-en:1195670",
+      "source_id": "sf:1195670",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:449651"
+      ],
+      "creation_date": 1761865017,
+      "tags": [
+        "linux",
+        "bash",
+        "scripting",
+        "shell-scripting",
+        "sap"
+      ],
+      "source_url": "https://serverfault.com/questions/1195670"
+    },
+    {
+      "id": "sf-en:1195688",
+      "source_id": "sf:1195688",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:214242"
+      ],
+      "creation_date": 1761935108,
+      "tags": [
+        "nginx"
+      ],
+      "source_url": "https://serverfault.com/questions/1195688"
+    },
+    {
+      "id": "sf-en:1195774",
+      "source_id": "sf:1195774",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:1082399"
+      ],
+      "creation_date": 1762360949,
+      "tags": [
+        "nginx",
+        "docker",
+        "fedora",
+        "selinux",
+        "podman"
+      ],
+      "source_url": "https://serverfault.com/questions/1195774"
+    },
+    {
+      "id": "sf-en:1196226",
+      "source_id": "sf:1196226",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:853430"
+      ],
+      "creation_date": 1765169289,
+      "tags": [
+        "docker",
+        "apache2",
+        "journald",
+        "journalctl"
+      ],
+      "source_url": "https://serverfault.com/questions/1196226"
+    },
+    {
+      "id": "sf-en:1198662",
+      "source_id": "sf:1198662",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:932628"
+      ],
+      "creation_date": 1775371739,
+      "tags": [
+        "nginx"
+      ],
+      "source_url": "https://serverfault.com/questions/1198662"
+    },
+    {
+      "id": "sf-en:1199492",
+      "source_id": "sf:1199492",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:218005"
+      ],
+      "creation_date": 1784112845,
+      "tags": [
+        "ubuntu",
+        "linux-networking",
+        "fail2ban"
+      ],
+      "source_url": "https://serverfault.com/questions/1199492"
+    },
+    {
+      "id": "sf-en:1199746",
+      "source_id": "sf:1199746",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:384686"
+      ],
+      "creation_date": 1788178386,
+      "tags": [
+        "networking",
+        "switch",
+        "vlan",
+        "ethernet",
+        "network-design"
+      ],
+      "source_url": "https://serverfault.com/questions/1199746"
+    },
+    {
+      "id": "sf-en:1199826",
+      "source_id": "sf:1199826",
+      "group": "serverfault_en",
+      "gold": [
+        "sf:384686"
+      ],
+      "creation_date": 1789380890,
+      "tags": [
+        "linux",
+        "nginx",
+        "apache-2.4",
+        "web-server",
+        "devops"
+      ],
+      "source_url": "https://serverfault.com/questions/1199826"
+    },
+    {
+      "id": "su-en:1917926",
+      "source_id": "su:1917926",
+      "group": "superuser_en",
+      "gold": [
+        "su:1769083"
+      ],
+      "creation_date": 1755123085,
+      "tags": [
+        "boot",
+        "windows-11-upgrade"
+      ],
+      "source_url": "https://superuser.com/questions/1917926"
+    },
+    {
+      "id": "su-en:1919112",
+      "source_id": "su:1919112",
+      "group": "superuser_en",
+      "gold": [
+        "su:1805221"
+      ],
+      "creation_date": 1755500410,
+      "tags": [
+        "linux",
+        "vagrant",
+        "libvirt"
+      ],
+      "source_url": "https://superuser.com/questions/1919112"
+    },
+    {
+      "id": "su-en:1922641",
+      "source_id": "su:1922641",
+      "group": "superuser_en",
+      "gold": [
+        "su:925847"
+      ],
+      "creation_date": 1756720553,
+      "tags": [
+        "hard-drive",
+        "sata",
+        "power",
+        "hotswapping"
+      ],
+      "source_url": "https://superuser.com/questions/1922641"
+    },
+    {
+      "id": "su-en:1924147",
+      "source_id": "su:1924147",
+      "group": "superuser_en",
+      "gold": [
+        "su:1097210"
+      ],
+      "creation_date": 1757480068,
+      "tags": [
+        "linux",
+        "backup"
+      ],
+      "source_url": "https://superuser.com/questions/1924147"
+    },
+    {
+      "id": "su-en:1924475",
+      "source_id": "su:1924475",
+      "group": "superuser_en",
+      "gold": [
+        "su:211966",
+        "su:555310"
+      ],
+      "creation_date": 1757703673,
+      "tags": [
+        "linux",
+        "bash",
+        "centos",
+        "gnu-screen",
+        "almalinux"
+      ],
+      "source_url": "https://superuser.com/questions/1924475"
+    },
+    {
+      "id": "su-en:1930784",
+      "source_id": "su:1930784",
+      "group": "superuser_en",
+      "gold": [
+        "su:1759403",
+        "su:1917019"
+      ],
+      "creation_date": 1764347393,
+      "tags": [
+        "linux",
+        "ubuntu",
+        "hard-drive",
+        "debian"
+      ],
+      "source_url": "https://superuser.com/questions/1930784"
+    },
+    {
+      "id": "su-en:1930948",
+      "source_id": "su:1930948",
+      "group": "superuser_en",
+      "gold": [
+        "su:1563992"
+      ],
+      "creation_date": 1764717523,
+      "tags": [
+        "boot",
+        "windows-11",
+        "uefi",
+        "efi",
+        "boot-partition"
+      ],
+      "source_url": "https://superuser.com/questions/1930948"
+    },
+    {
+      "id": "su-en:1931126",
+      "source_id": "su:1931126",
+      "group": "superuser_en",
+      "gold": [
+        "su:241817"
+      ],
+      "creation_date": 1765049065,
+      "tags": [
+        "windows-10",
+        "hard-drive",
+        "hard-drive-recovery"
+      ],
+      "source_url": "https://superuser.com/questions/1931126"
+    },
+    {
+      "id": "su-en:1932594",
+      "source_id": "su:1932594",
+      "group": "superuser_en",
+      "gold": [
+        "su:1285268"
+      ],
+      "creation_date": 1765994755,
+      "tags": [
+        "windows-10",
+        "boot",
+        "bootloader"
+      ],
+      "source_url": "https://superuser.com/questions/1932594"
+    },
+    {
+      "id": "su-en:1933055",
+      "source_id": "su:1933055",
+      "group": "superuser_en",
+      "gold": [
+        "su:1058592"
+      ],
+      "creation_date": 1767043578,
+      "tags": [
+        "hard-drive",
+        "smart",
+        "error-correction"
+      ],
+      "source_url": "https://superuser.com/questions/1933055"
+    },
+    {
+      "id": "su-en:1933700",
+      "source_id": "su:1933700",
+      "group": "superuser_en",
+      "gold": [
+        "su:248517"
+      ],
+      "creation_date": 1768410485,
+      "tags": [
+        "linux",
+        "laptop",
+        "keyboard",
+        "keymap"
+      ],
+      "source_url": "https://superuser.com/questions/1933700"
+    },
+    {
+      "id": "su-en:1933998",
+      "source_id": "su:1933998",
+      "group": "superuser_en",
+      "gold": [
+        "su:1584668"
+      ],
+      "creation_date": 1769053040,
+      "tags": [
+        "linux",
+        "file-permissions"
+      ],
+      "source_url": "https://superuser.com/questions/1933998"
+    },
+    {
+      "id": "su-en:1935197",
+      "source_id": "su:1935197",
+      "group": "superuser_en",
+      "gold": [
+        "su:949421"
+      ],
+      "creation_date": 1771864181,
+      "tags": [
+        "hard-drive",
+        "passwords"
+      ],
+      "source_url": "https://superuser.com/questions/1935197"
+    },
+    {
+      "id": "su-en:1935243",
+      "source_id": "su:1935243",
+      "group": "superuser_en",
+      "gold": [
+        "su:29704"
+      ],
+      "creation_date": 1771948786,
+      "tags": [
+        "windows",
+        "drivers",
+        "backup",
+        "export"
+      ],
+      "source_url": "https://superuser.com/questions/1935243"
+    },
+    {
+      "id": "su-en:1936232",
+      "source_id": "su:1936232",
+      "group": "superuser_en",
+      "gold": [
+        "su:26842"
+      ],
+      "creation_date": 1774627700,
+      "tags": [
+        "hard-drive",
+        "hardware-failure",
+        "desktop-computer",
+        "smart",
+        "check-disk"
+      ],
+      "source_url": "https://superuser.com/questions/1936232"
+    },
+    {
+      "id": "su-en:1936374",
+      "source_id": "su:1936374",
+      "group": "superuser_en",
+      "gold": [
+        "su:738705"
+      ],
+      "creation_date": 1775129152,
+      "tags": [
+        "ubuntu",
+        "boot",
+        "operating-systems"
+      ],
+      "source_url": "https://superuser.com/questions/1936374"
+    },
+    {
+      "id": "su-en:1936482",
+      "source_id": "su:1936482",
+      "group": "superuser_en",
+      "gold": [
+        "su:1358570",
+        "su:1682695",
+        "su:947232",
+        "su:980204"
+      ],
+      "creation_date": 1775499830,
+      "tags": [
+        "linux",
+        "windows",
+        "multi-boot",
+        "windows-installation",
+        "reinstall"
+      ],
+      "source_url": "https://superuser.com/questions/1936482"
+    },
+    {
+      "id": "su-en:1936877",
+      "source_id": "su:1936877",
+      "group": "superuser_en",
+      "gold": [
+        "su:101127"
+      ],
+      "creation_date": 1776639320,
+      "tags": [
+        "windows-10",
+        "boot"
+      ],
+      "source_url": "https://superuser.com/questions/1936877"
+    },
+    {
+      "id": "su-en:1937336",
+      "source_id": "su:1937336",
+      "group": "superuser_en",
+      "gold": [
+        "su:1182472"
+      ],
+      "creation_date": 1777945785,
+      "tags": [
+        "ssh",
+        "tmux",
+        "gnu-screen"
+      ],
+      "source_url": "https://superuser.com/questions/1937336"
+    },
+    {
+      "id": "su-en:1938245",
+      "source_id": "su:1938245",
+      "group": "superuser_en",
+      "gold": [
+        "su:1594349"
+      ],
+      "creation_date": 1780785609,
+      "tags": [
+        "windows-10",
+        "usb",
+        "partitioning",
+        "external"
+      ],
+      "source_url": "https://superuser.com/questions/1938245"
+    },
+    {
+      "id": "su-en:1938246",
+      "source_id": "su:1938246",
+      "group": "superuser_en",
+      "gold": [
+        "su:1754642"
+      ],
+      "creation_date": 1780787343,
+      "tags": [
+        "firefox",
+        "ssl",
+        "certificate",
+        "https",
+        "curl"
+      ],
+      "source_url": "https://superuser.com/questions/1938246"
+    },
+    {
+      "id": "su-en:1939303",
+      "source_id": "su:1939303",
+      "group": "superuser_en",
+      "gold": [
+        "su:845191"
+      ],
+      "creation_date": 1785118124,
+      "tags": [
+        "ubuntu",
+        "boot",
+        "windows-11",
+        "bootloader"
+      ],
+      "source_url": "https://superuser.com/questions/1939303"
+    },
+    {
+      "id": "su-en:1939453",
+      "source_id": "su:1939453",
+      "group": "superuser_en",
+      "gold": [
+        "su:1684416"
+      ],
+      "creation_date": 1785742533,
+      "tags": [
+        "linux",
+        "windows",
+        "macos",
+        "eject"
+      ],
+      "source_url": "https://superuser.com/questions/1939453"
+    }
+  ],
+  "file_sha256": {
+    "documents.json": "ac332b276e6675bdbc5888bd3d2289c0ba41fd313be9bfede6230451019db7bb",
+    "queries.json": "373908d163dd7a67e781c4851d45b834499156c81e7f08731b41f5387611eee3"
+  }
+}

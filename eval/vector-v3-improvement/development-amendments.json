@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-11-17T14:13:32.929760+00:00",
+  "amendments": [
+    {
+      "name": "E5 query/query prefix ablation",
+      "reason": "Official E5 FAQ recommends query prefixes on both sides for paraphrase retrieval; our benchmark matches questions. Add a separate labeled development condition, preserve original query/passage condition.",
+      "source": "https://huggingface.co/intfloat/multilingual-e5-small#faq",
+      "selection": "Eligible for the same frozen 50/50 English/Korean development selection score. No heldout scores inspected."
+    },
+    {
+      "name": "Additional holdout sources",
+      "reason": "Only 9 ServerFault cases matched the original rule. Before new-model accuracy runs, froze supplemental AskUbuntu/SuperUser acquisition; now 91 original cases and 20 translated controls, all later than 2025-07-01.",
+      "source_manifest": "holdout-extension/dataset-manifest.json"
+    },
+    {
+      "name": "Staged reranker depth and pair reuse",
+      "recorded_at": "2026-11-17T14:22:13.061621+00:00",
+      "reason": "Actual large-model timing makes exhaustive repeated top50 scoring wasteful. Before either reranker accuracy score, compare both on identical top20 candidates, then expand the leading combination to top50 and test a same-budget dense/BM25 union. Cache only identical model/prompt/query/document scores; do not use cache timings as latency measurements.",
+      "screening": "Both rerankers on baseline dense top20 and best encoder top20. Choose using the unchanged development criterion. Then top50 dense versus up-to50 union candidates for selected combination.",
+      "holdout": "Still untouched; lock the final pipeline before final scoring."
+    },
+    {
+      "name": "One finalist full-index budget",
+      "recorded_at": "2026-11-17T14:22:13.061639+00:00",
+      "reason": "GPU smoke measurements project over90 minutes for both larger encoders. Index time is an offline cost, not query latency; the user authorized overnight experimentation. Permit up to3 hours for exactly one selected full-corpus encoding while retaining all cost observations. This is a runtime-budget amendment, not a claim of hardware infeasibility or a change to relevance scoring.",
+      "new_limit_seconds": 10800,
+      "full_finalists": 1,
+      "holdout_scores_seen": false
+    },
+    {
+      "name": "Cluster-aware final uncertainty",
+      "recorded_at": "2026-11-17T14:51:49.084501+00:00",
+      "reason": "Before final model scores, source labels show 91 original holdout questions form 80 components when shared relevant records are connected. Translations also share source questions. Naive independent-query intervals can overstate precision.",
+      "method": "Build components using shared source_id or any shared gold document; paired bootstrap 2000 seed20261118 samples components and recomputes query-weighted delta. Report English and Korean strata separately and flag fewer than20 components. This does not establish complete statistical independence or population representativeness."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "selected_at": "2026-11-17T14:50:40.686393+00:00",
+  "candidates": [
+    {
+      "name": "baseline-dense",
+      "development_score": 0.37940840057646164,
+      "estimated_remaining_full_index_seconds": 30.0,
+      "within_frozen_resource_budget": true
+    },
+    {
+      "name": "e5-dense",
+      "development_score": 0.42385759965234726,
+      "estimated_remaining_full_index_seconds": 675.3270016361481,
+      "within_frozen_resource_budget": true
+    },
+    {
+      "name": "bge-dense",
+      "development_score": 0.5645246346287832,
+      "estimated_remaining_full_index_seconds": 5688.163928501278,
+      "within_frozen_resource_budget": true
+    },
+    {
+      "name": "qwen-dense",
+      "development_score": 0.6668945224852731,
+      "estimated_remaining_full_index_seconds": 7553.392825310473,
+      "within_frozen_resource_budget": true
+    },
+    {
+      "name": "e5-symmetric-dense",
+      "development_score": 0.44192528981834056,
+      "estimated_remaining_full_index_seconds": 648.5528303127628,
+      "within_frozen_resource_budget": true
+    },
+    {
+      "name": "qwen-headtail",
+      "development_score": 0.6594722544201397,
+      "estimated_remaining_full_index_seconds": 14971.74938352208,
+      "within_frozen_resource_budget": false
+    }
+  ],
+  "selected": "qwen-dense",
+  "scope": "Development-only choice; all large/small-pool scores retained; full-index timing is a projection, not query latency."
+}

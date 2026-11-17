@@ -1,0 +1,356 @@
+{
+  "frozen_at": "2026-11-17T14:04:39.814327+00:00",
+  "source_manifest_sha256": "e922099fe839b12d6c6eec32586e2adfe0c3228ab59cee6c67a0546006fbd376",
+  "translations_sha256": "51b54ab3689c3b81382afec091400df57c21c54a94ffabf435d2ac68d1e67214",
+  "authorship": "Translations of selected original titles before final model scores; no answer body consulted; no independent human translation review. Ambiguous source titles remain ambiguous.",
+  "queries": [
+    {
+      "id": "sf-ko:1198662",
+      "source_id": "sf:1198662",
+      "group": "serverfault_ko",
+      "text": "Nginx에서 외부 원본을 숨기면서 <old_host>/ 경로를 <new_host>/frontend/index.html로 리다이렉트하려면 어떻게 하나요?",
+      "gold": [
+        "sf:932628"
+      ],
+      "creation_date": 1775371739,
+      "tags": [
+        "nginx"
+      ],
+      "source_url": "https://serverfault.com/questions/1198662",
+      "original_query_id": "sf-en:1198662"
+    },
+    {
+      "id": "su-ko:1939453",
+      "source_id": "su:1939453",
+      "group": "superuser_ko",
+      "text": "명령줄에서 간단히 꺼내기(eject)를 실행하는 방법을 알려주세요.",
+      "gold": [
+        "su:1684416"
+      ],
+      "creation_date": 1785742533,
+      "tags": [
+        "linux",
+        "windows",
+        "macos",
+        "eject"
+      ],
+      "source_url": "https://superuser.com/questions/1939453",
+      "original_query_id": "su-en:1939453"
+    },
+    {
+      "id": "au-ko:1569506",
+      "source_id": "au:1569506",
+      "group": "askubuntu_ko",
+      "text": "/*의 권한을 기본값으로 복원하려면 어떻게 하나요?",
+      "gold": [
+        "au:43621"
+      ],
+      "creation_date": 1788833494,
+      "tags": [
+        "permissions",
+        "directory",
+        "default"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569506",
+      "original_query_id": "au-en:1569506"
+    },
+    {
+      "id": "su-ko:1936374",
+      "source_id": "su:1936374",
+      "group": "superuser_ko",
+      "text": "SSD의 Windows 11과 듀얼 부팅하도록 별도 HDD(H: 드라이브)에 Ubuntu를 설치하려면 어떻게 하나요?",
+      "gold": [
+        "su:738705"
+      ],
+      "creation_date": 1775129152,
+      "tags": [
+        "ubuntu",
+        "boot",
+        "operating-systems"
+      ],
+      "source_url": "https://superuser.com/questions/1936374",
+      "original_query_id": "su-en:1936374"
+    },
+    {
+      "id": "sf-ko:1196226",
+      "source_id": "sf:1196226",
+      "group": "serverfault_ko",
+      "text": "Apache2 로그에서 러시아어가 이스케이프되는 것을 없애려면 어떻게 하나요?",
+      "gold": [
+        "sf:853430"
+      ],
+      "creation_date": 1765169289,
+      "tags": [
+        "docker",
+        "apache2",
+        "journald",
+        "journalctl"
+      ],
+      "source_url": "https://serverfault.com/questions/1196226",
+      "original_query_id": "sf-en:1196226"
+    },
+    {
+      "id": "au-ko:1566419",
+      "source_id": "au:1566419",
+      "group": "askubuntu_ko",
+      "text": "이 문제를 어떻게 고치나요? WSL에서 Ubuntu 22.04 LTS를 사용합니다.",
+      "gold": [
+        "au:1566282"
+      ],
+      "creation_date": 1777959939,
+      "tags": [
+        "apt",
+        "updates",
+        "php",
+        "ppa"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566419",
+      "original_query_id": "au-en:1566419"
+    },
+    {
+      "id": "au-ko:1564338",
+      "source_id": "au:1564338",
+      "group": "askubuntu_ko",
+      "text": "보류된 깨진 패키지와 Steam lib i386 문제",
+      "gold": [
+        "au:1469713",
+        "au:223237"
+      ],
+      "creation_date": 1772013941,
+      "tags": [
+        "apt",
+        "dependencies",
+        "steam"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564338",
+      "original_query_id": "au-en:1564338"
+    },
+    {
+      "id": "au-ko:1564806",
+      "source_id": "au:1564806",
+      "group": "askubuntu_ko",
+      "text": "Webmin을 설치할 수 없습니다.",
+      "gold": [
+        "au:124017",
+        "au:145165",
+        "au:223237"
+      ],
+      "creation_date": 1773466233,
+      "tags": [
+        "apt",
+        "perl",
+        "webmin"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564806",
+      "original_query_id": "au-en:1564806"
+    },
+    {
+      "id": "au-ko:1566306",
+      "source_id": "au:1566306",
+      "group": "askubuntu_ko",
+      "text": "https://api.snapcraft.io/에 접속할 수 없습니다.",
+      "gold": [
+        "au:1566282"
+      ],
+      "creation_date": 1777629310,
+      "tags": [
+        "networking",
+        "snap",
+        "25.10"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566306",
+      "original_query_id": "au-en:1566306"
+    },
+    {
+      "id": "au-ko:1564564",
+      "source_id": "au:1564564",
+      "group": "askubuntu_ko",
+      "text": "제 Ubuntu 24.04는 가망이 없나요?",
+      "gold": [
+        "au:1029198"
+      ],
+      "creation_date": 1772678581,
+      "tags": [
+        "apt",
+        "upgrade",
+        "updates",
+        "24.04",
+        "update-manager"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564564",
+      "original_query_id": "au-en:1564564"
+    },
+    {
+      "id": "au-ko:1568131",
+      "source_id": "au:1568131",
+      "group": "askubuntu_ko",
+      "text": "Jammy 패키지 릴리스의 libm.so.2 버전 불일치",
+      "gold": [
+        "au:958014"
+      ],
+      "creation_date": 1783060477,
+      "tags": [
+        "apt",
+        "22.04",
+        "chromium",
+        "glibc"
+      ],
+      "source_url": "https://askubuntu.com/questions/1568131",
+      "original_query_id": "au-en:1568131"
+    },
+    {
+      "id": "sf-ko:1199746",
+      "source_id": "sf:1199746",
+      "group": "serverfault_ko",
+      "text": "여러 건물로 확장되는 사무실의 네트워크 스위치 용량을 어떻게 계획해야 하나요?",
+      "gold": [
+        "sf:384686"
+      ],
+      "creation_date": 1788178386,
+      "tags": [
+        "networking",
+        "switch",
+        "vlan",
+        "ethernet",
+        "network-design"
+      ],
+      "source_url": "https://serverfault.com/questions/1199746",
+      "original_query_id": "sf-en:1199746"
+    },
+    {
+      "id": "au-ko:1570652",
+      "source_id": "au:1570652",
+      "group": "askubuntu_ko",
+      "text": "업데이트에 문제가 있습니다.",
+      "gold": [
+        "au:866901"
+      ],
+      "creation_date": 1793180164,
+      "tags": [
+        "apt",
+        "updates",
+        "software-sources"
+      ],
+      "source_url": "https://askubuntu.com/questions/1570652",
+      "original_query_id": "au-en:1570652"
+    },
+    {
+      "id": "au-ko:1565703",
+      "source_id": "au:1565703",
+      "group": "askubuntu_ko",
+      "text": "부팅 중 읽을 수 없는 텍스트 줄이 나옵니다.",
+      "gold": [
+        "au:248"
+      ],
+      "creation_date": 1776189126,
+      "tags": [
+        "boot"
+      ],
+      "source_url": "https://askubuntu.com/questions/1565703",
+      "original_query_id": "au-en:1565703"
+    },
+    {
+      "id": "su-ko:1935197",
+      "source_id": "su:1935197",
+      "group": "superuser_ko",
+      "text": "BIOS 비밀번호로 잠긴 하드 디스크를 잠갔던 동일한 노트북에서 잠금 해제하거나 지우려면 어떻게 하나요?",
+      "gold": [
+        "su:949421"
+      ],
+      "creation_date": 1771864181,
+      "tags": [
+        "hard-drive",
+        "passwords"
+      ],
+      "source_url": "https://superuser.com/questions/1935197",
+      "original_query_id": "su-en:1935197"
+    },
+    {
+      "id": "au-ko:1569868",
+      "source_id": "au:1569868",
+      "group": "askubuntu_ko",
+      "text": "서버를 24.04에서 26.04로 업그레이드하려면 어떻게 하나요?",
+      "gold": [
+        "au:1566029",
+        "au:1569290"
+      ],
+      "creation_date": 1790512558,
+      "tags": [
+        "server"
+      ],
+      "source_url": "https://askubuntu.com/questions/1569868",
+      "original_query_id": "au-en:1569868"
+    },
+    {
+      "id": "au-ko:1566186",
+      "source_id": "au:1566186",
+      "group": "askubuntu_ko",
+      "text": "/etc/apt/sources.list.d 디렉터리에 google-chrome.list 파일이 없는 이유는 무엇인가요?",
+      "gold": [
+        "au:1514281"
+      ],
+      "creation_date": 1777388878,
+      "tags": [
+        "apt",
+        "package-management",
+        "google-chrome",
+        "software-sources"
+      ],
+      "source_url": "https://askubuntu.com/questions/1566186",
+      "original_query_id": "au-en:1566186"
+    },
+    {
+      "id": "su-ko:1930948",
+      "source_id": "su:1930948",
+      "group": "superuser_ko",
+      "text": "보조 하드 드라이브의 EFI 파티션을 삭제한 후 컴퓨터가 부팅되지 않습니다.",
+      "gold": [
+        "su:1563992"
+      ],
+      "creation_date": 1764717523,
+      "tags": [
+        "boot",
+        "windows-11",
+        "uefi",
+        "efi",
+        "boot-partition"
+      ],
+      "source_url": "https://superuser.com/questions/1930948",
+      "original_query_id": "su-en:1930948"
+    },
+    {
+      "id": "au-ko:1560781",
+      "source_id": "au:1560781",
+      "group": "askubuntu_ko",
+      "text": "스왑 파일과 사용하지 않는 스왑 파티션이 있는데, 스왑 파티션을 사용하도록 바꾸려면 어떻게 하나요?",
+      "gold": [
+        "au:1508263"
+      ],
+      "creation_date": 1765562100,
+      "tags": [
+        "partitioning",
+        "swap"
+      ],
+      "source_url": "https://askubuntu.com/questions/1560781",
+      "original_query_id": "au-en:1560781"
+    },
+    {
+      "id": "au-ko:1564020",
+      "source_id": "au:1564020",
+      "group": "askubuntu_ko",
+      "text": "블록 장치에서 제 사라진 디스크 공간은 어디에 있나요?",
+      "gold": [
+        "au:1269493"
+      ],
+      "creation_date": 1771200566,
+      "tags": [
+        "partitioning",
+        "24.04",
+        "df",
+        "du"
+      ],
+      "source_url": "https://askubuntu.com/questions/1564020",
+      "original_query_id": "au-en:1564020"
+    }
+  ]
+}

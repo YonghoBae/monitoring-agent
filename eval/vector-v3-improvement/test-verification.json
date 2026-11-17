@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "started_at": "2026-11-17T16:29:52.650369+00:00",
+  "finished_at": "2026-11-17T16:29:52.717771+00:00",
+  "tests_run": 22,
+  "failures": 0,
+  "errors": 0,
+  "patterns": [
+    "test_vector*.py",
+    "test_real_vector_retrieval.py",
+    "test_recent_vector_control.py",
+    "test_retrieval_uncertainty.py"
+  ],
+  "test_sha256": {
+    "scripts/tests/test_real_vector_retrieval.py": "0bf699793634b111bdc27365ba1df808f1179e75ff53900836500281b591c60f",
+    "scripts/tests/test_recent_vector_control.py": "4960ecf83851c1f2a944fd8eb7037528e36796b25c0ec4ed7793ed4819045437",
+    "scripts/tests/test_retrieval_uncertainty.py": "fc4c5eee39c2605722cc30de29241d209feca883af13b6e7f0eeb93c2a8bff73",
+    "scripts/tests/test_vector_duplicate_links.py": "e8373dd33a652f0a4b0951d761e11b044b69c830e956c45beb9971d751459a71",
+    "scripts/tests/test_vector_error_diagnosis.py": "5195f0bfad4865f74181c1e67514dbd30cdc81dd75e0cf993b8e0f640b6e1e91",
+    "scripts/tests/test_vector_reranker_cache.py": "72c3b33f67c02ed4641ce2a01b9c044ba813350b6265c3f0daf8f3507a8b9fae",
+    "scripts/tests/test_vector_retrieval.py": "5e2d04bf312a581541b932c111a0f0c51a9991b9ca53ca82592ae564c5f34355"
+  },
+  "scope": "Retrieval metrics, sampling controls, pair-cache identity, error diagnosis, duplicate-link diagnostics and grouped uncertainty. Model accuracy is measured separately."
+}

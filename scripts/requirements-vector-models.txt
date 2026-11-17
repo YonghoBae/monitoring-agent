@@ -1,0 +1,11 @@
+# GPU run: install torch==2.6.0 from the official cu124 index separately.
+# CPU-only numeric replay needs requirements-vector-verify.txt only.
+transformers==4.51.3
+tokenizers==0.21.4
+huggingface_hub==0.36.2
+safetensors==0.8.0
+sentencepiece==0.2.1
+numpy==2.2.6
+ir_measures==0.4.3
+pytrec_eval-terrier==0.5.11
+scipy==1.18.1

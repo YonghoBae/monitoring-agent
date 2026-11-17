@@ -1,0 +1,45 @@
+{
+  "frozen_at": "2026-11-17T13:54:41.467677+00:00",
+  "purpose": "Choose locally deployable retrieval improvements with fixed real-case relevance; no paid APIs; no production change",
+  "hardware": "GTX 1050 Max-Q 4 GiB",
+  "embedding_candidates": [
+    "all-minilm current baseline",
+    "intfloat/multilingual-e5-small",
+    "BAAI/bge-m3",
+    "Qwen/Qwen3-Embedding-0.6B"
+  ],
+  "reranker_candidates": [
+    "none",
+    "BAAI/bge-reranker-v2-m3",
+    "Qwen/Qwen3-Reranker-0.6B"
+  ],
+  "implementation": "Pinned official weights, Transformers reference pooling/prompts, no remote Python code; GPU float32/float16 smoke profiling chooses finite faster precision before accuracy scores",
+  "development_queries": "Existing 100 recent English plus existing 32 Korean and their 32 original English source titles. Previously inspected; not final test.",
+  "development_corpus": "5000 real documents: all development gold targets plus deterministic SHA256(v3-pool:ID) distractors from the unchanged v2 recent full corpus. Controlled screening pool, not deployed full-corpus accuracy.",
+  "embedding_input": "same title + newline + body, max_length=256 per model tokenizer; model-specific required query/document prefixes. Content truncation may differ by tokenizer and is recorded, not claimed as architecture-only ablation.",
+  "reranker_screening": "same baseline dense top50 candidates per query; max_length=512; compare with no reranking; official sequence-classification or yes/no logit scoring, not free-form LLM judge",
+  "selection_score": "0.5 * recent English nDCG@10 + 0.5 * historical Korean-control nDCG@10; English source controls diagnostic only. Equal groups are a chosen product priority, not measured traffic proportions.",
+  "resources": "Profile 32 representative items first; full 47k-document embedding expansion only if estimated <=90 minutes per finalist; local failures/time gates recorded, never counted as accuracy losses. Peak memory and latency measured.",
+  "chunking_probe": "For leading feasible embedding, compare head-only document with head+tail max256-token vectors, max score per source document and deduplicate before metrics. Bounded tail-coverage probe, not full-document chunking.",
+  "combination": "Compare best feasible embedding without reranker, with each feasible reranker; compare dense candidates and dense+BM25 union using same reranker. Choose on development only.",
+  "final_test": "Collect later real ServerFault duplicate cases before new model accuracy scores; community original_questions IDs are gold. Candidate background includes source records; source query itself excluded. Model parameters and selected pipeline locked before final score; report holdout by domain/language and uncertainty.",
+  "metrics": [
+    "nDCG@10",
+    "Recall@5",
+    "Recall@100",
+    "Hit@1",
+    "Hit@5",
+    "MRR@10",
+    "p50/p95 query wall time",
+    "peak VRAM",
+    "index time"
+  ],
+  "statistics": "Paired query bootstrap 2000 seed20261118; exploratory development comparisons; final report effect and CI, no tune on final labels/ranks",
+  "limitations": [
+    "public-model training overlap cannot be fully ruled out",
+    "Korean translations are authored controls",
+    "community duplicate labels incomplete",
+    "5000 candidate screening differs from full 47k corpus",
+    "GPU coexistence with answer LLM must be assessed before deployment"
+  ]
+}

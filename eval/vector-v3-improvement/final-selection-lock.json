@@ -1,0 +1,34 @@
+{
+  "locked_at": "2026-11-17T16:09:58.147964+00:00",
+  "selected_development_run": "qwen-dense--qwen-reranker--dense50",
+  "embedding_source": "qwen-dense",
+  "encoder": "qwen",
+  "tail": false,
+  "reranker": "qwen-reranker",
+  "candidate_mode": "dense",
+  "candidate_depth": 50,
+  "development_selection_score": 0.7151636610156611,
+  "candidate_scores": {
+    "baseline-dense": 0.37940840057646164,
+    "qwen-dense": 0.6668945224852731,
+    "baseline-dense--bge-reranker--dense20": 0.3881201322059577,
+    "qwen-dense--bge-reranker--dense20": 0.6103363330269957,
+    "baseline-dense--qwen-reranker--dense20": 0.4536294804367862,
+    "qwen-dense--qwen-reranker--dense20": 0.7033624624441928,
+    "qwen-dense--qwen-reranker--dense50": 0.7151636610156611,
+    "qwen-dense--qwen-reranker--union50": 0.7069100539684956
+  },
+  "holdout_scores_seen": false,
+  "holdout_manifest_sha256": "e922099fe839b12d6c6eec32586e2adfe0c3228ab59cee6c67a0546006fbd376",
+  "korean_control_sha256": "5fd0c04463a0f79aba31ff791a6364f8ce54a71b5cf58cdd9120c965daec770e",
+  "protocol_sha256": "d37b951f14e38ab6614319fb9c3ca8866fc84cb0f52fd2bcf5857b9e522f5320",
+  "amendments_sha256": "822efb38b9c0ce3d1c964b58b679e4ca908a631e4ab4b2188fa6deb24ff9e230",
+  "model_sources_sha256": "0992af679cbb9792af952954faf4ecab745564e5c3e7028d4fa49ae34ee3cfcd",
+  "final_comparisons": [
+    "baseline dense",
+    "BM25",
+    "selected encoder dense",
+    "selected pipeline"
+  ],
+  "final_rule": "Evaluate once, report regressions and uncertainty; do not choose a different pipeline using final scores."
+}

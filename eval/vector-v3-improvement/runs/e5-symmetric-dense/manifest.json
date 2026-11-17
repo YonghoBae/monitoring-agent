@@ -1,0 +1,21 @@
+{
+  "completed_at": "2026-11-17T14:35:47.541502+00:00",
+  "name": "e5-symmetric-dense",
+  "candidate_count": 5000,
+  "query_count": 164,
+  "protocol_sha256": "d37b951f14e38ab6614319fb9c3ca8866fc84cb0f52fd2bcf5857b9e522f5320",
+  "dataset_manifest_sha256": "d22598db2d5a69b8cf4a00005b885b17396e0ff18b92e6cb3e50a7b95ec6816e",
+  "runner_sha256": "826bdc70d7ea81181f454cd89698fe083cb158ef9df4272b48fd658106f81669",
+  "adapter_sha256": "6a3c7b6e592a7227d1b7a4ea8508ad0c7be5a88089826142b4fd3087cbc8eb87",
+  "independent_metrics_checked": 1148,
+  "paid_api_calls": 0,
+  "variant": "query: prefix for both question documents and queries; other E5 settings unchanged",
+  "source": "https://huggingface.co/intfloat/multilingual-e5-small#faq",
+  "embedding_state": {
+    "input_sha256": "5a8555fecc18967e2b0b990bc9f435d942af5de135fad9a9b45b674d58c8ee17",
+    "completed": 5164,
+    "total": 5164,
+    "seconds": 77.4633240600233
+  },
+  "variant_runner_sha256": "e84c8b86409f4126b730536377162be46e474bfc7a08d3fa5863f616e7f54052"
+}

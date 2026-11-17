@@ -1,0 +1,7 @@
+{
+  "frozen_at": "2026-11-17T16:47:19.195440+00:00",
+  "selection_lock_sha256": "a3a610b6671dcf998fc3a6c7d3824099cdb6a1a91837c06cc0def87d54a18afb",
+  "dataset_sha256": "a730e901ff6a6a8209517a1d098d5d34dfc4ba5fd67b9949d71ddb5793cdcc19",
+  "scope": "Supplementary post-selection regression on the existing fully synthetic Korean fixture: 20 families, 40 documents, 60 answerable variants. Native Korean and English-to-Korean controls. Not independent real-case evidence, not used to choose the final model or change its task instruction. Compare existing MiniLM vectors, BM25 and the locked encoder within each pool; compare 40 mixed records vs 20 resolution records separately. No reranker, no abstention calibration; 8 no-answer queries excluded. Primary real-case scores and locked selection remain unchanged.",
+  "final_scores_seen": false
+}

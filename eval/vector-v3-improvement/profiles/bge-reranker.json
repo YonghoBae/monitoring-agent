@@ -1,0 +1,39 @@
+{
+  "alias": "bge-reranker",
+  "model_id": "BAAI/bge-reranker-v2-m3",
+  "gpu": "NVIDIA GeForce GTX 1050 with Max-Q Design",
+  "measurements": [
+    {
+      "precision": "float32",
+      "status": "pass",
+      "items": 32,
+      "seconds": 7.78276532900054,
+      "seconds_per_item": 0.24321141653126688,
+      "batch_size": 2,
+      "load_seconds": 5.192102749017067,
+      "peak_allocated_mib": 2266.08740234375
+    },
+    {
+      "precision": "float16",
+      "status": "pass",
+      "items": 32,
+      "seconds": 6.952098187000956,
+      "seconds_per_item": 0.2172530683437799,
+      "batch_size": 2,
+      "load_seconds": 1.6169355459860526,
+      "peak_allocated_mib": 1137.17724609375
+    }
+  ],
+  "selected": {
+    "precision": "float16",
+    "status": "pass",
+    "items": 32,
+    "seconds": 6.952098187000956,
+    "seconds_per_item": 0.2172530683437799,
+    "batch_size": 2,
+    "load_seconds": 1.6169355459860526,
+    "peak_allocated_mib": 1137.17724609375
+  },
+  "selection": "fastest finite precision on same 32 smoke inputs, before relevance scores",
+  "task_instruction": "Given a server troubleshooting query, retrieve existing questions describing the same underlying problem."
+}
