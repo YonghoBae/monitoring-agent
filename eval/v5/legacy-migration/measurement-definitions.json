@@ -1,0 +1,46 @@
+{
+  "container_throttled": {
+    "throttle_percent": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    }
+  },
+  "notification_failure": {
+    "failures": {
+      "lookback_seconds": 900,
+      "aggregation": "increase"
+    }
+  },
+  "disk_io_saturation": {
+    "busy_percent": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    },
+    "write_mbps": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    }
+  },
+  "host_oom_killer": {
+    "oom_increase": {
+      "lookback_seconds": 1800,
+      "aggregation": "increase"
+    }
+  },
+  "jellyfin_transcode_cpu": {
+    "cpu_cores": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    }
+  },
+  "question_disk_io_saturation": {
+    "busy_percent": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    },
+    "write_mbps": {
+      "lookback_seconds": 300,
+      "aggregation": "rate"
+    }
+  }
+}

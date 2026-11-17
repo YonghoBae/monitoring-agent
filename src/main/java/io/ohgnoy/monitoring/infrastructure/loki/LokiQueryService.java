@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
+import java.net.http.HttpClient;
+import java.time.Duration;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -30,13 +33,15 @@ public class LokiQueryService {
     public LokiQueryService(RestClient.Builder builder,
                             @Value("${loki.url}") String lokiUrl,
                             ObjectMapper objectMapper) {
-        this.restClient = builder.build();
+        var requests = new JdkClientHttpRequestFactory(HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build());
+        requests.setReadTimeout(Duration.ofSeconds(15));
+        this.restClient = builder.requestFactory(requests).build();
         this.baseUrl = lokiUrl;
         this.objectMapper = objectMapper;
     }
 
     /**
-     * LogQL 쿼리로 최근 로그 조회. 실패 시 빈 리스트 반환.
+     * LogQL 쿼리로 최근 로그 조회. 실패는 정상 빈 결과와 구분해 전달한다.
      * Promtail 설정: job=docker, container_id 레이블
      */
     public List<String> queryRecentLogs(String logqlQuery, Instant start, Instant end, int limit) {
@@ -56,13 +61,13 @@ public class LokiQueryService {
             return parseLogs(response);
         } catch (Exception e) {
             log.warn("Loki 쿼리 실패 [{}]: {}", logqlQuery, e.getMessage());
-            return List.of();
+            throw new IllegalStateException("Loki 조회 실패", e);
         }
     }
 
     private List<String> parseLogs(String responseBody) throws Exception {
         JsonNode root = objectMapper.readTree(responseBody);
-        if (!"success".equals(root.path("status").asText())) return List.of();
+        if (!"success".equals(root.path("status").asText())) throw new IllegalStateException("Loki query failed");
 
         List<String[]> entries = new ArrayList<>(); // [nanosec_ts, log_line]
         for (JsonNode stream : root.path("data").path("result")) {

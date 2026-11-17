@@ -32,22 +32,52 @@ public class CommandExecutorService {
     }
 
     public List<String> listContainers() {
+        Process process = null;
         try {
-            Process process = new ProcessBuilder("docker", "ps", "--format", "{{.Names}}").start();
+            process = new ProcessBuilder("docker", "ps", "--format", "{{.Names}}")
+                    .redirectErrorStream(true).start();
+            if (!process.waitFor(5, TimeUnit.SECONDS)) {
+                process.destroyForcibly();
+                throw new IllegalStateException("Docker 컨테이너 목록 조회 시간 초과");
+            }
+            if (process.exitValue() != 0) throw new IllegalStateException("Docker 컨테이너 목록 조회 실패");
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                List<String> containers = reader.lines()
+                return reader.lines()
                         .map(String::trim)
                         .filter(s -> !s.isBlank())
                         .toList();
-                boolean finished = process.waitFor(5, TimeUnit.SECONDS);
-                if (finished && process.exitValue() == 0) {
-                    return containers;
-                }
             }
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
+            if (process != null) process.destroyForcibly();
+            if (e instanceof InterruptedException) Thread.currentThread().interrupt();
             log.warn("[CommandExecutorService] 컨테이너 목록 조회 실패: {}", e.getMessage());
+            throw new IllegalStateException("Docker 컨테이너 목록 조회 실패", e);
         }
-        return List.of();
+    }
+
+    /** Read only selected fields; never return environment variables, labels or full inspect JSON. */
+    public String inspectContainer(String name) {
+        String format="{\"name\":{{json .Name}},\"image\":{{json .Config.Image}},\"status\":{{json .State.Status}},\"oomKilled\":{{json .State.OOMKilled}},\"exitCode\":{{json .State.ExitCode}},\"restartCount\":{{json .RestartCount}},\"health\":{{if .State.Health}}{{json .State.Health.Status}}{{else}}\"not_configured\"{{end}},\"ports\":{{json .NetworkSettings.Ports}}}";
+        return inspectField(name,format);
+    }
+    public String containerLogPath(String name) {
+        String path=inspectField(name,"{{.LogPath}}");
+        if(path.isBlank()||!path.startsWith("/"))throw new IllegalStateException("Local container log path unavailable");
+        return path;
+    }
+    private String inspectField(String name,String format) {
+        if(name==null||!ALLOWED_CONTAINER_NAME.matcher(name).matches())throw new IllegalArgumentException("Invalid container name");
+        Process process=null;
+        try {
+            process=new ProcessBuilder("docker","inspect","--type","container","--format",format,name).redirectErrorStream(true).start();
+            final Process owned=process;
+            var output=CompletableFuture.supplyAsync(()->{try{return owned.getInputStream().readNBytes(65537);}catch(IOException e){throw new java.io.UncheckedIOException(e);}});
+            if(!process.waitFor(5,TimeUnit.SECONDS)){process.destroyForcibly();throw new IllegalStateException("Docker inspect timeout");}
+            byte[] bytes=output.get(1,TimeUnit.SECONDS);
+            if(process.exitValue()!=0)throw new IllegalStateException("Container details unavailable; target may be absent or Docker access failed");
+            if(bytes.length>65536)throw new IllegalStateException("Container details exceed output limit");
+            return new String(bytes,StandardCharsets.UTF_8).trim();
+        }catch(Exception e){if(process!=null&&process.isAlive())process.destroyForcibly();if(e instanceof InterruptedException)Thread.currentThread().interrupt();throw new IllegalStateException("Container inspection failed",e);}
     }
 
     public CommandResult execute(String command) {

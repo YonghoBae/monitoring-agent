@@ -40,5 +40,31 @@ src/main/resources/application.properties
 src/main/resources/application.yml
 
 .env
+.venv-eval/
+__pycache__/
 
+# Evaluation run archives and local operational state remain private.
+/eval/*
+!/eval/README.md
+!/eval/v4/
+/eval/v4/*
+!/eval/v5/
+/eval/v5/*
+!/eval/v5/canonical-core/
+/eval/v5/canonical-core/*
+!/eval/v5/legacy-migration/
+/eval/v5/legacy-migration/*
+!/eval/v4/dataset.json
+!/eval/v5/dataset.json
+!/eval/v5/gold.json
+!/eval/v5/gold-v52.json
+!/eval/v5/provenance.json
+!/eval/v5/canonical-core/dataset.json
+!/eval/v5/canonical-core/build-manifest.json
+!/eval/v5/legacy-migration/dataset.json
+!/eval/v5/legacy-migration/field-contracts.json
+!/eval/v5/legacy-migration/request-schemas.json
+!/eval/v5/legacy-migration/extra-answer-fields.json
+!/eval/v5/legacy-migration/measurement-definitions.json
+/docs/EVAL-OVERNIGHT-STATE-*.md
 TODO.md

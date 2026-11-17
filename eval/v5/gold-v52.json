@@ -1,0 +1,218 @@
+{
+  "case-201": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded pg_dump backup operation succeeded."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "The recorded limited restoration check succeeded: the query on the restored marker table completed successfully. This is only the captured check, not proof of full backup integrity or production recovery. No numeric value is required."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable: the recorded backup operation succeeded."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Restore check covers row count 3 and sum 60 only. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "restore marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-202": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded PostgreSQL initialization attempt failed while processing the initialization SQL file; earlier temporary startup or CREATE DATABASE does not establish completed initialization."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "Unknown: no separate initial-data query execution/result is visible. Explicitly distinguish that missing query result from the observed initialization-script failure; do not infer that the query succeeded, failed, or was never run."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "The immediate initialization error is that psql could not access /docker-entrypoint-initdb.d/00-eval.sql (Permission denied). Generic permission/access-denial wording is acceptable; exact owner, mode, ACL, security policy, responsible actor, or underlying configuration error is not established."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history. The separate requested initial-data/restore check execution and outcome are not visible.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "failed",
+    "direct_cause": "psql cannot read /docker-entrypoint-initdb.d/00-eval.sql: Permission denied",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-203": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded pg_dump backup attempt failed (nonzero exit); the operation label identifies this as the backup command."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "Unknown: no limited restoration-check execution/result is visible. Explicitly say that the check or its outcome cannot be established from these observations; do not infer a failed, successful, or never-run restore check solely from pg_dump failure."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "Unknown: the visible pg_dump nonzero exit has no diagnostic establishing its direct cause."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history. The separate requested initial-data/restore check execution and outcome are not visible.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "failed",
+    "direct_cause": "unknown",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-204": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded PostgreSQL initialization completed successfully."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "The recorded initial-data query succeeded: SELECT count(*) FROM eval_marker completed successfully. No numeric value is required, and this does not establish whole-service health."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable: the recorded initialization and initial-data query succeeded."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Fresh PGDATA initialization and marker row count 3, not repairing an existing failed data directory. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "initialized marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-205": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded pg_dump backup attempt failed."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "Unknown: no limited restoration-check execution/result is visible. Explicitly say that the check or its outcome cannot be established from these observations; do not infer a failed, successful, or never-run restore check solely from pg_dump failure."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "The direct backup failure is the explicit pg_dump/server version mismatch: the older client refuses the newer server. Why that client was chosen is unobservable."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history. The separate requested initial-data/restore check execution and outcome are not visible.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "failed",
+    "direct_cause": "pg_dump client 16.16 refuses PostgreSQL server 17.12 due to server version mismatch",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-206": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded PostgreSQL initialization completed successfully."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "The recorded initial-data query succeeded: SELECT count(*) FROM eval_marker completed successfully. No numeric value is required, and this does not establish whole-service health."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable: the recorded initialization and initial-data query succeeded."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Fresh PGDATA initialization and marker row count 3, not repairing an existing failed data directory. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "initialized marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-207": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded pg_dump backup operation succeeded."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "The recorded limited restoration check succeeded: the query on the restored marker table completed successfully. This is only the captured check, not proof of full backup integrity or production recovery. No numeric value is required."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable: the recorded backup operation succeeded."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Restore check covers row count 3 and sum 60 only. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "restore marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-208": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "Unknown: the visible container-state record with exit_code 1 does not establish whether PostgreSQL initialization succeeded or failed. A separately scoped report of the nonzero container exit is allowed, but must not be equated with initialization failure."
+        },
+        {
+          "key": "secondary_check",
+          "statement": "Unknown: the visible container-state exit code does not establish whether the initial-data query ran or what its result was. Explicitly distinguish this uncertainty from the nonzero container exit."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "Unknown: the visible container-state record gives no diagnostic establishing the cause of the nonzero exit or an initialization/query failure."
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. The primary status refers to requested PostgreSQL initialization, not container exit. The record reports container-state exit_code 1; initialization and initial-data-query outcomes are unknown. A failed label explicitly scoped only to the container exit is acceptable if both requested workflow outcomes are explicitly unknown. Report only the captured operations/checks. No operational change is requested or established by this view; experimental interventions are not agent actions.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history. The separate requested initial-data/restore check execution and outcome are not visible.",
+      "coverage_policy": "All three semantic findings cover clauses already present in the original question. secondary_check may be satisfied in ordinary prose or an explicit unknowns statement; no new agent JSON key is required. Only operation_status and direct_cause were requested JSON fields. Numeric values are optional and unscored for completeness. Evaluate the actual reached observations; the reference is not observational evidence."
+    },
+    "expected_status": "unknown",
+    "direct_cause": "unknown",
+    "optional_numeric_facts_not_scored": []
+  }
+}

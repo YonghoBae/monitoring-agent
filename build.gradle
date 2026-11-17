@@ -66,8 +66,26 @@ hibernate {
 }
 
 tasks.named('test') {
+    inputs.files('scripts/eval_fixture.py', 'scripts/requirements-eval.txt')
+    inputs.property('evalPromqlPython', providers.environmentVariable('EVAL_PROMQL_PYTHON').orElse(''))
 	useJUnitPlatform {
-		excludeTags 'eval'   // 라이브 LLM 평가는 CI에서 제외 — ./gradlew evalRun으로 수동 실행
+		excludeTags 'eval', 'drill' // Live calls and persistent drills require explicit opt-in.
+	}
+}
+
+// Writes a labelled resolution to the real DB. Use scripts/resolution_drill.py.
+tasks.register('resolutionDrill', Test) {
+	group = 'verification'
+	description = 'Persist a recovery-verified synthetic resolution (explicit live opt-in).'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	useJUnitPlatform {
+		includeTags 'drill'
+	}
+	outputs.upToDateWhen { false }
+	testLogging {
+		showStandardStreams = true
+		events 'passed', 'failed'
 	}
 }
 
@@ -76,6 +94,11 @@ tasks.named('test') {
 tasks.register('evalRun', Test) {
 	group = 'verification'
 	description = 'Run live agent evaluation (real LLM, mocked observability). Requires API key.'
+	// Concurrent diagnostic runs must not overwrite another run's result streams.
+	def reportId = UUID.randomUUID().toString()
+	binaryResultsDirectory = layout.buildDirectory.dir("test-results/evalRun/${reportId}/binary")
+	reports.junitXml.outputLocation = layout.buildDirectory.dir("test-results/evalRun/${reportId}/xml")
+	reports.html.outputLocation = layout.buildDirectory.dir("reports/tests/evalRun/${reportId}")
 	testClassesDirs = sourceSets.test.output.classesDirs
 	classpath = sourceSets.test.runtimeClasspath
 	useJUnitPlatform {

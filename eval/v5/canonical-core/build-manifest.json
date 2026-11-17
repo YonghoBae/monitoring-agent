@@ -1,0 +1,29 @@
+{
+  "kind": "confirmatory_canonical_core",
+  "source_dataset": "eval/v5/dataset.json",
+  "source_dataset_sha256": "2f10a21b02a617c12fe009671b6e0c2cf54b673b9fd09889869f553066905447",
+  "approved_gold": "eval/v5/gold-v52.json",
+  "approved_gold_sha256": "e00320b5c6f416b436e86d7f25205698679b1d9ed783f4b2dd377caedb242fc8",
+  "provenance": "eval/v5/provenance.json",
+  "provenance_sha256": "83a62b49e21a34fb13486e500151ccab3b5982493b9e259e3b03e0fe828f4585",
+  "built_dataset_sha256": "4125f2c74f9308b6d2ff57b25e30d724bcb54eca92528ab436067516e1c44edc",
+  "builder_sha256": "1646ac97cf2b1170a8a809ef7d5cb0576c0746e16fa0580666c6e52f784be135",
+  "case_ids": [
+    "case-201",
+    "case-202",
+    "case-203",
+    "case-204",
+    "case-205",
+    "case-206",
+    "case-207",
+    "case-208"
+  ],
+  "only_changed_scene_field": "answer_fields",
+  "requested_findings": [
+    "operation_status",
+    "secondary_check",
+    "direct_cause"
+  ],
+  "schema_policy": "Same neutral three fields for every phase within each family; no expected values",
+  "exploratory_campaign_preserved": "eval/v5/comparison-2"
+}

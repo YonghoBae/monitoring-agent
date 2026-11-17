@@ -1,0 +1,178 @@
+{
+  "case-201": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation succeeded."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Restore check covers row count 3 and sum 60 only.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "restore marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-202": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation failed."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "psql cannot read /docker-entrypoint-initdb.d/00-eval.sql: Permission denied"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "failed",
+    "direct_cause": "psql cannot read /docker-entrypoint-initdb.d/00-eval.sql: Permission denied",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-203": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation failed."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "unknown"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "failed",
+    "direct_cause": "unknown",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-204": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation succeeded."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Fresh PGDATA initialization and marker row count 3, not repairing an existing failed data directory.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "initialized marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-205": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation failed."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "pg_dump client 16.16 refuses PostgreSQL server 17.12 due to server version mismatch"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "failed",
+    "direct_cause": "pg_dump client 16.16 refuses PostgreSQL server 17.12 due to server version mismatch",
+    "optional_numeric_facts_not_scored": []
+  },
+  "case-206": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation succeeded."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Fresh PGDATA initialization and marker row count 3, not repairing an existing failed data directory.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "initialized marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-207": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation succeeded."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "not_applicable"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim. Restore check covers row count 3 and sum 60 only.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "succeeded",
+    "direct_cause": "not_applicable",
+    "optional_numeric_facts_not_scored": [
+      {
+        "quantity": "restore marker row count",
+        "value": 3,
+        "unit": "count"
+      }
+    ]
+  },
+  "case-208": {
+    "reference": {
+      "required_findings": [
+        {
+          "key": "operation_status",
+          "statement": "The recorded operation failed."
+        },
+        {
+          "key": "direct_cause",
+          "statement": "unknown"
+        }
+      ],
+      "scope": "Only captured isolated operation. No production recovery or universal health claim.",
+      "unobservable": "No evidence of who changed permissions, exact file ownership/mode from tool view, why old client was chosen, or earlier incident history."
+    },
+    "expected_status": "failed",
+    "direct_cause": "unknown",
+    "optional_numeric_facts_not_scored": []
+  }
+}

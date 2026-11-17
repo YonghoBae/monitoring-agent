@@ -41,4 +41,9 @@ public class AgentToolsFactory {
     public AgentTools createAgentTools() {
         return new AgentTools(alertVerifier, prometheusQuery, lokiQuery, vectorService, commandExecutorService);
     }
+
+    /** Optional discovery surface for controlled comparisons; not enabled by default. */
+    public ObservationDiscoveryTools createDiscoveryTools() {
+        return new ObservationDiscoveryTools(prometheusQuery,commandExecutorService,lokiQuery);
+    }
 }

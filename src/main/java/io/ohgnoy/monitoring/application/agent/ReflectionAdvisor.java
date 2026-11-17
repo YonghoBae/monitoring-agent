@@ -34,6 +34,7 @@ public class ReflectionAdvisor implements CallAdvisor {
 
     static final String CTX_ALERT = "alert";
     static final String CTX_AGENT_TOOLS = "agentTools";
+    static final String CTX_EXECUTION = "execution";
     static final String CTX_REFLECTION_RESULT = "reflectionResultHolder";
 
     private final ChatClient chatClient;
@@ -65,6 +66,8 @@ public class ReflectionAdvisor implements CallAdvisor {
         }
 
         AgentTools agentTools = (AgentTools) request.context().get(CTX_AGENT_TOOLS);
+        AgentExecution execution = (AgentExecution) request.context().get(CTX_EXECUTION);
+        if (execution != null && !execution.canContinue()) return initialResponse;
         @SuppressWarnings("unchecked")
         AtomicReference<String> resultHolder =
                 (AtomicReference<String>) request.context().get(CTX_REFLECTION_RESULT);
@@ -78,7 +81,7 @@ public class ReflectionAdvisor implements CallAdvisor {
         }
 
         String conclusion = initialResponse.chatResponse().getResult().getOutput().getText();
-        String reasoningChain = agentTools != null ? agentTools.getReasoningLog() : "";
+        String reasoningChain = execution != null ? execution.summary() : agentTools != null ? agentTools.getReasoningLog() : "";
 
         log.info("[ReflectionAdvisor] 자기검증 시작 — alertId={}", alert.getId());
         String reflectionResult = evaluate(alert, conclusion, reasoningChain);
@@ -123,9 +126,11 @@ public class ReflectionAdvisor implements CallAdvisor {
 
                 검토 기준:
                 1. 근본 원인 진단이 수집된 데이터와 논리적으로 일치하는가?
-                2. 보안 이상징후(외부 접근, 인증 실패, 비정상 패턴) 가능성을 확인했는가?
+                2. 관측된 보안 이상징후가 있다면 근거에 맞게 다루었는가?
                 3. 즉시 조치 항목이 현재 상황에서 실제로 효과가 있는가?
                 4. 중요한 데이터를 수집하지 않은 채 결론을 냈는가?
+                원인 미확정·알람 해소·조회 불가는 유효한 결론이다. 확인한 사실과 한계를 구분했다면
+                근본 원인이 확정되지 않았다는 이유만으로 재분석을 요구하지 마라.
 
                 문제가 없으면 "SUFFICIENT" 한 단어만 응답해.
                 개선이 필요하면 "INSUFFICIENT: [구체적 이유와 추가로 확인해야 할 항목]" 형식으로만 응답해.

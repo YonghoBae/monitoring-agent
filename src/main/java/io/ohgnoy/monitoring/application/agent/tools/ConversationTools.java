@@ -36,8 +36,12 @@ public class ConversationTools {
     @Tool(description = "명령 실행을 제안한다. 실제 실행 전 운영자의 확인(yes/no)이 필요하다.")
     public String execute_command(
             @ToolParam(description = "실행할 명령어 (docker restart <container-name> 형식만 허용)") String command,
-            @ToolParam(description = "이 명령이 필요한 이유") String reason) {
+            @ToolParam(description = "확인한 근거 또는 운영자의 명시적인 요청. 확인하지 않은 장애 상태를 단정하지 않는다.") String reason) {
         log.info("[ConversationTool] execute_command 제안: '{}', 이유: {}", command, reason);
+
+        if (command == null || command.isBlank() || reason == null || reason.isBlank()) {
+            return "거부됨: 실행할 명령과 제안 이유가 모두 필요합니다.";
+        }
 
         if (!commandExecutorService.isAllowed(command)) {
             log.warn("[ConversationTool] 허용되지 않은 명령어 거부: '{}'", command);

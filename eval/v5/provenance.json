@@ -1,0 +1,131 @@
+{
+  "case-201": {
+    "family": "pg_dump_version",
+    "phase": "normal",
+    "source_phase_event_ids": [
+      "event-19",
+      "event-22"
+    ],
+    "visible_event_ids": [
+      "event-19",
+      "event-22"
+    ],
+    "source": "https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same incompatibility mechanism, different versions and isolated data; not whole GitLab outage.",
+    "intervention": "PG16 Debian client vs PG17 Alpine client: version AND distribution/image differ."
+  },
+  "case-202": {
+    "family": "pg_init_permissions",
+    "phase": "fault",
+    "source_phase_event_ids": [
+      "event-51",
+      "event-52"
+    ],
+    "visible_event_ids": [
+      "event-51",
+      "event-52"
+    ],
+    "source": "https://github.com/docker-library/postgres/issues/722#issuecomment-621161536",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same unreadable init SQL mechanism; source used chown, this reproduction grants read permission with chmod. PG17 instead of PG11.",
+    "intervention": "Same SQL and image; remove then restore read permission. Each attempt has fresh tmpfs PGDATA."
+  },
+  "case-203": {
+    "family": "pg_dump_version",
+    "phase": "partial",
+    "source_phase_event_ids": [
+      "event-23",
+      "event-18",
+      "event-24"
+    ],
+    "visible_event_ids": [
+      "event-24"
+    ],
+    "source": "https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same incompatibility mechanism, different versions and isolated data; not whole GitLab outage.",
+    "intervention": "PG16 Debian client vs PG17 Alpine client: version AND distribution/image differ."
+  },
+  "case-204": {
+    "family": "pg_init_permissions",
+    "phase": "recovered",
+    "source_phase_event_ids": [
+      "event-66",
+      "event-67"
+    ],
+    "visible_event_ids": [
+      "event-66",
+      "event-67"
+    ],
+    "source": "https://github.com/docker-library/postgres/issues/722#issuecomment-621161536",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same unreadable init SQL mechanism; source used chown, this reproduction grants read permission with chmod. PG17 instead of PG11.",
+    "intervention": "Same SQL and image; remove then restore read permission. Each attempt has fresh tmpfs PGDATA."
+  },
+  "case-205": {
+    "family": "pg_dump_version",
+    "phase": "fault",
+    "source_phase_event_ids": [
+      "event-23",
+      "event-18",
+      "event-24"
+    ],
+    "visible_event_ids": [
+      "event-23",
+      "event-18",
+      "event-24"
+    ],
+    "source": "https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same incompatibility mechanism, different versions and isolated data; not whole GitLab outage.",
+    "intervention": "PG16 Debian client vs PG17 Alpine client: version AND distribution/image differ."
+  },
+  "case-206": {
+    "family": "pg_init_permissions",
+    "phase": "normal",
+    "source_phase_event_ids": [
+      "event-42",
+      "event-43"
+    ],
+    "visible_event_ids": [
+      "event-42",
+      "event-43"
+    ],
+    "source": "https://github.com/docker-library/postgres/issues/722#issuecomment-621161536",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same unreadable init SQL mechanism; source used chown, this reproduction grants read permission with chmod. PG17 instead of PG11.",
+    "intervention": "Same SQL and image; remove then restore read permission. Each attempt has fresh tmpfs PGDATA."
+  },
+  "case-207": {
+    "family": "pg_dump_version",
+    "phase": "recovered",
+    "source_phase_event_ids": [
+      "event-25",
+      "event-28"
+    ],
+    "visible_event_ids": [
+      "event-25",
+      "event-28"
+    ],
+    "source": "https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same incompatibility mechanism, different versions and isolated data; not whole GitLab outage.",
+    "intervention": "PG16 Debian client vs PG17 Alpine client: version AND distribution/image differ."
+  },
+  "case-208": {
+    "family": "pg_init_permissions",
+    "phase": "partial",
+    "source_phase_event_ids": [
+      "event-51",
+      "event-52"
+    ],
+    "visible_event_ids": [
+      "event-51"
+    ],
+    "source": "https://github.com/docker-library/postgres/issues/722#issuecomment-621161536",
+    "view_transform": "Actual captured outputs replayed as log collector records; actual embedded timestamps or capture timestamp determine query offsets; command wrapper/alias added; partial control withholds details.",
+    "fidelity": "Same unreadable init SQL mechanism; source used chown, this reproduction grants read permission with chmod. PG17 instead of PG11.",
+    "intervention": "Same SQL and image; remove then restore read permission. Each attempt has fresh tmpfs PGDATA."
+  }
+}

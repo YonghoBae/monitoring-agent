@@ -62,14 +62,38 @@ public class AgentTools {
         return result;
     }
 
+    @Tool(description = "RAM/메모리와 GPU 현재 수치를 조회한다. RAM 전체/사용/여유(GiB), GPU 사용률(%)/VRAM(MiB), 수집 대상 instance를 제공한다.")
+    public String get_hardware_status() {
+        log.info("[AgentTool] get_hardware_status");
+        String result = prometheusQuery.hardwareSummary();
+        appendLog("get_hardware_status", "RAM/GPU fixed read-only queries", result);
+        return result;
+    }
+
+    @Tool(description = "CPU/디스크 사용률과 네트워크 속도를 계산한다. resource=all이면 RAM/GPU와 실행 중 컨테이너 목록도 함께 조회해 전체 상태와 미확인 범위를 제공한다.")
+    public String get_system_status(
+            @ToolParam(description = "조회 범위: cpu, disk, network, all") String resource) {
+        String result = prometheusQuery.systemSummary(resource);
+        if ("all".equalsIgnoreCase(resource)) {
+            result += "\n" + prometheusQuery.hardwareSummary();
+            try {
+                result += "\n실행 중 컨테이너 (개별 서비스 health 검증 아님): " + String.join(", ", getContainersCached());
+            } catch (RuntimeException e) {
+                result += "\n컨테이너 목록: 조회 실패 (확인 불가)";
+            }
+        }
+        appendLog("get_system_status", "resource=" + resource, result);
+        return result;
+    }
+
     @Tool(description = "Prometheus에서 사용 가능한 메트릭 이름 목록을 조회한다. query_prometheus 호출 전 정확한 메트릭 이름이 불확실할 때 먼저 호출해 확인한다.")
     public String list_metrics(
-            @ToolParam(description = "메트릭 이름에 포함된 키워드 (예: 'DCGM', 'container', 'node', 'gpu')") String filter) {
+            @ToolParam(description = "메트릭 검색 키워드. 쉼표/공백으로 여러 키워드 OR 검색 가능 (예: 'memory, gpu'). RAM/램은 memory, GPU는 DCGM 메트릭도 포함한다.") String filter) {
         log.info("[AgentTool] list_metrics: filter={}", filter);
         return listMetricsByFilter("list_metrics", filter);
     }
 
-    @Tool(description = "Prometheus에서 사용 가능한 메트릭 이름 목록을 조회한다. list_metrics 이름이 모델에 의해 변형되어 호출된 경우의 호환 도구다.")
+    // Legacy Java callers may still use the alias; only list_metrics is exposed to models.
     public String list_misc(
             @ToolParam(description = "메트릭 이름에 포함된 키워드 (예: 'memory', 'node', 'container')") String filter) {
         log.info("[AgentTool] list_misc(alias of list_metrics): filter={}", filter);
@@ -78,7 +102,10 @@ public class AgentTools {
 
     private String listMetricsByFilter(String toolName, String filter) {
         List<String> metrics = prometheusQuery.listMetrics(filter);
-        String result = metrics.isEmpty() ? "메트릭 없음: " + filter : String.join(", ", metrics);
+        String result = metrics.isEmpty()
+                ? "검색 조건에 일치하는 메트릭 이름 없음: " + filter
+                  + ". 이 결과만으로 수집 중단을 판단하지 마세요. 키워드를 나눠 재검색하거나 빈 필터로 실제 이름을 확인하세요."
+                : String.join(", ", metrics);
         appendLog(toolName, "filter=" + filter, result);
         return result;
     }
@@ -122,13 +149,7 @@ public class AgentTools {
             @ToolParam(description = "조회할 과거 시간 범위 (분 단위, 예: '30')") String timeRangeMinutes) {
         log.info("[AgentTool] query_loki: container={}", containerName);
 
-        // 1차: 실행 중인 컨테이너 목록 대조 (캐시 활용)
-        List<String> running = getContainersCached();
-        if (!running.isEmpty() && !running.contains(containerName)) {
-            return "존재하지 않는 컨테이너: " + containerName + ". 실행 중인 컨테이너: " + String.join(", ", running);
-        }
-
-        // 2차: 메타문자 검증 (목록 조회 실패 시 폴백, defense-in-depth)
+        // Stopped containers can still have historical logs; running inventory is not an existence test.
         if (!ALLOWED_CONTAINER_NAME.matcher(containerName).matches()) {
             return "허용되지 않는 컨테이너 이름: " + containerName;
         }

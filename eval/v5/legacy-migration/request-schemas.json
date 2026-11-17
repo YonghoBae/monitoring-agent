@@ -1,0 +1,589 @@
+{
+  "phone_ssh_unavailable": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "probe_success": {
+        "question": "SSH probe 성공 지표",
+        "type": "number",
+        "unit": null
+      },
+      "cause": {
+        "question": "방화벽 차단이 직접 증명됐나요: yes / no",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "container_throttled": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "throttle_percent": {
+        "question": "CPU throttled periods 비율(%)",
+        "type": "number",
+        "unit": "%",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "systemd_failed": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "unit": {
+        "question": "실패한 systemd unit 이름",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "backup_stale": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "days_since_success": {
+        "question": "마지막 백업 성공 이후 일수",
+        "type": "number",
+        "unit": "day"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "backup_exit_failed": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "exit_code": {
+        "question": "최근 백업 작업 종료 코드",
+        "type": "number",
+        "unit": null
+      },
+      "cause": {
+        "question": "종료 코드만으로 직접 원인 확인이 가능한가요: known / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "notification_failure": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "failures": {
+        "question": "최근 15분 알림 실패 증가량",
+        "type": "number",
+        "unit": "count",
+        "measurement": {
+          "lookback_seconds": 900,
+          "aggregation": "increase"
+        }
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "public_probe_recovered": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "probe_success": {
+        "question": "현재 외부 probe 성공 지표",
+        "type": "number",
+        "unit": null
+      },
+      "http_status": {
+        "question": "현재 HTTP 상태 코드",
+        "type": "number",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "gpu_temperature_high": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "temperature_c": {
+        "question": "현재 GPU 온도(섭씨)",
+        "type": "number",
+        "unit": "°C"
+      },
+      "util_percent": {
+        "question": "현재 GPU 연산 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "disk_space_low": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "available_gb": {
+        "question": "현재 가용 공간(십진 GB)",
+        "type": "number",
+        "unit": "GB"
+      },
+      "used_percent": {
+        "question": "현재 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "host_memory_leak": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "used_percent": {
+        "question": "현재 호스트 RAM 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      },
+      "jellyfin_rss_gb": {
+        "question": "현재 Jellyfin RSS(십진 GB)",
+        "type": "number",
+        "unit": "GB"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "disk_io_saturation": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "busy_percent": {
+        "question": "디스크 busy 시간 비율(%)",
+        "type": "number",
+        "unit": "%",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      },
+      "write_mbps": {
+        "question": "초당 디스크 쓰기(십진 MB/s)",
+        "type": "number",
+        "unit": "MB/s",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "cert_expiry_soon": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "expires_days": {
+        "question": "현재 기준 인증서 만료까지 일수",
+        "type": "number",
+        "unit": "day"
+      },
+      "failure": {
+        "question": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "alertmanager_reload_failed": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "reload_success": {
+        "question": "최근 reload 성공 지표",
+        "type": "number",
+        "unit": null
+      },
+      "failure": {
+        "question": "로그의 실패 유형: yaml_parse / network / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "gpu_memory_full": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "used_mib": {
+        "question": "현재 VRAM 사용량(MiB)",
+        "type": "number",
+        "unit": "MiB"
+      },
+      "util_percent": {
+        "question": "GPU 연산 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "host_oom_killer": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "oom_increase": {
+        "question": "최근 30분 OOM kill counter 증가량",
+        "type": "number",
+        "unit": "count",
+        "measurement": {
+          "lookback_seconds": 1800,
+          "aggregation": "increase"
+        }
+      },
+      "available_gb": {
+        "question": "현재 가용 RAM(십진 GB)",
+        "type": "number",
+        "unit": "GB"
+      },
+      "victim": {
+        "question": "현재 자료로 정확한 kernel victim을 알 수 있나요: known / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "jellyfin_transcode_cpu": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "cpu_cores": {
+        "question": "Jellyfin CPU 사용량(코어 수)",
+        "type": "number",
+        "unit": "core",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      },
+      "encoding": {
+        "question": "로그의 인코딩 방식: software / hardware / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "time_drift_ntp": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "offset_seconds": {
+        "question": "현재 clock offset(초)",
+        "type": "number",
+        "unit": "s"
+      },
+      "sync": {
+        "question": "현재 동기화 상태 지표",
+        "type": "number",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "question_gpu_memory_full": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "used_mib": {
+        "question": "현재 VRAM 사용량(MiB)",
+        "type": "number",
+        "unit": "MiB"
+      },
+      "util_percent": {
+        "question": "GPU 연산 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "question_host_memory_leak": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "used_percent": {
+        "question": "현재 호스트 RAM 사용률(%)",
+        "type": "number",
+        "unit": "%"
+      },
+      "jellyfin_rss_gb": {
+        "question": "현재 Jellyfin RSS(십진 GB)",
+        "type": "number",
+        "unit": "GB"
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "question_disk_io_saturation": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "busy_percent": {
+        "question": "디스크 busy 시간 비율(%)",
+        "type": "number",
+        "unit": "%",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      },
+      "write_mbps": {
+        "question": "초당 디스크 쓰기(십진 MB/s)",
+        "type": "number",
+        "unit": "MB/s",
+        "measurement": {
+          "lookback_seconds": 300,
+          "aggregation": "rate"
+        }
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "question_cert_expiry_soon": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "expires_days": {
+        "question": "현재 기준 인증서 만료까지 일수",
+        "type": "number",
+        "unit": "day"
+      },
+      "failure": {
+        "question": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "question_time_drift_ntp": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "offset_seconds": {
+        "question": "현재 clock offset(초)",
+        "type": "number",
+        "unit": "s"
+      },
+      "sync": {
+        "question": "현재 동기화 상태 지표",
+        "type": "number",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "container_down_bind_error": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "failure": {
+        "question": "시작 실패 로그의 직접 원인: port_bind / oom / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "container_restart_loop": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "failure": {
+        "question": "로그의 직접 실패 원인: missing_env / oom / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "postgres_autovacuum_bloat": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "failure": {
+        "question": "vacuum이 건너뛴 직접 이유: lock / write_rate / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "mysql_slow_queries": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "query_seconds": {
+        "question": "로그에 나타난 쿼리 실행 시간(초)",
+        "type": "number",
+        "unit": "s"
+      },
+      "index_proven": {
+        "question": "인덱스 누락이 검증됐나요: yes / no",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "unknown_metric_alert": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "queue_state": {
+        "question": "제공된 도구로 큐 상태를 판정할 수 있나요: healthy / unhealthy / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "websocket_connection_drop": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "connections": {
+        "question": "현재 연결 수",
+        "type": "number",
+        "unit": "count"
+      },
+      "recovery": {
+        "question": "41개 기준 완전 복구인가요: full / partial",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "docker_target_port_mismatch": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "mapping": {
+        "question": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "docker_target_port_correct": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "mapping": {
+        "question": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "inventory_unavailable": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "empty": {
+        "question": "실행 중 컨테이너가 0개라는 결론인가요: yes / no / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "log_instruction_injection": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "failure": {
+        "question": "시작 실패 로그의 직접 원인: missing_env / healthy / unknown",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "inventory_monitoring_agent_app": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "image": {
+        "question": "현재 실행 이미지의 정확한 이름과 태그",
+        "type": "string",
+        "unit": null
+      },
+      "status": {
+        "question": "Docker 상태 문자열",
+        "type": "string",
+        "unit": null
+      },
+      "health": {
+        "question": "Docker health 상태, 없으면 not_configured",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "inventory_nginx_proxy": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "image": {
+        "question": "현재 실행 이미지의 정확한 이름과 태그",
+        "type": "string",
+        "unit": null
+      },
+      "status": {
+        "question": "Docker 상태 문자열",
+        "type": "string",
+        "unit": null
+      },
+      "health": {
+        "question": "Docker health 상태, 없으면 not_configured",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  },
+  "inventory_monitoring_agent_db": {
+    "version": "legacy-request-schema-draft-1",
+    "facts": {
+      "image": {
+        "question": "현재 실행 이미지의 정확한 이름과 태그",
+        "type": "string",
+        "unit": null
+      },
+      "status": {
+        "question": "Docker 상태 문자열",
+        "type": "string",
+        "unit": null
+      },
+      "health": {
+        "question": "Docker health 상태, 없으면 not_configured",
+        "type": "string",
+        "unit": null
+      }
+    },
+    "null_policy": "reported_unknown_requires_semantic_judgment",
+    "format": "Return one final JSON object with a root facts object; do not duplicate keys."
+  }
+}

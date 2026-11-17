@@ -1,0 +1,154 @@
+{
+  "container_throttled": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "systemd_failed": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "backup_stale": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "notification_failure": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "public_probe_recovered": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "gpu_temperature_high": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "disk_space_low": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "host_memory_leak": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "disk_io_saturation": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "cert_expiry_soon": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "alertmanager_reload_failed": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "gpu_memory_full": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "host_oom_killer": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "jellyfin_transcode_cpu": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "time_drift_ntp": [
+    {
+      "key": "causal_assessment",
+      "question": "확인된 원인, 아직 모르는 점을 보고하세요.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "question_gpu_memory_full": [
+    {
+      "key": "failure_inference",
+      "question": "메모리가 찼다고 추론 장애라고 단정할 수 있어?",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "question_host_memory_leak": [
+    {
+      "key": "growing_container",
+      "question": "어느 컨테이너가 메모리를 늘려 쓰고 있어?",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "container_restart_loop": [
+    {
+      "key": "restart_pattern",
+      "question": "leafy-api restarted 6 times in 10 minutes 현재 상황과 확인 가능한 직접 근거를 조사해줘.",
+      "type": "string|null",
+      "unit": null
+    }
+  ],
+  "mysql_slow_queries": [
+    {
+      "key": "current_situation",
+      "question": "slow query count exceeded threshold 현재 상황과 확인 가능한 직접 근거를 조사해줘.",
+      "type": "string|null",
+      "unit": null
+    }
+  ]
+}

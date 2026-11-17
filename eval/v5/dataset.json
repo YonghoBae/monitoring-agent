@@ -1,0 +1,1170 @@
+{
+  "schema_version": 5,
+  "kind": "source-backed isolated capture replay",
+  "scenarios": [
+    {
+      "id": "case-201",
+      "family": "pg_dump_version",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 백업 작업과 해당 덤프의 제한적인 복원 검사 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -72,
+                "line": "{\"operation\": \"pg_dump\", \"exit_code\": 0, \"stdout\": \"--\\n-- PostgreSQL database dump\\n--\\n\\n\\\\restrict CwmcZQWt0Rc42ymoRtRYyDzE2pp6WrPBCDzuuJU7PHbBtflXzibcQJneeajqFKw\\n\\n-- Dumped from database version 17.12\\n-- Dumped by pg_dump version 17.12\\n\\nSET statement_timeout = 0;\\nSET lock_timeout = 0;\\nSET idle_in_transaction_session_timeout = 0;\\nSET transaction_timeout = 0;\\nSET client_encoding = 'UTF8';\\nSET standard_conforming_strings = on;\\nSELECT pg_catalog.set_config('search_path', '', false);\\nSET check_function_bodies = false;\\nSET xmloption = content;\\nSET client_min_messages = warning;\\nSET row_security = off;\\n\\nSET default_tablespace = '';\\n\\nSET default_table_access_method = heap;\\n\\n--\\n-- Name: eval_marker; Type: TABLE; Schema: public; Owner: -\\n--\\n\\nCREATE TABLE public.eval_marker (\\n    value integer\\n);\\n\\n\\n--\\n-- Data for Name: eval_marker; Type: TABLE DATA; Schema: public; Owner: -\\n--\\n\\nCOPY public.eval_marker (value) FROM stdin;\\n10\\n20\\n30\\n\\\\.\\n\\n\\n--\\n-- PostgreSQL database dump complete\\n--\\n\\n\\\\unrestrict CwmcZQWt0Rc42ymoRtRYyDzE2pp6WrPBCDzuuJU7PHbBtflXzibcQJneeajqFKw\\n\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -72,
+                "line": "{\"operation\": \"SELECT count(*),sum(value) FROM restored eval_marker\", \"exit_code\": 0, \"stdout\": \"3:60\\n\", \"stderr\": \"\"}"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-202",
+      "family": "pg_init_permissions",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 PostgreSQL 초기화와 초기 데이터 조회 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -62,
+                "line": "{\"operation\": \"container state\", \"exit_code\": 0, \"stdout\": \"{\\\"Status\\\":\\\"exited\\\",\\\"Running\\\":false,\\\"Paused\\\":false,\\\"Restarting\\\":false,\\\"OOMKilled\\\":false,\\\"Dead\\\":false,\\\"Pid\\\":0,\\\"ExitCode\\\":1,\\\"Error\\\":\\\"\\\",\\\"StartedAt\\\":\\\"2026-11-16T15:15:53.9297309Z\\\",\\\"FinishedAt\\\":\\\"2026-11-16T15:15:56.834237104Z\\\"}\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.045613069Z chmod: /var/run/postgresql: Operation not permitted"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047391425Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047407121Z WARNING: POSTGRES_HOST_AUTH_METHOD has been set to \"trust\". This will allow"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047411019Z          anyone with access to the Postgres port to access your database without"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047414212Z          a password, even if POSTGRES_PASSWORD is set. See PostgreSQL"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047417152Z          documentation about \"trust\":"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047419731Z          https://www.postgresql.org/docs/current/auth-trust.html"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047422840Z          In Docker's default configuration, this is effectively any other"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047425680Z          container on the same system."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047428576Z "
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047431355Z          It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047434332Z          it with \"-e POSTGRES_PASSWORD=password\" instead to set a password in"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047437378Z          \"docker run\"."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.047440849Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063354822Z The files belonging to this database system will be owned by user \"postgres\"."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063370159Z This user must also own the server process."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063372891Z "
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063401820Z The database cluster will be initialized with locale \"en_US.utf8\"."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063405475Z The default database encoding has accordingly been set to \"UTF8\"."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063407713Z The default text search configuration will be set to \"english\"."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063409851Z "
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063411823Z Data page checksums are disabled."
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063413813Z "
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063430911Z fixing permissions on existing directory /tmp/pgdata ... ok"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063627698Z creating subdirectories ... ok"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.063631328Z selecting dynamic shared memory implementation ... posix"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.083368083Z selecting default \"max_connections\" ... 100"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.129402728Z selecting default \"shared_buffers\" ... 128MB"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.227755166Z selecting default time zone ... UTC"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.228978653Z creating configuration files ... ok"
+              },
+              {
+                "offset_seconds": -65,
+                "line": "2026-11-16T15:15:54.841567200Z running bootstrap script ... ok"
+              },
+              {
+                "offset_seconds": -64,
+                "line": "2026-11-16T15:15:55.352988955Z sh: locale: not found"
+              },
+              {
+                "offset_seconds": -64,
+                "line": "2026-11-16T15:15:55.353013937Z 2026-11-16 15:15:55.352 UTC [23] WARNING:  no usable system locales were found"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.417292647Z performing post-bootstrap initialization ... ok"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426632794Z initdb: warning: enabling \"trust\" authentication for local connections"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426633783Z syncing data to disk ... ok"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426658758Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426663264Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426666205Z Success. You can now start the database server using:"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426669584Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426671810Z     pg_ctl -D /tmp/pgdata -l logfile start"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426673913Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.426679919Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb."
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.541553203Z waiting for server to start....2026-11-16 15:15:56.541 UTC [29] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.541698124Z 2026-11-16 15:15:56.541 UTC [29] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\""
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.545480179Z 2026-11-16 15:15:56.545 UTC [32] LOG:  database system was shut down at 2026-11-16 15:15:56 UTC"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.552404780Z 2026-11-16 15:15:56.552 UTC [29] LOG:  database system is ready to accept connections"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.651247872Z  done"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.651320845Z server started"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.751404286Z CREATE DATABASE"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.751944068Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.752039769Z "
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.752076744Z /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/00-eval.sql"
+              },
+              {
+                "offset_seconds": -63,
+                "line": "2026-11-16T15:15:56.819374852Z psql: error: /docker-entrypoint-initdb.d/00-eval.sql: Permission denied"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-203",
+      "family": "pg_dump_version",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 백업 작업과 해당 덤프의 제한적인 복원 검사 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -71,
+                "line": "{\"operation\": \"pg_dump\", \"exit_code\": 1, \"detail\": \"Detailed output is unavailable in this view.\"}"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-204",
+      "family": "pg_init_permissions",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 PostgreSQL 초기화와 초기 데이터 조회 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -57,
+                "line": "{\"operation\": \"SELECT count(*) FROM eval_marker\", \"exit_code\": 0, \"stdout\": \"3\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.639733093Z chmod: /var/run/postgresql: Operation not permitted"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641400160Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641418614Z WARNING: POSTGRES_HOST_AUTH_METHOD has been set to \"trust\". This will allow"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641423576Z          anyone with access to the Postgres port to access your database without"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641426721Z          a password, even if POSTGRES_PASSWORD is set. See PostgreSQL"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641429541Z          documentation about \"trust\":"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641432413Z          https://www.postgresql.org/docs/current/auth-trust.html"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641435361Z          In Docker's default configuration, this is effectively any other"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641438268Z          container on the same system."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641441015Z "
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641444021Z          It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641446907Z          it with \"-e POSTGRES_PASSWORD=password\" instead to set a password in"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641452384Z          \"docker run\"."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.641455488Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672226474Z The files belonging to this database system will be owned by user \"postgres\"."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672244920Z This user must also own the server process."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672247708Z "
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672303809Z The database cluster will be initialized with locale \"en_US.utf8\"."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672310802Z The default database encoding has accordingly been set to \"UTF8\"."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672314705Z The default text search configuration will be set to \"english\"."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672318437Z "
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672321350Z Data page checksums are disabled."
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672330469Z "
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672360611Z fixing permissions on existing directory /tmp/pgdata ... ok"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672465294Z creating subdirectories ... ok"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.672513430Z selecting dynamic shared memory implementation ... posix"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.688051886Z selecting default \"max_connections\" ... 100"
+              },
+              {
+                "offset_seconds": -62,
+                "line": "2026-11-16T15:15:57.708192396Z selecting default \"shared_buffers\" ... 128MB"
+              },
+              {
+                "offset_seconds": -61,
+                "line": "2026-11-16T15:15:58.201093035Z selecting default time zone ... UTC"
+              },
+              {
+                "offset_seconds": -61,
+                "line": "2026-11-16T15:15:58.202537460Z creating configuration files ... ok"
+              },
+              {
+                "offset_seconds": -61,
+                "line": "2026-11-16T15:15:58.699867414Z running bootstrap script ... ok"
+              },
+              {
+                "offset_seconds": -60,
+                "line": "2026-11-16T15:15:59.515944295Z sh: locale: not found"
+              },
+              {
+                "offset_seconds": -60,
+                "line": "2026-11-16T15:15:59.566292073Z 2026-11-16 15:15:59.566 UTC [29] WARNING:  no usable system locales were found"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.475524280Z performing post-bootstrap initialization ... ok"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483192453Z initdb: warning: enabling \"trust\" authentication for local connections"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483210454Z syncing data to disk ... ok"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483219160Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb."
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483223385Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483228034Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483230339Z Success. You can now start the database server using:"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483232873Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483235286Z     pg_ctl -D /tmp/pgdata -l logfile start"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.483237714Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.574698968Z waiting for server to start....2026-11-16 15:16:01.574 UTC [59] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.574728825Z 2026-11-16 15:16:01.574 UTC [59] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\""
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.576318951Z 2026-11-16 15:16:01.576 UTC [62] LOG:  database system was shut down at 2026-11-16 15:16:01 UTC"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.579597770Z 2026-11-16 15:16:01.579 UTC [59] LOG:  database system is ready to accept connections"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.607176469Z  done"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.607201215Z server started"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.677708232Z CREATE DATABASE"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.678179185Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.678257253Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.678287567Z /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/00-eval.sql"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.691506639Z CREATE TABLE"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.691894009Z INSERT 0 3"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.692370990Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.692376841Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.693111137Z waiting for server to shut down....2026-11-16 15:16:01.693 UTC [59] LOG:  received fast shutdown request"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.693154707Z 2026-11-16 15:16:01.693 UTC [59] LOG:  aborting any active transactions"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.695742307Z 2026-11-16 15:16:01.695 UTC [59] LOG:  background worker \"logical replication launcher\" (PID 65) exited with exit code 1"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.702217632Z 2026-11-16 15:16:01.702 UTC [60] LOG:  shutting down"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.702229015Z 2026-11-16 15:16:01.702 UTC [60] LOG:  checkpoint starting: shutdown immediate"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.776751087Z 2026-11-16 15:16:01.776 UTC [60] LOG:  checkpoint complete: wrote 937 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.073 s, sync=0.002 s, total=0.075 s; sync files=302, longest=0.001 s, average=0.001 s; distance=4347 kB, estimate=4347 kB; lsn=0/1944C48, redo lsn=0/1944C48"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.808129955Z 2026-11-16 15:16:01.807 UTC [59] LOG:  database system is shut down"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.893967460Z  done"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.894026389Z server stopped"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.896713226Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.896781252Z PostgreSQL init process complete; ready for start up."
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.896867995Z "
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.970008139Z 2026-11-16 15:16:01.969 UTC [1] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.970050696Z 2026-11-16 15:16:01.970 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.970058375Z 2026-11-16 15:16:01.970 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.970150629Z 2026-11-16 15:16:01.970 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\""
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.971806914Z 2026-11-16 15:16:01.971 UTC [77] LOG:  database system was shut down at 2026-11-16 15:16:01 UTC"
+              },
+              {
+                "offset_seconds": -58,
+                "line": "2026-11-16T15:16:01.975635161Z 2026-11-16 15:16:01.975 UTC [1] LOG:  database system is ready to accept connections"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-205",
+      "family": "pg_dump_version",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 백업 작업과 해당 덤프의 제한적인 복원 검사 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -71,
+                "line": "{\"operation\": \"pg_dump --version\", \"exit_code\": 0, \"stdout\": \"pg_dump (PostgreSQL) 16.16 (Debian 16.16-1.pgdg13+1)\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -73,
+                "line": "{\"operation\": \"SHOW server_version\", \"exit_code\": 0, \"stdout\": \"17.12\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -71,
+                "line": "{\"operation\": \"pg_dump\", \"exit_code\": 1, \"stdout\": \"\", \"stderr\": \"pg_dump: error: aborting because of server version mismatch\\npg_dump: detail: server version: 17.12; pg_dump version: 16.16 (Debian 16.16-1.pgdg13+1)\\n\"}"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-206",
+      "family": "pg_init_permissions",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 PostgreSQL 초기화와 초기 데이터 조회 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -66,
+                "line": "{\"operation\": \"SELECT count(*) FROM eval_marker\", \"exit_code\": 0, \"stdout\": \"3\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.522355364Z chmod: /var/run/postgresql: Operation not permitted"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523730963Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523743044Z WARNING: POSTGRES_HOST_AUTH_METHOD has been set to \"trust\". This will allow"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523747290Z          anyone with access to the Postgres port to access your database without"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523749775Z          a password, even if POSTGRES_PASSWORD is set. See PostgreSQL"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523751853Z          documentation about \"trust\":"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523754002Z          https://www.postgresql.org/docs/current/auth-trust.html"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523758200Z          In Docker's default configuration, this is effectively any other"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523760321Z          container on the same system."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523762316Z "
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523764292Z          It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523766408Z          it with \"-e POSTGRES_PASSWORD=password\" instead to set a password in"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523768564Z          \"docker run\"."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.523770649Z ********************************************************************************"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539382638Z The files belonging to this database system will be owned by user \"postgres\"."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539404314Z This user must also own the server process."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539407355Z "
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539412514Z The database cluster will be initialized with locale \"en_US.utf8\"."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539415844Z The default database encoding has accordingly been set to \"UTF8\"."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539418201Z The default text search configuration will be set to \"english\"."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539421710Z "
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539424843Z Data page checksums are disabled."
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539439823Z "
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539488690Z fixing permissions on existing directory /tmp/pgdata ... ok"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539586314Z creating subdirectories ... ok"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.539640135Z selecting dynamic shared memory implementation ... posix"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.554417571Z selecting default \"max_connections\" ... 100"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.573871062Z selecting default \"shared_buffers\" ... 128MB"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.938460378Z selecting default time zone ... UTC"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "2026-11-16T15:15:49.939867381Z creating configuration files ... ok"
+              },
+              {
+                "offset_seconds": -69,
+                "line": "2026-11-16T15:15:50.376318831Z running bootstrap script ... ok"
+              },
+              {
+                "offset_seconds": -68,
+                "line": "2026-11-16T15:15:51.178307928Z sh: locale: not found"
+              },
+              {
+                "offset_seconds": -68,
+                "line": "2026-11-16T15:15:51.178328534Z 2026-11-16 15:15:51.178 UTC [29] WARNING:  no usable system locales were found"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.448471903Z performing post-bootstrap initialization ... ok"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458764813Z syncing data to disk ... ok"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458767658Z initdb: warning: enabling \"trust\" authentication for local connections"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458807273Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb."
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458817212Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458820363Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458823252Z Success. You can now start the database server using:"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458839681Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458844212Z     pg_ctl -D /tmp/pgdata -l logfile start"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.458848567Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.567935865Z waiting for server to start....2026-11-16 15:15:52.567 UTC [53] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.567960801Z 2026-11-16 15:15:52.567 UTC [53] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\""
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.569873951Z 2026-11-16 15:15:52.569 UTC [56] LOG:  database system was shut down at 2026-11-16 15:15:52 UTC"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.574129429Z 2026-11-16 15:15:52.574 UTC [53] LOG:  database system is ready to accept connections"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.582910096Z  done"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.582928167Z server started"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.761250453Z CREATE DATABASE"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.761818634Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.762001669Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.762010912Z /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/00-eval.sql"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.856193882Z CREATE TABLE"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.856731497Z INSERT 0 3"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.857423846Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.857441845Z "
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.858568009Z waiting for server to shut down....2026-11-16 15:15:52.858 UTC [53] LOG:  received fast shutdown request"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.858636888Z 2026-11-16 15:15:52.858 UTC [53] LOG:  aborting any active transactions"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.938986652Z 2026-11-16 15:15:52.938 UTC [72] FATAL:  terminating connection due to administrator command"
+              },
+              {
+                "offset_seconds": -67,
+                "line": "2026-11-16T15:15:52.939052598Z 2026-11-16 15:15:52.938 UTC [72] LOG:  could not send data to client: Broken pipe"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.034392605Z 2026-11-16 15:15:53.034 UTC [74] FATAL:  the database system is shutting down"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.034458359Z 2026-11-16 15:15:53.034 UTC [53] LOG:  background worker \"logical replication launcher\" (PID 59) exited with exit code 1"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.046028954Z 2026-11-16 15:15:53.045 UTC [54] LOG:  shutting down"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.046112922Z 2026-11-16 15:15:53.045 UTC [54] LOG:  checkpoint starting: shutdown immediate"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.149786837Z 2026-11-16 15:15:53.149 UTC [54] LOG:  checkpoint complete: wrote 937 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.101 s, sync=0.002 s, total=0.104 s; sync files=302, longest=0.001 s, average=0.001 s; distance=4347 kB, estimate=4347 kB; lsn=0/1944C48, redo lsn=0/1944C48"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.170634105Z 2026-11-16 15:15:53.170 UTC [53] LOG:  database system is shut down"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.234823479Z  done"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.234952485Z server stopped"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.237763156Z "
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.237821279Z PostgreSQL init process complete; ready for start up."
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.237869429Z "
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.336081841Z 2026-11-16 15:15:53.335 UTC [1] LOG:  starting PostgreSQL 17.12 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.336115991Z 2026-11-16 15:15:53.335 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.336127953Z 2026-11-16 15:15:53.336 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.336314054Z 2026-11-16 15:15:53.336 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\""
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.338778251Z 2026-11-16 15:15:53.338 UTC [78] LOG:  database system was shut down at 2026-11-16 15:15:53 UTC"
+              },
+              {
+                "offset_seconds": -66,
+                "line": "2026-11-16T15:15:53.345199004Z 2026-11-16 15:15:53.345 UTC [1] LOG:  database system is ready to accept connections"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-207",
+      "family": "pg_dump_version",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 백업 작업과 해당 덤프의 제한적인 복원 검사 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -71,
+                "line": "{\"operation\": \"pg_dump\", \"exit_code\": 0, \"stdout\": \"--\\n-- PostgreSQL database dump\\n--\\n\\n\\\\restrict 0X0jIQFCu5AFCKfcNgHgLz7xeZZU58kEmJ9YARZDI6YwLhuSDEHClWCRCbtleDY\\n\\n-- Dumped from database version 17.12\\n-- Dumped by pg_dump version 17.12\\n\\nSET statement_timeout = 0;\\nSET lock_timeout = 0;\\nSET idle_in_transaction_session_timeout = 0;\\nSET transaction_timeout = 0;\\nSET client_encoding = 'UTF8';\\nSET standard_conforming_strings = on;\\nSELECT pg_catalog.set_config('search_path', '', false);\\nSET check_function_bodies = false;\\nSET xmloption = content;\\nSET client_min_messages = warning;\\nSET row_security = off;\\n\\nSET default_tablespace = '';\\n\\nSET default_table_access_method = heap;\\n\\n--\\n-- Name: eval_marker; Type: TABLE; Schema: public; Owner: -\\n--\\n\\nCREATE TABLE public.eval_marker (\\n    value integer\\n);\\n\\n\\n--\\n-- Data for Name: eval_marker; Type: TABLE DATA; Schema: public; Owner: -\\n--\\n\\nCOPY public.eval_marker (value) FROM stdin;\\n10\\n20\\n30\\n\\\\.\\n\\n\\n--\\n-- PostgreSQL database dump complete\\n--\\n\\n\\\\unrestrict 0X0jIQFCu5AFCKfcNgHgLz7xeZZU58kEmJ9YARZDI6YwLhuSDEHClWCRCbtleDY\\n\\n\", \"stderr\": \"\"}"
+              },
+              {
+                "offset_seconds": -70,
+                "line": "{\"operation\": \"SELECT count(*),sum(value) FROM restored eval_marker\", \"exit_code\": 0, \"stdout\": \"3:60\\n\", \"stderr\": \"\"}"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    },
+    {
+      "id": "case-208",
+      "family": "pg_init_permissions",
+      "split": "test",
+      "task_mode": "question",
+      "question": "service-db의 수집 기록을 조회해서 PostgreSQL 초기화와 초기 데이터 조회 결과를 알려줘. 실패했다면 기록으로 확인되는 직접 원인을 설명하고, 확인되지 않는 근본 원인은 단정하지 마. 성공 여부나 원인을 알 수 없으면 구분해서 알려줘. 운영 변경은 실행하지 마.",
+      "answer_fields": [
+        {
+          "key": "operation_status",
+          "question": "수집된 작업 결과: succeeded, failed, unknown 중 하나"
+        },
+        {
+          "key": "direct_cause",
+          "question": "실패의 직접 원인. 성공이면 not_applicable, 원인 미확인이면 null, 확인되면 짧게 설명"
+        }
+      ],
+      "world": {
+        "evaluation_time": "2026-11-16T15:17:00Z",
+        "step_seconds": 60,
+        "series": [],
+        "allow_empty_series": true,
+        "declared_metrics": [],
+        "containers": [
+          "service-db"
+        ],
+        "logs": [
+          {
+            "source": "docker",
+            "name": "service-db",
+            "entries": [
+              {
+                "offset_seconds": -62,
+                "line": "{\"operation\": \"container state\", \"exit_code\": 1, \"detail\": \"Detailed output is unavailable in this view.\"}"
+              }
+            ]
+          }
+        ],
+        "rag": []
+      }
+    }
+  ]
+}

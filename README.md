@@ -10,12 +10,21 @@
 ![Gradle](https://img.shields.io/badge/Gradle-8-02303A?logo=gradle&logoColor=white)
 
 Alertmanager 웹훅을 수신해 AI 분석 → 자동 조치까지 처리하는 Spring Boot 기반 인시던트 대응 에이전트입니다.
-알람 발생 시 Prometheus/Loki에서 실시간 컨텍스트를 수집하고, Google Gemini로 근본 원인을 분석한 뒤, Discord를 통해 결과를 전달하거나 자동으로 복구 명령을 실행합니다.
+알람 발생 시 Prometheus/Loki에서 실시간 컨텍스트를 수집하고, 설정된 LLM(Gemini 또는 OpenAI 호환 API/Ollama)으로 원인을 조사한 뒤, Discord를 통해 결과를 전달하거나 허용된 복구 명령을 실행합니다.
+
+## 평가 현황 — 2026-11-17
+
+출처 기반 데이터셋, 결정적 수치 검사, 별도 LLM Judge와 독립 AI 교차 검수를 갖춘 오프라인 평가를 추가했습니다. 런타임의 선택적 4차원 Judge와는 별도 경로입니다.
+35문항 통제 시험의 잠정 자동 주 점수는 간소화 하네스 **61.8점**, Pi **53.6점**입니다. 반복별 우열과 채점 불확실성 때문에 **최종 순위와 확정 정확도는 입증하지 못했습니다**. 실제 장애 원리 2종의 재현 시험은 별도로 보고합니다.
+
+- [데이터·코드·결과 안내](eval/README.md)
+- [전체 평가 결과](docs/EVAL-V5-VERIFIED-RESULTS-2026-11-17.md)
+- [점수의 한계와 신뢰성 검증 상태](docs/EVAL-V5-RELIABILITY-CONCLUSION-2026-11-17.md)
 
 ## 주요 기능
 
 - **4단계 자동화 파이프라인**: Verify → Investigate → Resolve → Authorize
-- **AI 분석**: Google Gemini 2.5-flash 기반 근본 원인 분석
+- **AI 분석**: Spring AI를 통한 Gemini 또는 OpenAI 호환 LLM 기반 조사
 - **RAG**: PGVector + Ollama(all-minilm)로 유사 과거 알람 검색 후 프롬프트에 주입
 - **자동 복구**: Playbook에 등록된 AUTO 알람은 승인 없이 즉시 실행
 - **Discord 승인 워크플로우**: NEEDS_APPROVAL 알람은 Discord Bot으로 승인 후 실행
@@ -40,7 +49,7 @@ flowchart TD
     R --> PB[AlertPlaybook]
     R --> VS[AlertVectorService]
     VS -->|벡터 검색| PGV[(PGVector)]
-    R -->|프롬프트| G[Google Gemini]
+    R -->|프롬프트| G[설정된 LLM]
     G -->|분석 결과| R
 
     R --> AU["4️⃣ Authorize"]
@@ -57,7 +66,7 @@ flowchart TD
 | 분류 | 기술 |
 |------|------|
 | Framework | Spring Boot 3.5.7 (Java 21) |
-| AI | Spring AI + Google Gemini 2.5-flash |
+| AI | Spring AI + Gemini / OpenAI 호환 API (Ollama 등) |
 | Embedding | Ollama (all-minilm) |
 | Vector Store | PGVector (PostgreSQL 16) |
 | DB | PostgreSQL 16 |

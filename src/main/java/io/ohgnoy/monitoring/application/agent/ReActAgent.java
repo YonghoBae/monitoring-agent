@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;
+import java.time.Duration;
 
 /**
  * ReAct 패턴 기반 에이전트.
@@ -44,6 +45,11 @@ public class ReActAgent {
     private final WebSearchTool webSearchTool;
     private final AgentJudgeEvaluator judgeEvaluator;
     private final String systemPrompt;
+    @Value("${agent.max-tool-calls:12}") private int maxToolCalls = 12;
+    @Value("${agent.timeout-seconds:90}") private int timeoutSeconds = 90;
+    @Value("${agent.investigation-mode:legacy}") private String investigationMode = "legacy";
+    @Value("${agent.discovery-tools-enabled:false}") private boolean discoveryToolsEnabled;
+    private java.time.Clock observationClock = java.time.Clock.systemUTC();
 
     public ReActAgent(@Qualifier("agentChatClient") ObjectProvider<ChatClient> chatClientProvider,
                       ObjectProvider<ReflectionAdvisor> reflectionAdvisorProvider,
@@ -71,7 +77,8 @@ public class ReActAgent {
             if (in == null) {
                 throw new IllegalStateException("시스템 프롬프트 리소스 없음: " + path);
             }
-            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            String prompt = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            return "v4".equals(version) ? AgentPrompts.common() + "\n" + prompt : prompt;
         } catch (IOException e) {
             throw new UncheckedIOException("시스템 프롬프트 로드 실패: " + path, e);
         }
@@ -100,12 +107,21 @@ public class ReActAgent {
         log.info("[ReActAgent] 분석 시작 — alertId={}, alertName={}", alert.getId(), alert.getAlertName());
 
         AgentTools agentTools = agentToolsFactory.createAgentTools();
+        if ("focused".equals(investigationMode)) {
+            var callbacks = discoveryToolsEnabled
+                    ? org.springframework.ai.support.ToolCallbacks.from(agentTools, agentToolsFactory.createDiscoveryTools())
+                    : org.springframework.ai.support.ToolCallbacks.from(agentTools);
+            return new FocusedInvestigator(chatClient, maxToolCalls, Duration.ofSeconds(timeoutSeconds), observationClock)
+                    .investigate(userMessage, callbacks);
+        }
         AtomicReference<String> reflectionResultHolder = new AtomicReference<>();
+        AgentExecution execution = new AgentExecution(maxToolCalls, Duration.ofSeconds(timeoutSeconds), java.time.Clock.systemUTC(), observationClock);
 
         try {
-            String conclusion = chatClient.prompt()
+            String conclusion = execution.call(() -> chatClient.prompt()
                     .advisors(spec -> {
                         spec.param(ReflectionAdvisor.CTX_ALERT, alert)
+                                .param(ReflectionAdvisor.CTX_EXECUTION, execution)
                                 .param(ReflectionAdvisor.CTX_AGENT_TOOLS, agentTools)
                                 .param(ReflectionAdvisor.CTX_REFLECTION_RESULT, reflectionResultHolder);
                         if (reflectionAdvisor != null) {
@@ -114,32 +130,32 @@ public class ReActAgent {
                     })
                     .system(buildSystemPrompt())
                     .user(userMessage)
-                    .tools(agentTools, webSearchTool)
+                    .toolCallbacks(execution.callbacks(agentTools, webSearchTool))
                     .call()
-                    .content();
+                    .content());
 
-            int iterationCount = agentTools.getCallCount();
-            String reasoningChain = agentTools.getReasoningLog();
+            int iterationCount = execution.callCount();
+            String reasoningChain = execution.summary();
             String reflectionResult = reflectionResultHolder.get();
             log.info("[ReActAgent] 분석 완료 — alertId={}, toolCalls={}", alert.getId(), iterationCount);
 
             // Reflection이 근거 불충분으로 판정하면 피드백을 붙여 1회 재분석한다.
             // (advisor 체인은 소모형이라 체인 내부 재호출이 불가능 — 여기서 새 요청으로 수행)
-            if (reflectionResult != null && reflectionResult.startsWith("INSUFFICIENT")) {
+            if (reflectionResult != null && reflectionResult.startsWith("INSUFFICIENT") && execution.canContinue()) {
                 log.info("[ReActAgent] Reflection 재분석 시작 — alertId={}", alert.getId());
 
                 AgentTools retryTools = agentToolsFactory.createAgentTools();
-                String retriedConclusion = chatClient.prompt()
+                String retriedConclusion = execution.call(() -> chatClient.prompt()
                         .system(buildSystemPrompt())
                         .user(userMessage
                                 + "\n\n[이전 분석 검토 결과]\n" + reflectionResult
                                 + "\n\n[이전 분석에서 수집한 데이터]\n" + (reasoningChain.isBlank() ? "없음" : reasoningChain)
                                 + "\n\n위 피드백을 반영하고, 이미 수집한 데이터는 재조회하지 말고 추가로 필요한 데이터만 수집해서 다시 분석해줘.")
-                        .tools(retryTools, webSearchTool)
+                        .toolCallbacks(execution.callbacks(retryTools, webSearchTool))
                         .call()
-                        .content();
+                        .content());
 
-                int totalCalls = iterationCount + retryTools.getCallCount();
+                int totalCalls = execution.callCount();
                 log.info("[ReActAgent] 재분석 완료 — alertId={}, totalToolCalls={}", alert.getId(), totalCalls);
 
                 // 모델이 도구 호출 후 텍스트 없이 종료하면 content()가 null일 수 있다.
@@ -148,18 +164,18 @@ public class ReActAgent {
                     log.warn("[ReActAgent] 재분석 결론이 비어 있음 — 최초 결론 유지. alertId={}", alert.getId());
                     retriedConclusion = conclusion;
                 }
-                return new AgentResult(retriedConclusion,
-                        reasoningChain + "\n[Reflection 재분석]\n" + retryTools.getReasoningLog(),
+                return new AgentResult(execution.finish(retriedConclusion),
+                        execution.summary(),
                         totalCalls, reflectionResult);
             }
 
-            return new AgentResult(conclusion, reasoningChain, iterationCount, reflectionResult);
+            return new AgentResult(execution.finish(conclusion), reasoningChain, iterationCount, reflectionResult);
 
         } catch (Exception e) {
             log.error("[ReActAgent] 분석 실패 — alertId={}: {}", alert.getId(), e.getMessage());
             return new AgentResult(
-                    "AI 분석 실패: " + e.getMessage(),
-                    agentTools.getReasoningLog(), agentTools.getCallCount(), null
+                    execution.finish(null),
+                    execution.summary(), execution.callCount(), null
             );
         }
     }

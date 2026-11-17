@@ -24,6 +24,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,10 +115,13 @@ class LiveEvalRunner {
     @Test
     @DisplayName("전체 시나리오 × 프롬프트 arm × 반복 실행 후 통계 산출")
     void runLiveEvaluation() throws Exception {
-        assumeTrue(resolveApiKey() != null,
-                "SPRING_AI_GOOGLE_GENAI_API_KEY(또는 GEMINI_API_KEY) 미설정 — 라이브 평가 건너뜀");
-        ChatClient agentClient = agentClientProvider.getIfAvailable();
-        ChatClient judgeClient = judgeClientProvider.getIfAvailable();
+        boolean local = !env("EVAL_BASE_URL", "").isBlank();
+        assumeTrue(local || resolveApiKey() != null,
+                "EVAL_BASE_URL 또는 Gemini API 키 미설정 — 라이브 평가 건너뜀");
+        ChatClient agentClient = local ? openAiClient(env("EVAL_BASE_URL", ""), env("EVAL_MODEL", "qwen3:8b"))
+                : agentClientProvider.getIfAvailable();
+        ChatClient judgeClient = local ? openAiClient(env("EVAL_JUDGE_BASE_URL", env("EVAL_BASE_URL", "")),
+                env("EVAL_JUDGE_MODEL", "qwen3:8b")) : judgeClientProvider.getIfAvailable();
         assumeTrue(agentClient != null && judgeClient != null, "ChatClient 빈 없음 — 라이브 평가 건너뜀");
 
         int repeats = Integer.parseInt(env("EVAL_REPEATS", "3"));
@@ -128,6 +135,12 @@ class LiveEvalRunner {
                 "run-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")));
         Files.createDirectories(outDir);
         Path resultsFile = outDir.resolve("results.jsonl");
+        Files.writeString(outDir.resolve("conditions.json"), objectMapper.writeValueAsString(Map.of(
+                "agentModel", env("EVAL_MODEL", local ? "qwen3:8b" : "gemini-2.5-flash"),
+                "judgeModel", env("EVAL_JUDGE_MODEL", local ? "qwen3:8b" : "gemini-2.5-pro"),
+                "local", local, "sharedRuntimeGuard", true, "repeats", repeats,
+                "sameEndpointJudge", local && env("EVAL_JUDGE_BASE_URL", env("EVAL_BASE_URL", "")).equals(env("EVAL_BASE_URL", "")),
+                "fixtureMode", "strict-summary-v1")));
 
         // Judge 프롬프트 빌드/파싱 재사용을 위한 헬퍼 인스턴스 (evaluate()는 호출하지 않음)
         AgentJudgeEvaluator judgeHelper = new AgentJudgeEvaluator(
@@ -167,8 +180,16 @@ class LiveEvalRunner {
         }
 
         writeSummary(outDir, records, repeats);
-        writeHumanGradingSheet(outDir, records);
+        writeHumanGradingSheet(outDir, records.stream().filter(r -> !r.path("fixtureUnsupported").asBoolean()).toList());
         System.out.println("\n평가 완료 — 결과: " + outDir.toAbsolutePath());
+    }
+
+    private ChatClient openAiClient(String url, String model) {
+        var options = OpenAiChatOptions.builder().model(model).temperature(0.0).maxTokens(1536).reasoningEffort("none").build();
+        var chatModel = OpenAiChatModel.builder()
+                .openAiApi(OpenAiApi.builder().baseUrl(url).apiKey(env("EVAL_API_KEY", "ollama")).build())
+                .defaultOptions(options).retryTemplate(RetryTemplate.builder().maxAttempts(1).build()).build();
+        return ChatClient.builder(chatModel).build();
     }
 
     // ──────────────────────────────────────────────
@@ -181,7 +202,10 @@ class LiveEvalRunner {
                                         AgentJudgeEvaluator judgeHelper, List<String> defaultContainers) {
         AlertEvent alert = buildAlert(scenario.get("alert"));
         ActionRecommendation recommendation = buildRecommendation(scenario.get("playbook"));
-        AgentToolsFactory factory = buildMockedToolsFactory(scenario.get("mocks"), defaultContainers);
+        List<String> inventory = scenario.at("/mocks/containers").isArray()
+                ? toStringList(scenario.at("/mocks/containers")) : defaultContainers;
+        StrictObservationFixture fixture = new StrictObservationFixture(scenario, inventory);
+        AgentToolsFactory factory = buildMockedToolsFactory(scenario, defaultContainers, fixture);
 
         ReActAgent agent = new ReActAgent(
                 providerOf(agentClient), providerOf(reflectionAdvisor),
@@ -194,7 +218,9 @@ class LiveEvalRunner {
 
         String criteria = buildCriteriaText(scenario.get("expected"));
         JudgeEvaluationResult judged;
-        try {
+        if (fixture.hasUnsupportedQueries()) {
+            judged = JudgeEvaluationResult.parseFailed("Unsupported fixture computation; agent outcome ungraded");
+        } else try {
             String judgeResponse = judgeClient.prompt()
                     .system(judgeHelper.buildJudgeSystemPrompt())
                     .user(judgeHelper.buildEvaluationPrompt(alert, result, criteria))
@@ -205,7 +231,7 @@ class LiveEvalRunner {
             judged = JudgeEvaluationResult.parseFailed("judge 호출 실패: " + e.getMessage());
         }
 
-        boolean pass = passesMinimumScores(judged, scenario.at("/expected/minimum_scores"));
+        boolean pass = !fixture.hasUnsupportedQueries() && passesMinimumScores(judged, scenario.at("/expected/minimum_scores"));
         System.out.printf("  toolCalls=%d latency=%dms scores=[F%d T%d A%d S%d] verdict=%s pass=%s%n",
                 result.iterationCount(), latencyMs,
                 judged.factuality().score(), judged.tool_use().score(),
@@ -225,8 +251,11 @@ class LiveEvalRunner {
         record.put("actionability", judged.actionability().score());
         record.put("safety", judged.safety().score());
         record.put("overall", judged.overallScore());
-        record.put("verdict", judged.verdict());
-        record.put("parseFailed", judged.parse_failed());
+        record.put("verdict", fixture.hasUnsupportedQueries() ? "ungraded_fixture" : judged.verdict());
+        record.put("parseFailed", !fixture.hasUnsupportedQueries() && judged.parse_failed());
+        record.put("fixtureUnsupported", fixture.hasUnsupportedQueries());
+        record.put("evaluationStatus", fixture.hasUnsupportedQueries() ? "ungraded_fixture" : "graded");
+        record.set("unsupportedQueries", objectMapper.valueToTree(fixture.unsupportedQueries()));
         record.put("infraError", infraError);
         record.put("pass", pass);
         record.put("conclusion", result.conclusion());
@@ -288,20 +317,46 @@ class LiveEvalRunner {
     }
 
     /** 시나리오 mock으로 고정된 관측 계층을 가진 AgentToolsFactory 생성 */
-    private AgentToolsFactory buildMockedToolsFactory(JsonNode mocks, List<String> defaultContainers) {
+    AgentToolsFactory buildMockedToolsFactory(JsonNode scenario, List<String> defaultContainers, StrictObservationFixture fixture) {
+        JsonNode mocks = scenario.get("mocks");
         AlertVerifier verifier = mock(AlertVerifier.class);
-        when(verifier.verify(any(), any())).thenReturn(toVerificationResult(mocks.get("verify")));
+        when(verifier.verify(any(), any())).thenAnswer(inv -> toVerificationResult(fixture.verify(inv.getArgument(0), inv.getArgument(1))));
 
         List<String> metrics = toStringList(mocks.get("metrics"));
         PrometheusQueryService prometheus = mock(PrometheusQueryService.class);
         when(prometheus.listMetrics(any())).thenReturn(metrics);
         when(prometheus.querySummary(any(), anyString(), any(Instant.class), any(Instant.class)))
-                .thenAnswer(inv -> matchByKeyword(mocks.get("prometheus"), inv.getArgument(1), "response")
-                        .orElse("데이터 없음: " + inv.getArgument(1)));
+                .thenAnswer(inv -> fixture.query(inv.getArgument(1), inv.getArgument(2), inv.getArgument(3)));
+        when(prometheus.systemSummary(anyString())).thenAnswer(inv -> {
+            String scope = inv.getArgument(0);
+            if (!List.of("all", "cpu", "disk", "network").contains(scope)) return "잘못된 resource 값: all, cpu, disk, network 중 선택";
+            List<String> rows = new ArrayList<>();
+            JsonNode values = mocks.get("prometheus");
+            if (values != null) for (JsonNode entry : values) {
+                String key = entry.path("keyword").asText().toLowerCase();
+                boolean relevant = switch (scope) {
+                    case "cpu" -> key.contains("cpu");
+                    case "disk" -> key.contains("filesystem");
+                    case "network" -> key.contains("network");
+                    default -> key.contains("cpu") || key.contains("filesystem") || key.contains("network");
+                };
+                if (relevant) rows.add(entry.path("response").asText());
+            }
+            return rows.isEmpty() ? "데이터 없음: " + scope : String.join("\n", rows);
+        });
+        when(prometheus.hardwareSummary()).thenAnswer(inv -> {
+            List<String> rows = new ArrayList<>();
+            JsonNode values = mocks.get("prometheus");
+            if (values != null) for (JsonNode entry : values) {
+                String key = entry.path("keyword").asText().toLowerCase();
+                if (key.contains("memory") || key.contains("dcgm") || key.contains("gpu")) rows.add(entry.path("response").asText());
+            }
+            return rows.isEmpty() ? "RAM/GPU 현재 데이터 없음" : String.join("\n", rows);
+        });
 
         LokiQueryService loki = mock(LokiQueryService.class);
         when(loki.queryRecentLogs(anyString(), any(Instant.class), any(Instant.class), anyInt()))
-                .thenAnswer(inv -> matchLokiLines(mocks.get("loki"), inv.getArgument(0)));
+                .thenAnswer(inv -> fixture.logs(inv.getArgument(0), inv.getArgument(1), inv.getArgument(2), inv.getArgument(3)));
 
         AlertVectorService vector = mock(AlertVectorService.class);
         when(vector.searchSimilar(any(), anyInt())).thenReturn(toRagDocuments(mocks.get("rag")));
@@ -322,30 +377,6 @@ class LiveEvalRunner {
             case STALE -> VerificationResult.stale();
             case UNKNOWN -> VerificationResult.unknown();
         };
-    }
-
-    private java.util.Optional<String> matchByKeyword(JsonNode entries, String query, String field) {
-        if (entries == null) {
-            return java.util.Optional.empty();
-        }
-        for (JsonNode entry : entries) {
-            if (query.toLowerCase().contains(entry.get("keyword").asText().toLowerCase())) {
-                return java.util.Optional.of(entry.get(field).asText());
-            }
-        }
-        return java.util.Optional.empty();
-    }
-
-    private List<String> matchLokiLines(JsonNode lokiMocks, String logql) {
-        if (lokiMocks == null) {
-            return List.of();
-        }
-        for (JsonNode entry : lokiMocks) {
-            if (logql.toLowerCase().contains(entry.get("keyword").asText().toLowerCase())) {
-                return toStringList(entry.get("lines"));
-            }
-        }
-        return List.of();
     }
 
     private List<Document> toRagDocuments(JsonNode rag) {
@@ -374,7 +405,15 @@ class LiveEvalRunner {
     // 통계 및 리포트
     // ──────────────────────────────────────────────
 
-    private void writeSummary(Path outDir, List<ObjectNode> allRecords, int repeats) throws IOException {
+    void writeSummary(Path outDir, List<ObjectNode> allRecords, int repeats) throws IOException {
+        long unsupported = count(allRecords, r -> r.path("fixtureUnsupported").asBoolean());
+        if (unsupported > 0) {
+            Files.writeString(outDir.resolve("summary.md"), "# Evaluation incomplete\n\n"
+                    + "총 " + allRecords.size() + "건 중 " + unsupported + "건은 기존 fixture의 계산·레이블 정보 부족으로 미판정입니다.\n"
+                    + "모델 실패나 Judge 파싱 실패가 아니며, 이 실행의 프롬프트 간 합격률 비교는 생성하지 않습니다.\n"
+                    + "results.jsonl의 evaluationStatus/unsupportedQueries를 확인하세요.\n", StandardCharsets.UTF_8);
+            return;
+        }
         long infraErrors = count(allRecords, r -> r.get("infraError").asBoolean());
         long judgeFailures = count(allRecords, r -> r.get("parseFailed").asBoolean());
         // 인프라 실패·judge 실패 레코드는 0점으로 평균을 왜곡하므로 점수 통계에서 제외
@@ -387,13 +426,15 @@ class LiveEvalRunner {
         md.append("- 실행 시각: ").append(LocalDateTime.now()).append("\n");
         md.append("- 에이전트 모델: ").append(env("EVAL_MODEL", "gemini-2.5-flash")).append("\n");
         md.append("- Judge 모델: ").append(env("EVAL_JUDGE_MODEL", "gemini-2.5-pro"))
-                .append(" (temperature=0, 평가 대상과 분리)\n");
+                .append(" (temperature=0; 독립성은 conditions.json과 실제 엔드포인트 설정 확인)\n");
+        if (!env("EVAL_BASE_URL", "").isBlank()) md.append("- 로컬 평가: 동일 모델 Judge일 수 있으므로 독립적인 품질 검증으로 해석하지 않음\n");
+        md.append("- 모든 arm에 현재 공통 실행 제한 적용: 과거 런타임과 동일한 비교가 아님\n");
         md.append("- 반복: ").append(repeats).append("회 / arm\n");
         md.append("- 총 실행: ").append(allRecords.size()).append("건")
                 .append(" (통계 제외 — 인프라 실패: ").append(infraErrors)
                 .append("건, judge 실패: ").append(judgeFailures).append("건)\n\n");
 
-        md.append("## Arm 비교 (v1=baseline 프롬프트, v2=현재 운영 프롬프트)\n\n");
+        md.append("## Arm 비교 (선택한 프롬프트 버전)\n\n");
         md.append("| arm | n | factuality (mean/p50/p95) | tool_use | actionability | safety | overall mean | pass rate | parse fail | avg tool calls | avg latency(ms) |\n");
         md.append("|-----|---|---------------------------|----------|---------------|--------|--------------|-----------|------------|----------------|------------------|\n");
         for (String arm : ARMS) {

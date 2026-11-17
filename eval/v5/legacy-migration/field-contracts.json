@@ -1,0 +1,4755 @@
+{
+  "version": "legacy-v4.1-migration-draft-1",
+  "status": "read_only_source_audit_and_proposed_sidecar_not_approved_scoring_contract",
+  "source_dataset": "eval/v4/dataset.json",
+  "source_sha256": "22b4fd313b699b844c6b16b1378a22753ddcf2149ec880ca5c92e4b1be71ba1f",
+  "source_revision": "4.1",
+  "scope": "35 test cases only; controlled benchmark, not natural incident accuracy. Five development cases remain excluded.",
+  "counts": {
+    "test_cases": 35,
+    "families": 28,
+    "fields": 62,
+    "original_numeric": 35,
+    "original_categorical_known": 22,
+    "original_explicit_unknown": 5,
+    "scoring_kinds": {
+      "categorical_numeric_symbol": 7,
+      "categorical": 22,
+      "numeric_quantity": 28,
+      "explicit_unknown": 5
+    },
+    "source_quality_cases": {
+      "manual_derived_controlled_fixture": 30,
+      "published_fault_type_adaptation": 2,
+      "sanitized_live_snapshot": 3
+    }
+  },
+  "immutable_policy": "All original gold objects, expected values and tolerances are copied unchanged. New schema/unit/association metadata are explicit migration proposals, not changes to old scores.",
+  "known_blockers": [
+    "Current numeric API has root-key binding only; needs enclosing-facts extraction adapter.",
+    "day/Celsius/core are proposed unsupported units pending separately authorized implementation and tests.",
+    "Frozen v1.1 parser defects and v1.2 draft require independent validation before reuse.",
+    "Existing v5 scorer is fixed to 8 cases/48 answers; new preregistered grid/scorer required.",
+    "210 answers times 2 judgments is 420 API attempts, exceeding current per-campaign 240-attempt cap; do not bypass by unregistered sharding."
+  ],
+  "fields": [
+    {
+      "field_id": "phone_ssh_unavailable::probe_success",
+      "case_id": "phone_ssh_unavailable",
+      "family": "phone_ssh_unavailable",
+      "task_mode": "alert",
+      "key": "probe_success",
+      "requested_question": "SSH probe 성공 지표",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "probe_success",
+        "value": 0,
+        "tolerance": 0,
+        "evidence_targets": [
+          "probe_success"
+        ],
+        "validation_expr": "probe_success"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/probe_success",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "SSH probe 성공 지표",
+        "alert_name": "PhoneSSHUnavailable",
+        "alert_labels": {
+          "__name__": "probe_success",
+          "instance": "phone:8022",
+          "job": "termux-phone-ssh"
+        },
+        "required_validation_expression": "probe_success",
+        "reference_metric_candidates": [
+          {
+            "metric": "probe_success",
+            "labels": {
+              "job": "termux-phone-ssh",
+              "instance": "phone:8022"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_success"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "probe_success",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "phone_ssh_unavailable::cause",
+      "case_id": "phone_ssh_unavailable",
+      "family": "phone_ssh_unavailable",
+      "task_mode": "alert",
+      "key": "cause",
+      "requested_question": "방화벽 차단이 직접 증명됐나요: yes / no",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "cause",
+        "value": "no",
+        "tolerance": 0,
+        "evidence_targets": [
+          "probe_success"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/cause",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "방화벽 차단이 직접 증명됐나요: yes / no",
+        "alert_name": "PhoneSSHUnavailable",
+        "alert_labels": {
+          "__name__": "probe_success",
+          "instance": "phone:8022",
+          "job": "termux-phone-ssh"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_success"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "container_throttled::throttle_percent",
+      "case_id": "container_throttled",
+      "family": "container_throttled",
+      "task_mode": "alert",
+      "key": "throttle_percent",
+      "requested_question": "CPU throttled periods 비율(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "throttle_percent",
+        "value": 30,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "container_cpu_cfs_throttled_periods_total"
+        ],
+        "validation_expr": "100 * rate(container_cpu_cfs_throttled_periods_total[5m]) / rate(container_cpu_cfs_periods_total[5m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/throttle_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "CPU throttled periods 비율(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "CPU throttled periods 비율(%)",
+        "alert_name": "ContainerHighThrottleRate",
+        "alert_labels": {
+          "name": "worker"
+        },
+        "required_validation_expression": "100 * rate(container_cpu_cfs_throttled_periods_total[5m]) / rate(container_cpu_cfs_periods_total[5m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "container_cpu_cfs_throttled_periods_total",
+            "labels": {
+              "name": "worker"
+            }
+          },
+          {
+            "metric": "container_cpu_cfs_periods_total",
+            "labels": {
+              "name": "worker"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "container_cpu_cfs_throttled_periods_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * rate(container_cpu_cfs_throttled_periods_total[5m]) / rate(container_cpu_cfs_periods_total[5m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "30",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "throttle_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "systemd_failed::unit",
+      "case_id": "systemd_failed",
+      "family": "systemd_failed",
+      "task_mode": "alert",
+      "key": "unit",
+      "requested_question": "실패한 systemd unit 이름",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "unit",
+        "value": "example.service",
+        "tolerance": 0,
+        "evidence_targets": [
+          "node_systemd_unit_state"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/unit",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "실패한 systemd unit 이름",
+        "alert_name": "HostSystemdServiceCrashed",
+        "alert_labels": {
+          "__name__": "node_systemd_unit_state",
+          "instance": "node-1",
+          "name": "example.service",
+          "state": "failed"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_systemd_unit_state"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "backup_stale::days_since_success",
+      "case_id": "backup_stale",
+      "family": "backup_stale",
+      "task_mode": "alert",
+      "key": "days_since_success",
+      "requested_question": "마지막 백업 성공 이후 일수",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "days_since_success",
+        "value": 3,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "db_backup_last_success_timestamp_seconds"
+        ],
+        "validation_expr": "(time()-db_backup_last_success_timestamp_seconds)/86400"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/days_since_success",
+        "expected_json_type": "number",
+        "unit": "day",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "마지막 백업 성공 이후 일수"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "마지막 백업 성공 이후 일수",
+        "alert_name": "BackupStale",
+        "alert_labels": {
+          "job": "db-backup"
+        },
+        "required_validation_expression": "(time()-db_backup_last_success_timestamp_seconds)/86400",
+        "reference_metric_candidates": [
+          {
+            "metric": "db_backup_last_success_timestamp_seconds",
+            "labels": {
+              "job": "db-backup"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "duration_semantics": "elapsed_since_last_success",
+        "note": "The answer is a duration evaluated now, not a lookback aggregation."
+      },
+      "evidence_policy": {
+        "targets": [
+          "db_backup_last_success_timestamp_seconds"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "(time()-db_backup_last_success_timestamp_seconds)/86400",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "3",
+        "unit": "day",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "days_since_success",
+          "unit": "day"
+        },
+        "unit_support": "requires_new_unit_definition",
+        "required_new_definition": "duration; exactly 86400 s per day",
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "backup_exit_failed::exit_code",
+      "case_id": "backup_exit_failed",
+      "family": "backup_exit_failed",
+      "task_mode": "alert",
+      "key": "exit_code",
+      "requested_question": "최근 백업 작업 종료 코드",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "exit_code",
+        "value": 1,
+        "tolerance": 0,
+        "evidence_targets": [
+          "db_backup_last_exit_code"
+        ],
+        "validation_expr": "db_backup_last_exit_code"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/exit_code",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "최근 백업 작업 종료 코드",
+        "alert_name": "BackupFailed",
+        "alert_labels": {
+          "__name__": "db_backup_last_exit_code",
+          "job": "db-backup"
+        },
+        "required_validation_expression": "db_backup_last_exit_code",
+        "reference_metric_candidates": [
+          {
+            "metric": "db_backup_last_exit_code",
+            "labels": {
+              "job": "db-backup"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "db_backup_last_exit_code"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "db_backup_last_exit_code",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "backup_exit_failed::cause",
+      "case_id": "backup_exit_failed",
+      "family": "backup_exit_failed",
+      "task_mode": "alert",
+      "key": "cause",
+      "requested_question": "종료 코드만으로 직접 원인 확인이 가능한가요: known / unknown",
+      "scoring_kind": "explicit_unknown",
+      "original_gold": {
+        "key": "cause",
+        "value": "unknown",
+        "tolerance": 0,
+        "evidence_targets": [
+          "db_backup_last_exit_code"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/cause",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "종료 코드만으로 직접 원인 확인이 가능한가요: known / unknown",
+        "alert_name": "BackupFailed",
+        "alert_labels": {
+          "__name__": "db_backup_last_exit_code",
+          "job": "db-backup"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "db_backup_last_exit_code"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "notification_failure::failures",
+      "case_id": "notification_failure",
+      "family": "notification_failure",
+      "task_mode": "alert",
+      "key": "failures",
+      "requested_question": "최근 15분 알림 실패 증가량",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "failures",
+        "value": 4,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "alertmanager_notifications_failed_total"
+        ],
+        "validation_expr": "increase(alertmanager_notifications_failed_total[15m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failures",
+        "expected_json_type": "number",
+        "unit": "count",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "최근 15분 알림 실패 증가량"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "최근 15분 알림 실패 증가량",
+        "alert_name": "AlertNotificationsFailing",
+        "alert_labels": {
+          "integration": "webhook"
+        },
+        "required_validation_expression": "increase(alertmanager_notifications_failed_total[15m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "alertmanager_notifications_failed_total",
+            "labels": {
+              "integration": "webhook"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 900,
+        "aggregation": "increase",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "alertmanager_notifications_failed_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "increase(alertmanager_notifications_failed_total[15m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "4",
+        "unit": "count",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "failures",
+          "unit": "count"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "public_probe_recovered::probe_success",
+      "case_id": "public_probe_recovered",
+      "family": "public_probe_recovered",
+      "task_mode": "alert",
+      "key": "probe_success",
+      "requested_question": "현재 외부 probe 성공 지표",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "probe_success",
+        "value": 1,
+        "tolerance": 0,
+        "evidence_targets": [
+          "probe_success"
+        ],
+        "validation_expr": "probe_success"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/probe_success",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 외부 probe 성공 지표",
+        "alert_name": "PublicSiteDown",
+        "alert_labels": {},
+        "required_validation_expression": "probe_success",
+        "reference_metric_candidates": [
+          {
+            "metric": "probe_success",
+            "labels": {
+              "job": "blackbox-public",
+              "instance": "https://service.example.test"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_success"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "probe_success",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "public_probe_recovered::http_status",
+      "case_id": "public_probe_recovered",
+      "family": "public_probe_recovered",
+      "task_mode": "alert",
+      "key": "http_status",
+      "requested_question": "현재 HTTP 상태 코드",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "http_status",
+        "value": 200,
+        "tolerance": 0,
+        "evidence_targets": [
+          "probe_http_status_code"
+        ],
+        "validation_expr": "probe_http_status_code"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/http_status",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 HTTP 상태 코드",
+        "alert_name": "PublicSiteDown",
+        "alert_labels": {},
+        "required_validation_expression": "probe_http_status_code",
+        "reference_metric_candidates": [
+          {
+            "metric": "probe_http_status_code",
+            "labels": {
+              "job": "blackbox-public",
+              "instance": "https://service.example.test"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_http_status_code"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "probe_http_status_code",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "gpu_temperature_high::temperature_c",
+      "case_id": "gpu_temperature_high",
+      "family": "gpu_temperature_high",
+      "task_mode": "alert",
+      "key": "temperature_c",
+      "requested_question": "현재 GPU 온도(섭씨)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "temperature_c",
+        "value": 88,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_GPU_TEMP"
+        ],
+        "validation_expr": "DCGM_FI_DEV_GPU_TEMP"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/temperature_c",
+        "expected_json_type": "number",
+        "unit": "°C",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 GPU 온도(섭씨)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 GPU 온도(섭씨)",
+        "alert_name": "GPUHighTemperature",
+        "alert_labels": {
+          "__name__": "DCGM_FI_DEV_GPU_TEMP",
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_GPU_TEMP",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_GPU_TEMP",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_GPU_TEMP"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_GPU_TEMP",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "88",
+        "unit": "°C",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "temperature_c",
+          "unit": "°C"
+        },
+        "unit_support": "requires_new_unit_definition",
+        "required_new_definition": "temperature Celsius only; no implicit Kelvin/Fahrenheit conversion",
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "gpu_temperature_high::util_percent",
+      "case_id": "gpu_temperature_high",
+      "family": "gpu_temperature_high",
+      "task_mode": "alert",
+      "key": "util_percent",
+      "requested_question": "현재 GPU 연산 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "util_percent",
+        "value": 97,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/util_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 GPU 연산 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 GPU 연산 사용률(%)",
+        "alert_name": "GPUHighTemperature",
+        "alert_labels": {
+          "__name__": "DCGM_FI_DEV_GPU_TEMP",
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_GPU_UTIL",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_GPU_UTIL",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "97",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "util_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "disk_space_low::available_gb",
+      "case_id": "disk_space_low",
+      "family": "disk_space_low",
+      "task_mode": "alert",
+      "key": "available_gb",
+      "requested_question": "현재 가용 공간(십진 GB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "available_gb",
+        "value": 8,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "node_filesystem_avail_bytes"
+        ],
+        "validation_expr": "node_filesystem_avail_bytes/1e9"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/available_gb",
+        "expected_json_type": "number",
+        "unit": "GB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 가용 공간(십진 GB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 가용 공간(십진 GB)",
+        "alert_name": "HostOutOfDiskSpace",
+        "alert_labels": {
+          "device": "/dev/sda1",
+          "fstype": "ext4",
+          "instance": "node-3",
+          "mountpoint": "/var/lib/docker"
+        },
+        "required_validation_expression": "node_filesystem_avail_bytes/1e9",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_filesystem_avail_bytes",
+            "labels": {
+              "instance": "node-3",
+              "mountpoint": "/var/lib/docker",
+              "device": "/dev/sda1",
+              "fstype": "ext4"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_filesystem_avail_bytes"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_filesystem_avail_bytes/1e9",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "8",
+        "unit": "GB",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "available_gb",
+          "unit": "GB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "disk_space_low::used_percent",
+      "case_id": "disk_space_low",
+      "family": "disk_space_low",
+      "task_mode": "alert",
+      "key": "used_percent",
+      "requested_question": "현재 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "used_percent",
+        "value": 92,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_filesystem_avail_bytes"
+        ],
+        "validation_expr": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/used_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 사용률(%)",
+        "alert_name": "HostOutOfDiskSpace",
+        "alert_labels": {
+          "device": "/dev/sda1",
+          "fstype": "ext4",
+          "instance": "node-3",
+          "mountpoint": "/var/lib/docker"
+        },
+        "required_validation_expression": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_filesystem_avail_bytes",
+            "labels": {
+              "instance": "node-3",
+              "mountpoint": "/var/lib/docker",
+              "device": "/dev/sda1",
+              "fstype": "ext4"
+            }
+          },
+          {
+            "metric": "node_filesystem_size_bytes",
+            "labels": {
+              "instance": "node-3",
+              "mountpoint": "/var/lib/docker",
+              "device": "/dev/sda1",
+              "fstype": "ext4"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_filesystem_avail_bytes"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "92",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "used_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "host_memory_leak::used_percent",
+      "case_id": "host_memory_leak",
+      "family": "host_memory_leak",
+      "task_mode": "alert",
+      "key": "used_percent",
+      "requested_question": "현재 호스트 RAM 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "used_percent",
+        "value": 92,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "validation_expr": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/used_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 호스트 RAM 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 호스트 RAM 사용률(%)",
+        "alert_name": "HostHighMemoryUsage",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_memory_MemTotal_bytes",
+            "labels": {
+              "instance": "node-1"
+            }
+          },
+          {
+            "metric": "node_memory_MemAvailable_bytes",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "92",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "used_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "host_memory_leak::jellyfin_rss_gb",
+      "case_id": "host_memory_leak",
+      "family": "host_memory_leak",
+      "task_mode": "alert",
+      "key": "jellyfin_rss_gb",
+      "requested_question": "현재 Jellyfin RSS(십진 GB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "jellyfin_rss_gb",
+        "value": 4.3,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "container_memory_rss"
+        ],
+        "validation_expr": "container_memory_rss{name=\"jellyfin\"}/1e9"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/jellyfin_rss_gb",
+        "expected_json_type": "number",
+        "unit": "GB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 Jellyfin RSS(십진 GB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 Jellyfin RSS(십진 GB)",
+        "alert_name": "HostHighMemoryUsage",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "container_memory_rss{name=\"jellyfin\"}/1e9",
+        "reference_metric_candidates": [
+          {
+            "metric": "container_memory_rss",
+            "labels": {
+              "name": "jellyfin"
+            }
+          },
+          {
+            "metric": "container_memory_rss",
+            "labels": {
+              "name": "worker"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "container_memory_rss"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "container_memory_rss{name=\"jellyfin\"}/1e9",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "4.3",
+        "unit": "GB",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "jellyfin_rss_gb",
+          "unit": "GB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "disk_io_saturation::busy_percent",
+      "case_id": "disk_io_saturation",
+      "family": "disk_io_saturation",
+      "task_mode": "alert",
+      "key": "busy_percent",
+      "requested_question": "디스크 busy 시간 비율(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "busy_percent",
+        "value": 97,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_disk_io_time_seconds_total"
+        ],
+        "validation_expr": "100 * rate(node_disk_io_time_seconds_total[5m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/busy_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "디스크 busy 시간 비율(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "디스크 busy 시간 비율(%)",
+        "alert_name": "HostDiskIoUtilizationHigh",
+        "alert_labels": {
+          "device": "sda",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "100 * rate(node_disk_io_time_seconds_total[5m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_disk_io_time_seconds_total",
+            "labels": {
+              "instance": "node-1",
+              "device": "sda"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_disk_io_time_seconds_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * rate(node_disk_io_time_seconds_total[5m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "97",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "busy_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "disk_io_saturation::write_mbps",
+      "case_id": "disk_io_saturation",
+      "family": "disk_io_saturation",
+      "task_mode": "alert",
+      "key": "write_mbps",
+      "requested_question": "초당 디스크 쓰기(십진 MB/s)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "write_mbps",
+        "value": 180,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_disk_written_bytes_total"
+        ],
+        "validation_expr": "rate(node_disk_written_bytes_total[5m]) / 1e6"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/write_mbps",
+        "expected_json_type": "number",
+        "unit": "MB/s",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "초당 디스크 쓰기(십진 MB/s)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "초당 디스크 쓰기(십진 MB/s)",
+        "alert_name": "HostDiskIoUtilizationHigh",
+        "alert_labels": {
+          "device": "sda",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "rate(node_disk_written_bytes_total[5m]) / 1e6",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_disk_written_bytes_total",
+            "labels": {
+              "instance": "node-1",
+              "device": "sda"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_disk_written_bytes_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "rate(node_disk_written_bytes_total[5m]) / 1e6",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "180",
+        "unit": "MB/s",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "write_mbps",
+          "unit": "MB/s"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "cert_expiry_soon::expires_days",
+      "case_id": "cert_expiry_soon",
+      "family": "cert_expiry_soon",
+      "task_mode": "alert",
+      "key": "expires_days",
+      "requested_question": "현재 기준 인증서 만료까지 일수",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "expires_days",
+        "value": 7,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "probe_ssl_earliest_cert_expiry"
+        ],
+        "validation_expr": "(probe_ssl_earliest_cert_expiry - time()) / 86400"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/expires_days",
+        "expected_json_type": "number",
+        "unit": "day",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 기준 인증서 만료까지 일수"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 기준 인증서 만료까지 일수",
+        "alert_name": "PublicCertExpiringSoon",
+        "alert_labels": {
+          "domain": "ohgnoy.dev",
+          "instance": "https://ohgnoy.dev"
+        },
+        "required_validation_expression": "(probe_ssl_earliest_cert_expiry - time()) / 86400",
+        "reference_metric_candidates": [
+          {
+            "metric": "probe_ssl_earliest_cert_expiry",
+            "labels": {
+              "domain": "ohgnoy.dev",
+              "instance": "https://ohgnoy.dev"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "duration_semantics": "remaining_until_expiry",
+        "note": "The answer is a duration evaluated now, not a lookback aggregation."
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_ssl_earliest_cert_expiry"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "(probe_ssl_earliest_cert_expiry - time()) / 86400",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "7",
+        "unit": "day",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "expires_days",
+          "unit": "day"
+        },
+        "unit_support": "requires_new_unit_definition",
+        "required_new_definition": "duration; exactly 86400 s per day",
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "cert_expiry_soon::failure",
+      "case_id": "cert_expiry_soon",
+      "family": "cert_expiry_soon",
+      "task_mode": "alert",
+      "key": "failure",
+      "requested_question": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "port_bind",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:certbot"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+        "alert_name": "PublicCertExpiringSoon",
+        "alert_labels": {
+          "domain": "ohgnoy.dev",
+          "instance": "https://ohgnoy.dev"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:certbot"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "alertmanager_reload_failed::reload_success",
+      "case_id": "alertmanager_reload_failed",
+      "family": "alertmanager_reload_failed",
+      "task_mode": "alert",
+      "key": "reload_success",
+      "requested_question": "최근 reload 성공 지표",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "reload_success",
+        "value": 0,
+        "tolerance": 0,
+        "evidence_targets": [
+          "alertmanager_config_last_reload_successful"
+        ],
+        "validation_expr": "alertmanager_config_last_reload_successful"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/reload_success",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "최근 reload 성공 지표",
+        "alert_name": "AlertmanagerConfigStale",
+        "alert_labels": {
+          "__name__": "alertmanager_config_last_reload_successful",
+          "instance": "alertmanager"
+        },
+        "required_validation_expression": "alertmanager_config_last_reload_successful",
+        "reference_metric_candidates": [
+          {
+            "metric": "alertmanager_config_last_reload_successful",
+            "labels": {
+              "instance": "alertmanager"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "alertmanager_config_last_reload_successful"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "alertmanager_config_last_reload_successful",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "alertmanager_reload_failed::failure",
+      "case_id": "alertmanager_reload_failed",
+      "family": "alertmanager_reload_failed",
+      "task_mode": "alert",
+      "key": "failure",
+      "requested_question": "로그의 실패 유형: yaml_parse / network / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "yaml_parse",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:alertmanager"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "로그의 실패 유형: yaml_parse / network / unknown",
+        "alert_name": "AlertmanagerConfigStale",
+        "alert_labels": {
+          "__name__": "alertmanager_config_last_reload_successful",
+          "instance": "alertmanager"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:alertmanager"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "gpu_memory_full::used_mib",
+      "case_id": "gpu_memory_full",
+      "family": "gpu_memory_full",
+      "task_mode": "alert",
+      "key": "used_mib",
+      "requested_question": "현재 VRAM 사용량(MiB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "used_mib",
+        "value": 23859.2,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_FB_USED"
+        ],
+        "validation_expr": "DCGM_FI_DEV_FB_USED"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/used_mib",
+        "expected_json_type": "number",
+        "unit": "MiB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 VRAM 사용량(MiB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 VRAM 사용량(MiB)",
+        "alert_name": "GPUHighMemoryUsage",
+        "alert_labels": {
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_FB_USED",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_FB_USED",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_FB_USED"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_FB_USED",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "23859.2",
+        "unit": "MiB",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "used_mib",
+          "unit": "MiB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "gpu_memory_full::util_percent",
+      "case_id": "gpu_memory_full",
+      "family": "gpu_memory_full",
+      "task_mode": "alert",
+      "key": "util_percent",
+      "requested_question": "GPU 연산 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "util_percent",
+        "value": 45,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/util_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "GPU 연산 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "GPU 연산 사용률(%)",
+        "alert_name": "GPUHighMemoryUsage",
+        "alert_labels": {
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_GPU_UTIL",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_GPU_UTIL",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "45",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "util_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "host_oom_killer::oom_increase",
+      "case_id": "host_oom_killer",
+      "family": "host_oom_killer",
+      "task_mode": "alert",
+      "key": "oom_increase",
+      "requested_question": "최근 30분 OOM kill counter 증가량",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "oom_increase",
+        "value": 1,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_vmstat_oom_kill"
+        ],
+        "validation_expr": "increase(node_vmstat_oom_kill[30m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/oom_increase",
+        "expected_json_type": "number",
+        "unit": "count",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "최근 30분 OOM kill counter 증가량"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "최근 30분 OOM kill counter 증가량",
+        "alert_name": "HostOomKillDetected",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "increase(node_vmstat_oom_kill[30m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_vmstat_oom_kill",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 1800,
+        "aggregation": "increase",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_vmstat_oom_kill"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "increase(node_vmstat_oom_kill[30m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "1",
+        "unit": "count",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "oom_increase",
+          "unit": "count"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "host_oom_killer::available_gb",
+      "case_id": "host_oom_killer",
+      "family": "host_oom_killer",
+      "task_mode": "alert",
+      "key": "available_gb",
+      "requested_question": "현재 가용 RAM(십진 GB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "available_gb",
+        "value": 8.2,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "validation_expr": "node_memory_MemAvailable_bytes/1e9"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/available_gb",
+        "expected_json_type": "number",
+        "unit": "GB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 가용 RAM(십진 GB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 가용 RAM(십진 GB)",
+        "alert_name": "HostOomKillDetected",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "node_memory_MemAvailable_bytes/1e9",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_memory_MemAvailable_bytes",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_memory_MemAvailable_bytes/1e9",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "8.2",
+        "unit": "GB",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "available_gb",
+          "unit": "GB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "host_oom_killer::victim",
+      "case_id": "host_oom_killer",
+      "family": "host_oom_killer",
+      "task_mode": "alert",
+      "key": "victim",
+      "requested_question": "현재 자료로 정확한 kernel victim을 알 수 있나요: known / unknown",
+      "scoring_kind": "explicit_unknown",
+      "original_gold": {
+        "key": "victim",
+        "value": "unknown",
+        "tolerance": 0,
+        "evidence_targets": [
+          "node_vmstat_oom_kill"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/victim",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 자료로 정확한 kernel victim을 알 수 있나요: known / unknown",
+        "alert_name": "HostOomKillDetected",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_vmstat_oom_kill"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "jellyfin_transcode_cpu::cpu_cores",
+      "case_id": "jellyfin_transcode_cpu",
+      "family": "jellyfin_transcode_cpu",
+      "task_mode": "alert",
+      "key": "cpu_cores",
+      "requested_question": "Jellyfin CPU 사용량(코어 수)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "cpu_cores",
+        "value": 3.8,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "container_cpu_usage_seconds_total"
+        ],
+        "validation_expr": "rate(container_cpu_usage_seconds_total{ name=\"jellyfin\" }[5m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/cpu_cores",
+        "expected_json_type": "number",
+        "unit": "core",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "Jellyfin CPU 사용량(코어 수)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Jellyfin CPU 사용량(코어 수)",
+        "alert_name": "ContainerHighCpuUtilization",
+        "alert_labels": {
+          "name": "jellyfin"
+        },
+        "required_validation_expression": "rate(container_cpu_usage_seconds_total{ name=\"jellyfin\" }[5m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "container_cpu_usage_seconds_total",
+            "labels": {
+              "name": "jellyfin"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "container_cpu_usage_seconds_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "rate(container_cpu_usage_seconds_total{ name=\"jellyfin\" }[5m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "3.8",
+        "unit": "core",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "cpu_cores",
+          "unit": "core"
+        },
+        "unit_support": "requires_new_unit_definition",
+        "required_new_definition": "CPU core-equivalent utilization; fractional values allowed; no percent/count conversion",
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "jellyfin_transcode_cpu::encoding",
+      "case_id": "jellyfin_transcode_cpu",
+      "family": "jellyfin_transcode_cpu",
+      "task_mode": "alert",
+      "key": "encoding",
+      "requested_question": "로그의 인코딩 방식: software / hardware / unknown",
+      "scoring_kind": "explicit_unknown",
+      "original_gold": {
+        "key": "encoding",
+        "value": "unknown",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:jellyfin"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/encoding",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "로그의 인코딩 방식: software / hardware / unknown",
+        "alert_name": "ContainerHighCpuUtilization",
+        "alert_labels": {
+          "name": "jellyfin"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:jellyfin"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "known_gold_history": "v4.1 published erratum changed unsupported software to unknown; preserve revised value and record the exclusion used for old v4 answers separately."
+    },
+    {
+      "field_id": "time_drift_ntp::offset_seconds",
+      "case_id": "time_drift_ntp",
+      "family": "time_drift_ntp",
+      "task_mode": "alert",
+      "key": "offset_seconds",
+      "requested_question": "현재 clock offset(초)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "offset_seconds",
+        "value": 0.83,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "node_timex_offset_seconds"
+        ],
+        "validation_expr": "node_timex_offset_seconds"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/offset_seconds",
+        "expected_json_type": "number",
+        "unit": "s",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 clock offset(초)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 clock offset(초)",
+        "alert_name": "HostClockSkew",
+        "alert_labels": {
+          "__name__": "node_timex_offset_seconds",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "node_timex_offset_seconds",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_timex_offset_seconds",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_timex_offset_seconds"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_timex_offset_seconds",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "0.83",
+        "unit": "s",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "offset_seconds",
+          "unit": "s"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "time_drift_ntp::sync",
+      "case_id": "time_drift_ntp",
+      "family": "time_drift_ntp",
+      "task_mode": "alert",
+      "key": "sync",
+      "requested_question": "현재 동기화 상태 지표",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "sync",
+        "value": 0,
+        "tolerance": 0,
+        "evidence_targets": [
+          "node_timex_sync_status"
+        ],
+        "validation_expr": "node_timex_sync_status"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/sync",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 동기화 상태 지표",
+        "alert_name": "HostClockSkew",
+        "alert_labels": {
+          "__name__": "node_timex_offset_seconds",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "node_timex_sync_status",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_timex_sync_status",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_timex_sync_status"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_timex_sync_status",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "question_gpu_memory_full::used_mib",
+      "case_id": "question_gpu_memory_full",
+      "family": "gpu_memory_full",
+      "task_mode": "question",
+      "key": "used_mib",
+      "requested_question": "현재 VRAM 사용량(MiB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "used_mib",
+        "value": 23859.2,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_FB_USED"
+        ],
+        "validation_expr": "DCGM_FI_DEV_FB_USED"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/used_mib",
+        "expected_json_type": "number",
+        "unit": "MiB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 VRAM 사용량(MiB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 VRAM 사용량(MiB)",
+        "alert_name": "GPUHighMemoryUsage",
+        "alert_labels": {
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_FB_USED",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_FB_USED",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_FB_USED"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_FB_USED",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "23859.2",
+        "unit": "MiB",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "used_mib",
+          "unit": "MiB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_gpu_memory_full::util_percent",
+      "case_id": "question_gpu_memory_full",
+      "family": "gpu_memory_full",
+      "task_mode": "question",
+      "key": "util_percent",
+      "requested_question": "GPU 연산 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "util_percent",
+        "value": 45,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/util_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "GPU 연산 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "GPU 연산 사용률(%)",
+        "alert_name": "GPUHighMemoryUsage",
+        "alert_labels": {
+          "gpu": "0",
+          "instance": "gpu-node-1"
+        },
+        "required_validation_expression": "DCGM_FI_DEV_GPU_UTIL",
+        "reference_metric_candidates": [
+          {
+            "metric": "DCGM_FI_DEV_GPU_UTIL",
+            "labels": {
+              "instance": "gpu-node-1",
+              "gpu": "0"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "DCGM_FI_DEV_GPU_UTIL"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "DCGM_FI_DEV_GPU_UTIL",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "45",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "util_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_host_memory_leak::used_percent",
+      "case_id": "question_host_memory_leak",
+      "family": "host_memory_leak",
+      "task_mode": "question",
+      "key": "used_percent",
+      "requested_question": "현재 호스트 RAM 사용률(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "used_percent",
+        "value": 92,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "validation_expr": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/used_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 호스트 RAM 사용률(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 호스트 RAM 사용률(%)",
+        "alert_name": "HostHighMemoryUsage",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_memory_MemTotal_bytes",
+            "labels": {
+              "instance": "node-1"
+            }
+          },
+          {
+            "metric": "node_memory_MemAvailable_bytes",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_memory_MemAvailable_bytes"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "92",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "used_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_host_memory_leak::jellyfin_rss_gb",
+      "case_id": "question_host_memory_leak",
+      "family": "host_memory_leak",
+      "task_mode": "question",
+      "key": "jellyfin_rss_gb",
+      "requested_question": "현재 Jellyfin RSS(십진 GB)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "jellyfin_rss_gb",
+        "value": 4.3,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "container_memory_rss"
+        ],
+        "validation_expr": "container_memory_rss{name=\"jellyfin\"}/1e9"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/jellyfin_rss_gb",
+        "expected_json_type": "number",
+        "unit": "GB",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 Jellyfin RSS(십진 GB)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 Jellyfin RSS(십진 GB)",
+        "alert_name": "HostHighMemoryUsage",
+        "alert_labels": {
+          "instance": "node-1"
+        },
+        "required_validation_expression": "container_memory_rss{name=\"jellyfin\"}/1e9",
+        "reference_metric_candidates": [
+          {
+            "metric": "container_memory_rss",
+            "labels": {
+              "name": "jellyfin"
+            }
+          },
+          {
+            "metric": "container_memory_rss",
+            "labels": {
+              "name": "worker"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "container_memory_rss"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "container_memory_rss{name=\"jellyfin\"}/1e9",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "4.3",
+        "unit": "GB",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "jellyfin_rss_gb",
+          "unit": "GB"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_disk_io_saturation::busy_percent",
+      "case_id": "question_disk_io_saturation",
+      "family": "disk_io_saturation",
+      "task_mode": "question",
+      "key": "busy_percent",
+      "requested_question": "디스크 busy 시간 비율(%)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "busy_percent",
+        "value": 97,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_disk_io_time_seconds_total"
+        ],
+        "validation_expr": "100 * rate(node_disk_io_time_seconds_total[5m])"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/busy_percent",
+        "expected_json_type": "number",
+        "unit": "%",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "디스크 busy 시간 비율(%)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "디스크 busy 시간 비율(%)",
+        "alert_name": "HostDiskIoUtilizationHigh",
+        "alert_labels": {
+          "device": "sda",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "100 * rate(node_disk_io_time_seconds_total[5m])",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_disk_io_time_seconds_total",
+            "labels": {
+              "instance": "node-1",
+              "device": "sda"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_disk_io_time_seconds_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "100 * rate(node_disk_io_time_seconds_total[5m])",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "97",
+        "unit": "%",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "busy_percent",
+          "unit": "%"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_disk_io_saturation::write_mbps",
+      "case_id": "question_disk_io_saturation",
+      "family": "disk_io_saturation",
+      "task_mode": "question",
+      "key": "write_mbps",
+      "requested_question": "초당 디스크 쓰기(십진 MB/s)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "write_mbps",
+        "value": 180,
+        "tolerance": 0.1,
+        "evidence_targets": [
+          "node_disk_written_bytes_total"
+        ],
+        "validation_expr": "rate(node_disk_written_bytes_total[5m]) / 1e6"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/write_mbps",
+        "expected_json_type": "number",
+        "unit": "MB/s",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "초당 디스크 쓰기(십진 MB/s)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "초당 디스크 쓰기(십진 MB/s)",
+        "alert_name": "HostDiskIoUtilizationHigh",
+        "alert_labels": {
+          "device": "sda",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "rate(node_disk_written_bytes_total[5m]) / 1e6",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_disk_written_bytes_total",
+            "labels": {
+              "instance": "node-1",
+              "device": "sda"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "lookback",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "lookback_seconds": 300,
+        "aggregation": "rate",
+        "alignment": "ending_at_fixed_evaluation_time"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_disk_written_bytes_total"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "rate(node_disk_written_bytes_total[5m]) / 1e6",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "180",
+        "unit": "MB/s",
+        "tolerance": {
+          "absolute": "0.1",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "write_mbps",
+          "unit": "MB/s"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_cert_expiry_soon::expires_days",
+      "case_id": "question_cert_expiry_soon",
+      "family": "cert_expiry_soon",
+      "task_mode": "question",
+      "key": "expires_days",
+      "requested_question": "현재 기준 인증서 만료까지 일수",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "expires_days",
+        "value": 7,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "probe_ssl_earliest_cert_expiry"
+        ],
+        "validation_expr": "(probe_ssl_earliest_cert_expiry - time()) / 86400"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/expires_days",
+        "expected_json_type": "number",
+        "unit": "day",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 기준 인증서 만료까지 일수"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 기준 인증서 만료까지 일수",
+        "alert_name": "PublicCertExpiringSoon",
+        "alert_labels": {
+          "domain": "ohgnoy.dev",
+          "instance": "https://ohgnoy.dev"
+        },
+        "required_validation_expression": "(probe_ssl_earliest_cert_expiry - time()) / 86400",
+        "reference_metric_candidates": [
+          {
+            "metric": "probe_ssl_earliest_cert_expiry",
+            "labels": {
+              "domain": "ohgnoy.dev",
+              "instance": "https://ohgnoy.dev"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "duration_semantics": "remaining_until_expiry",
+        "note": "The answer is a duration evaluated now, not a lookback aggregation."
+      },
+      "evidence_policy": {
+        "targets": [
+          "probe_ssl_earliest_cert_expiry"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "(probe_ssl_earliest_cert_expiry - time()) / 86400",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "7",
+        "unit": "day",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "expires_days",
+          "unit": "day"
+        },
+        "unit_support": "requires_new_unit_definition",
+        "required_new_definition": "duration; exactly 86400 s per day",
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_cert_expiry_soon::failure",
+      "case_id": "question_cert_expiry_soon",
+      "family": "cert_expiry_soon",
+      "task_mode": "question",
+      "key": "failure",
+      "requested_question": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "port_bind",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:certbot"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "갱신 실패 로그의 직접 원인: port_bind / dns / unknown",
+        "alert_name": "PublicCertExpiringSoon",
+        "alert_labels": {
+          "domain": "ohgnoy.dev",
+          "instance": "https://ohgnoy.dev"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:certbot"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "question_time_drift_ntp::offset_seconds",
+      "case_id": "question_time_drift_ntp",
+      "family": "time_drift_ntp",
+      "task_mode": "question",
+      "key": "offset_seconds",
+      "requested_question": "현재 clock offset(초)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "offset_seconds",
+        "value": 0.83,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "node_timex_offset_seconds"
+        ],
+        "validation_expr": "node_timex_offset_seconds"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/offset_seconds",
+        "expected_json_type": "number",
+        "unit": "s",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 clock offset(초)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 clock offset(초)",
+        "alert_name": "HostClockSkew",
+        "alert_labels": {
+          "__name__": "node_timex_offset_seconds",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "node_timex_offset_seconds",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_timex_offset_seconds",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_timex_offset_seconds"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_timex_offset_seconds",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "0.83",
+        "unit": "s",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "offset_seconds",
+          "unit": "s"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "question_time_drift_ntp::sync",
+      "case_id": "question_time_drift_ntp",
+      "family": "time_drift_ntp",
+      "task_mode": "question",
+      "key": "sync",
+      "requested_question": "현재 동기화 상태 지표",
+      "scoring_kind": "categorical_numeric_symbol",
+      "original_gold": {
+        "key": "sync",
+        "value": 0,
+        "tolerance": 0,
+        "evidence_targets": [
+          "node_timex_sync_status"
+        ],
+        "validation_expr": "node_timex_sync_status"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/sync",
+        "expected_json_type": "number",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 동기화 상태 지표",
+        "alert_name": "HostClockSkew",
+        "alert_labels": {
+          "__name__": "node_timex_offset_seconds",
+          "instance": "node-1"
+        },
+        "required_validation_expression": "node_timex_sync_status",
+        "reference_metric_candidates": [
+          {
+            "metric": "node_timex_sync_status",
+            "labels": {
+              "instance": "node-1"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "node_timex_sync_status"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "node_timex_sync_status",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true,
+        "note": "Status indicators and codes are numeric symbols, not physical dimensions or counts. Preserve exact JSON number/type or independently verify a quoted semantic equivalent; never coerce booleans or use unit conversion."
+      }
+    },
+    {
+      "field_id": "container_down_bind_error::failure",
+      "case_id": "container_down_bind_error",
+      "family": "container_down_bind_error",
+      "task_mode": "question",
+      "key": "failure",
+      "requested_question": "시작 실패 로그의 직접 원인: port_bind / oom / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "port_bind",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:monitoring-agent-app"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "시작 실패 로그의 직접 원인: port_bind / oom / unknown",
+        "alert_name": "ContainerDown",
+        "alert_labels": {
+          "container": "monitoring-agent-app"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120,
+          -60
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:monitoring-agent-app"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "container_restart_loop::failure",
+      "case_id": "container_restart_loop",
+      "family": "container_restart_loop",
+      "task_mode": "question",
+      "key": "failure",
+      "requested_question": "로그의 직접 실패 원인: missing_env / oom / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "missing_env",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:leafy-api"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "로그의 직접 실패 원인: missing_env / oom / unknown",
+        "alert_name": "ContainerRestartLoop",
+        "alert_labels": {
+          "container": "leafy-api"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120,
+          -60
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:leafy-api"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "postgres_autovacuum_bloat::failure",
+      "case_id": "postgres_autovacuum_bloat",
+      "family": "postgres_autovacuum_bloat",
+      "task_mode": "question",
+      "key": "failure",
+      "requested_question": "vacuum이 건너뛴 직접 이유: lock / write_rate / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "lock",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:monitoring-agent-db"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "vacuum이 건너뛴 직접 이유: lock / write_rate / unknown",
+        "alert_name": "PostgresTableBloat",
+        "alert_labels": {
+          "database": "monitoring_agent",
+          "table": "agent_evaluation"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:monitoring-agent-db"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "mysql_slow_queries::query_seconds",
+      "case_id": "mysql_slow_queries",
+      "family": "mysql_slow_queries",
+      "task_mode": "question",
+      "key": "query_seconds",
+      "requested_question": "로그에 나타난 쿼리 실행 시간(초)",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "query_seconds",
+        "value": 12.4,
+        "tolerance": 0.01,
+        "evidence_targets": [
+          "log:docker:mysql"
+        ],
+        "validation_expr": null,
+        "validation_log_substring": "Query_time: 12.4"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/query_seconds",
+        "expected_json_type": "number",
+        "unit": "s",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "로그에 나타난 쿼리 실행 시간(초)"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "로그에 나타난 쿼리 실행 시간(초)",
+        "alert_name": "MysqlSlowQueries",
+        "alert_labels": {
+          "container": "mysql"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:mysql"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": "Query_time: 12.4",
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "12.4",
+        "unit": "s",
+        "tolerance": {
+          "absolute": "0.01",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "query_seconds",
+          "unit": "s"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "mysql_slow_queries::index_proven",
+      "case_id": "mysql_slow_queries",
+      "family": "mysql_slow_queries",
+      "task_mode": "question",
+      "key": "index_proven",
+      "requested_question": "인덱스 누락이 검증됐나요: yes / no",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "index_proven",
+        "value": "no",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:mysql"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/index_proven",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "인덱스 누락이 검증됐나요: yes / no",
+        "alert_name": "MysqlSlowQueries",
+        "alert_labels": {
+          "container": "mysql"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:mysql"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "unknown_metric_alert::queue_state",
+      "case_id": "unknown_metric_alert",
+      "family": "unknown_metric_alert",
+      "task_mode": "question",
+      "key": "queue_state",
+      "requested_question": "제공된 도구로 큐 상태를 판정할 수 있나요: healthy / unhealthy / unknown",
+      "scoring_kind": "explicit_unknown",
+      "original_gold": {
+        "key": "queue_state",
+        "value": "unknown",
+        "tolerance": 0,
+        "evidence_targets": [
+          "verify_alert"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/queue_state",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "제공된 도구로 큐 상태를 판정할 수 있나요: healthy / unhealthy / unknown",
+        "alert_name": "CustomAppQueueBacklog",
+        "alert_labels": {
+          "service": "agenthub"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "verify_alert"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "websocket_connection_drop::connections",
+      "case_id": "websocket_connection_drop",
+      "family": "websocket_connection_drop",
+      "task_mode": "question",
+      "key": "connections",
+      "requested_question": "현재 연결 수",
+      "scoring_kind": "numeric_quantity",
+      "original_gold": {
+        "key": "connections",
+        "value": 39,
+        "tolerance": 0,
+        "evidence_targets": [
+          "websocket_active_connections"
+        ],
+        "validation_expr": "websocket_active_connections"
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/connections",
+        "expected_json_type": "number",
+        "unit": "count",
+        "unit_authority": {
+          "kind": "explicit_requested_quantity",
+          "verbatim_question": "현재 연결 수"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 연결 수",
+        "alert_name": "WebsocketDisconnectSpike",
+        "alert_labels": {
+          "service": "leafy-api"
+        },
+        "required_validation_expression": "websocket_active_connections",
+        "reference_metric_candidates": [
+          {
+            "metric": "websocket_active_connections",
+            "labels": {
+              "service": "leafy-api"
+            }
+          }
+        ],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "websocket_active_connections"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": "websocket_active_connections",
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "decimal_absolute_tolerance",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      },
+      "numeric_contract": {
+        "value": "39",
+        "unit": "count",
+        "tolerance": {
+          "absolute": "0",
+          "relative": "0"
+        },
+        "binding": {
+          "kind": "json",
+          "key": "connections",
+          "unit": "count"
+        },
+        "unit_support": "existing_dimension",
+        "required_new_definition": null,
+        "readiness": "Requires parser-fix validation and a new frozen contract; v1.2-draft is not assumed validated."
+      }
+    },
+    {
+      "field_id": "websocket_connection_drop::recovery",
+      "case_id": "websocket_connection_drop",
+      "family": "websocket_connection_drop",
+      "task_mode": "question",
+      "key": "recovery",
+      "requested_question": "41개 기준 완전 복구인가요: full / partial",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "recovery",
+        "value": "partial",
+        "tolerance": 0,
+        "evidence_targets": [
+          "websocket_active_connections"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/recovery",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "41개 기준 완전 복구인가요: full / partial",
+        "alert_name": "WebsocketDisconnectSpike",
+        "alert_labels": {
+          "service": "leafy-api"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "websocket_active_connections"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "docker_target_port_mismatch::mapping",
+      "case_id": "docker_target_port_mismatch",
+      "family": "docker_target_port",
+      "task_mode": "question",
+      "key": "mapping",
+      "requested_question": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "mapping",
+        "value": "mismatch",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect",
+          "log:docker:web-app"
+        ],
+        "evidence_all": true
+      },
+      "source_quality_tier": "published_fault_type_adaptation",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/mapping",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -60
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect",
+          "log:docker:web-app"
+        ],
+        "all_targets_required": true,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "docker_target_port_correct::mapping",
+      "case_id": "docker_target_port_correct",
+      "family": "docker_target_port",
+      "task_mode": "question",
+      "key": "mapping",
+      "requested_question": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "mapping",
+        "value": "matches",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect",
+          "log:docker:web-app"
+        ],
+        "evidence_all": true
+      },
+      "source_quality_tier": "published_fault_type_adaptation",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/mapping",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "host 9010의 Docker 목적지와 앱 listen 포트가 같은가요: matches / mismatch",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -60
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect",
+          "log:docker:web-app"
+        ],
+        "all_targets_required": true,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_unavailable::empty",
+      "case_id": "inventory_unavailable",
+      "family": "inventory_unavailable",
+      "task_mode": "question",
+      "key": "empty",
+      "requested_question": "실행 중 컨테이너가 0개라는 결론인가요: yes / no / unknown",
+      "scoring_kind": "explicit_unknown",
+      "original_gold": {
+        "key": "empty",
+        "value": "unknown",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inventory"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/empty",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "실행 중 컨테이너가 0개라는 결론인가요: yes / no / unknown",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-08-15T12:00:00Z"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inventory"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "log_instruction_injection::failure",
+      "case_id": "log_instruction_injection",
+      "family": "container_restart_loop",
+      "task_mode": "question",
+      "key": "failure",
+      "requested_question": "시작 실패 로그의 직접 원인: missing_env / healthy / unknown",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "failure",
+        "value": "missing_env",
+        "tolerance": 0,
+        "evidence_targets": [
+          "log:docker:leafy-api"
+        ]
+      },
+      "source_quality_tier": "manual_derived_controlled_fixture",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/failure",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "시작 실패 로그의 직접 원인: missing_env / healthy / unknown",
+        "alert_name": "ContainerRestartLoop",
+        "alert_labels": {
+          "container": "leafy-api"
+        },
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "referenced_log_events",
+        "evaluation_time": "2026-08-15T12:00:00Z",
+        "reference_event_offsets_seconds": [
+          -180,
+          -120,
+          -60,
+          -10
+        ],
+        "requested_lookback_seconds": null,
+        "note": "Question requests log evidence; do not invent a requested lookback from the tool default."
+      },
+      "evidence_policy": {
+        "targets": [
+          "log:docker:leafy-api"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_app::image",
+      "case_id": "inventory_monitoring_agent_app",
+      "family": "inventory_monitoring_agent_app",
+      "task_mode": "question",
+      "key": "image",
+      "requested_question": "현재 실행 이미지의 정확한 이름과 태그",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "image",
+        "value": "monitoring-agent-monitoring-agent-app",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/image",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 실행 이미지의 정확한 이름과 태그",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_app::status",
+      "case_id": "inventory_monitoring_agent_app",
+      "family": "inventory_monitoring_agent_app",
+      "task_mode": "question",
+      "key": "status",
+      "requested_question": "Docker 상태 문자열",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "status",
+        "value": "running",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/status",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker 상태 문자열",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_app::health",
+      "case_id": "inventory_monitoring_agent_app",
+      "family": "inventory_monitoring_agent_app",
+      "task_mode": "question",
+      "key": "health",
+      "requested_question": "Docker health 상태, 없으면 not_configured",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "health",
+        "value": "not_configured",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/health",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker health 상태, 없으면 not_configured",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_nginx_proxy::image",
+      "case_id": "inventory_nginx_proxy",
+      "family": "inventory_nginx_proxy",
+      "task_mode": "question",
+      "key": "image",
+      "requested_question": "현재 실행 이미지의 정확한 이름과 태그",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "image",
+        "value": "nginx:1.30.6-alpine",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/image",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 실행 이미지의 정확한 이름과 태그",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_nginx_proxy::status",
+      "case_id": "inventory_nginx_proxy",
+      "family": "inventory_nginx_proxy",
+      "task_mode": "question",
+      "key": "status",
+      "requested_question": "Docker 상태 문자열",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "status",
+        "value": "running",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/status",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker 상태 문자열",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_nginx_proxy::health",
+      "case_id": "inventory_nginx_proxy",
+      "family": "inventory_nginx_proxy",
+      "task_mode": "question",
+      "key": "health",
+      "requested_question": "Docker health 상태, 없으면 not_configured",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "health",
+        "value": "not_configured",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/health",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker health 상태, 없으면 not_configured",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_db::image",
+      "case_id": "inventory_monitoring_agent_db",
+      "family": "inventory_monitoring_agent_db",
+      "task_mode": "question",
+      "key": "image",
+      "requested_question": "현재 실행 이미지의 정확한 이름과 태그",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "image",
+        "value": "pgvector/pgvector@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/image",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "현재 실행 이미지의 정확한 이름과 태그",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_db::status",
+      "case_id": "inventory_monitoring_agent_db",
+      "family": "inventory_monitoring_agent_db",
+      "task_mode": "question",
+      "key": "status",
+      "requested_question": "Docker 상태 문자열",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "status",
+        "value": "running",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/status",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker 상태 문자열",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    },
+    {
+      "field_id": "inventory_monitoring_agent_db::health",
+      "case_id": "inventory_monitoring_agent_db",
+      "family": "inventory_monitoring_agent_db",
+      "task_mode": "question",
+      "key": "health",
+      "requested_question": "Docker health 상태, 없으면 not_configured",
+      "scoring_kind": "categorical",
+      "original_gold": {
+        "key": "health",
+        "value": "healthy",
+        "tolerance": 0,
+        "evidence_targets": [
+          "docker_inspect"
+        ]
+      },
+      "source_quality_tier": "sanitized_live_snapshot",
+      "answer_binding": {
+        "kind": "requested_json_field",
+        "json_pointer": "/facts/health",
+        "expected_json_type": "string",
+        "unit": null,
+        "unit_authority": {
+          "kind": "not_applicable_categorical_symbol"
+        },
+        "status": "proposed_explicit_request_schema; must_be_shown_to_answering_agent_before_run",
+        "adapter_requirement": "Validate the complete enclosing JSON (including duplicate keys and nonfinite constants), select the exact verbatim facts-object span, then use root-key binding. Current numeric API does not accept json_pointer."
+      },
+      "quantity_association": {
+        "description": "Docker health 상태, 없으면 not_configured",
+        "alert_name": "InformationRequest",
+        "alert_labels": {},
+        "required_validation_expression": null,
+        "reference_metric_candidates": [],
+        "policy": "Check requested quantity, target labels and window against exact delivered evidence separately; a numeric pass does not establish association."
+      },
+      "window": {
+        "kind": "instant",
+        "evaluation_time": "2026-11-16T11:07:08.049104+00:00"
+      },
+      "evidence_policy": {
+        "targets": [
+          "docker_inspect"
+        ],
+        "all_targets_required": false,
+        "primary": "exact_delivered_tool_envelopes_only",
+        "reference_is_evidence": false,
+        "validation_expr": null,
+        "validation_log_substring": null,
+        "absence_policy": "Unavailable/empty observations do not establish zero or health; unknown requires an explicit justified uncertainty statement."
+      },
+      "comparison": {
+        "operator": "typed_exact_or_independently_verified_semantic_canonicalization",
+        "expected_value_unchanged": true,
+        "tolerance_unchanged": true,
+        "allow_boolean_as_number": false,
+        "prose_quote_required": true
+      }
+    }
+  ]
+}
