@@ -1,0 +1,32 @@
+{
+  "kind": "controlled_retrieval_diagnostic",
+  "frozen_at": "2026-11-17T12:18:02.353647+00:00",
+  "inputs": {
+    "eval/vector-v1/dataset.json": "a730e901ff6a6a8209517a1d098d5d34dfc4ba5fd67b9949d71ddb5793cdcc19",
+    "eval/vector-v1/sources.json": "fcbfabf5aa5aac59b232a03e1f8d7809a35dfc319a2138311892e92957e7665f",
+    "eval/vector-v1/protocol.json": "23bf24c6c2ea0a6802d94053b1c7ee00b17af02b481d9ab685bfb281acc15c68",
+    "scripts/eval_vector_retrieval.py": "b54a54f053d7c3df99369c715868319bafcc07b27eed063908e8671b8758d5eb",
+    "scripts/tests/test_vector_retrieval.py": "5e2d04bf312a581541b932c111a0f0c51a9991b9ca53ca82592ae564c5f34355",
+    "src/main/java/io/ohgnoy/monitoring/infrastructure/rag/AlertVectorService.java": "3f86b074071db563bf90c92d5cdafe6b226a88527520c3cdafa9a0b9dbeac8ee"
+  },
+  "model": {
+    "name": "all-minilm:latest",
+    "digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+    "size": 45960996
+  },
+  "ollama_version": {
+    "version": "0.32.9"
+  },
+  "endpoint": "local Ollama; address excluded from public metadata",
+  "model_details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "bert",
+    "families": [
+      "bert"
+    ],
+    "parameter_size": "23M",
+    "quantization_level": "F16"
+  },
+  "paid_api_calls": 0
+}

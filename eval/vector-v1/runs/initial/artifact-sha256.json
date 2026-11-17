@@ -1,0 +1,8 @@
+{
+  "pgvector-rankings.json": "ac581dbf8371a82d8b64cedfdfe90971fe2639bbadc340f2d996931eacf4bcd5",
+  "results.json": "b4f9907c035e39ed4131f0e300ac5bb70d26acdc2d3d08b122116c98a52aa25c",
+  "summary.json": "7e996091db14e7ab7267f2307036a02797ebf1ffa13258f7ac7b33d96f422e57",
+  "embeddings.json": "3f78c56108a8b19ecd82fd68dca7628c4ac1c6e8a8b5a9275695e7890b0ec014",
+  "manifest.json": "858d72ebaa131d6e418d56a5d4561d4a3382c7119d3edb9460d9e9dabfc16360",
+  "embedding-batches.json": "a6ac72983d2a6b2a47402fa28ae13efab19e5eaaeb7d372e7765df6eb62a9edf"
+}

@@ -1,0 +1,1 @@
+{"status": "passed", "frozen_inputs": 6, "artifacts": 6, "embedding_items": 108, "pgvector_rankings_reproduced": 136, "result_rows": 272, "positive_metric_groups": 16, "paid_api_calls": 0, "scope": "Artifact integrity and arithmetic; not independent relevance-label certification."}

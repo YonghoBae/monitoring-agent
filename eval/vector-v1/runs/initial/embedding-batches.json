@@ -1,0 +1,86 @@
+[
+  {
+    "count": 8,
+    "elapsed_seconds": 0.11309935100143775,
+    "prompt_eval_count": 581,
+    "load_duration": 28648969
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.10441393201472238,
+    "prompt_eval_count": 606,
+    "load_duration": 28813109
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.09578200004762039,
+    "prompt_eval_count": 583,
+    "load_duration": 26075145
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.0944372049998492,
+    "prompt_eval_count": 622,
+    "load_duration": 25431738
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.08833426603814587,
+    "prompt_eval_count": 590,
+    "load_duration": 24895379
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07412375102285296,
+    "prompt_eval_count": 228,
+    "load_duration": 25142758
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07202687702374533,
+    "prompt_eval_count": 208,
+    "load_duration": 25314559
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07861575100105256,
+    "prompt_eval_count": 239,
+    "load_duration": 27165395
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.06847052497323602,
+    "prompt_eval_count": 227,
+    "load_duration": 21353125
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07703920500352979,
+    "prompt_eval_count": 214,
+    "load_duration": 24589953
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.0737895350321196,
+    "prompt_eval_count": 242,
+    "load_duration": 25998659
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07906881294911727,
+    "prompt_eval_count": 234,
+    "load_duration": 31638900
+  },
+  {
+    "count": 8,
+    "elapsed_seconds": 0.07667236000997946,
+    "prompt_eval_count": 201,
+    "load_duration": 28858272
+  },
+  {
+    "count": 4,
+    "elapsed_seconds": 0.05074972502188757,
+    "prompt_eval_count": 97,
+    "load_duration": 22403136
+  }
+]

@@ -1,0 +1,181 @@
+{
+  "kind": "controlled_retrieval_diagnostic",
+  "completed_at": "2026-11-17T12:18:07.675470+00:00",
+  "methods": {
+    "dense_current_all": {
+      "positive": {
+        "all": {
+          "queries": 60,
+          "hit_at_1": 0.3,
+          "recall_at_3": 0.6833333333333333,
+          "recall_at_5": 0.7666666666666667,
+          "mrr_at_5": 0.49972222222222223,
+          "ndcg_at_5": 0.5675566767757826
+        },
+        "ko_direct": {
+          "queries": 20,
+          "hit_at_1": 0.75,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0,
+          "mrr_at_5": 0.875,
+          "ndcg_at_5": 0.9077324383928644
+        },
+        "ko_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.15,
+          "recall_at_3": 0.25,
+          "recall_at_5": 0.4,
+          "mrr_at_5": 0.21583333333333332,
+          "ndcg_at_5": 0.26021910862712383
+        },
+        "en_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.0,
+          "recall_at_3": 0.8,
+          "recall_at_5": 0.9,
+          "mrr_at_5": 0.4083333333333333,
+          "ndcg_at_5": 0.5347184833073595
+        }
+      },
+      "wrong_type_fraction_at_5": 0.31333333333333335,
+      "negative_queries": 8,
+      "negative_nonempty_rate": 1.0
+    },
+    "dense_resolution_only": {
+      "positive": {
+        "all": {
+          "queries": 60,
+          "hit_at_1": 0.65,
+          "recall_at_3": 0.7333333333333333,
+          "recall_at_5": 0.8,
+          "mrr_at_5": 0.7011111111111111,
+          "ndcg_at_5": 0.7254641331888373
+        },
+        "ko_direct": {
+          "queries": 20,
+          "hit_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0,
+          "mrr_at_5": 1.0,
+          "ndcg_at_5": 1.0
+        },
+        "ko_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.15,
+          "recall_at_3": 0.25,
+          "recall_at_5": 0.4,
+          "mrr_at_5": 0.21583333333333332,
+          "ndcg_at_5": 0.26021910862712383
+        },
+        "en_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.8,
+          "recall_at_3": 0.95,
+          "recall_at_5": 1.0,
+          "mrr_at_5": 0.8875,
+          "ndcg_at_5": 0.9161732909393884
+        }
+      },
+      "wrong_type_fraction_at_5": 0.0,
+      "negative_queries": 8,
+      "negative_nonempty_rate": 1.0
+    },
+    "bm25_resolution_only": {
+      "positive": {
+        "all": {
+          "queries": 60,
+          "hit_at_1": 0.8,
+          "recall_at_3": 0.9,
+          "recall_at_5": 0.9333333333333333,
+          "mrr_at_5": 0.8547222222222222,
+          "ndcg_at_5": 0.8745363022194204
+        },
+        "ko_direct": {
+          "queries": 20,
+          "hit_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0,
+          "mrr_at_5": 1.0,
+          "ndcg_at_5": 1.0
+        },
+        "ko_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.65,
+          "recall_at_3": 0.9,
+          "recall_at_5": 0.95,
+          "mrr_at_5": 0.7791666666666667,
+          "ndcg_at_5": 0.8227197786179612
+        },
+        "en_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.75,
+          "recall_at_3": 0.8,
+          "recall_at_5": 0.85,
+          "mrr_at_5": 0.7849999999999999,
+          "ndcg_at_5": 0.8008891280402999
+        }
+      },
+      "wrong_type_fraction_at_5": 0.0,
+      "negative_queries": 8,
+      "negative_nonempty_rate": 1.0
+    },
+    "rrf_resolution_only": {
+      "positive": {
+        "all": {
+          "queries": 60,
+          "hit_at_1": 0.6666666666666666,
+          "recall_at_3": 0.7666666666666667,
+          "recall_at_5": 0.8833333333333333,
+          "mrr_at_5": 0.7358333333333333,
+          "ndcg_at_5": 0.7719979610925071
+        },
+        "ko_direct": {
+          "queries": 20,
+          "hit_at_1": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0,
+          "mrr_at_5": 1.0,
+          "ndcg_at_5": 1.0
+        },
+        "ko_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.25,
+          "recall_at_3": 0.4,
+          "recall_at_5": 0.7,
+          "mrr_at_5": 0.3783333333333333,
+          "ndcg_at_5": 0.4563670800167056
+        },
+        "en_paraphrase": {
+          "queries": 20,
+          "hit_at_1": 0.75,
+          "recall_at_3": 0.9,
+          "recall_at_5": 0.95,
+          "mrr_at_5": 0.8291666666666666,
+          "ndcg_at_5": 0.8596268032608154
+        }
+      },
+      "wrong_type_fraction_at_5": 0.0,
+      "negative_queries": 8,
+      "negative_nonempty_rate": 1.0
+    }
+  },
+  "embedding_items": 108,
+  "embedding_elapsed_seconds": 1.1466232961392961,
+  "postgres": {
+    "postgres_version": "PostgreSQL 16.16 (Debian 16.16-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "pgvector_version": "0.8.7"
+  },
+  "pgvector_queries": 136,
+  "pgvector_total_seconds_including_docker_exec": 0.1907718989532441,
+  "max_cosine_difference_from_python": 1.2423329598387767e-07,
+  "identical_full_rankings_to_python": 136,
+  "inputs_unchanged": true,
+  "paid_api_calls": 0,
+  "limitations": [
+    "authored controlled relevance labels, no independent human review",
+    "small 20-family corpus, no population accuracy claim",
+    "current serialization and retrieval policy reproduced, not full Spring AI end-to-end",
+    "no ANN performance or threshold calibration",
+    "no downstream answer/remediation quality measurement"
+  ]
+}

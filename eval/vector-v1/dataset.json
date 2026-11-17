@@ -1,0 +1,1299 @@
+{
+  "version": "vector-retrieval-v1",
+  "created_at": "2026-11-17T12:12:47.896194+00:00",
+  "task": "Retrieve prior resolution records, not just similar firing alerts.",
+  "provenance": "Authored controlled corpus/questions grounded in official manuals and one public issue; not imported BEIR data or a natural incident sample.",
+  "independence_limit": "One authoring context created questions and relevance judgments; no independent human relevance review.",
+  "corpus": [
+    {
+      "id": "resolution-container_oom",
+      "type": "resolution",
+      "family": "container_oom",
+      "alertName": "ContainerMemoryLimit",
+      "alertSummary": "컨테이너가 메모리 상한에 도달해 OOMKilled로 종료됐다.",
+      "resolutionSteps": "메모리 사용량과 OOMKilled 상태를 확인했다. 누수를 조사하고 워크로드에 맞게 memory limit을 조정한 뒤 종료 재발 여부를 관찰했다.",
+      "outcome": "RESOLVED",
+      "source_id": "docker_resources",
+      "synthetic": true,
+      "text": "ContainerMemoryLimit | 컨테이너가 메모리 상한에 도달해 OOMKilled로 종료됐다. | 메모리 사용량과 OOMKilled 상태를 확인했다. 누수를 조사하고 워크로드에 맞게 memory limit을 조정한 뒤 종료 재발 여부를 관찰했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-container_oom",
+      "type": "alert",
+      "family": "container_oom",
+      "alertName": "ContainerMemoryLimit",
+      "message": "Memory cgroup out of memory: container process killed",
+      "annotationSummary": "컨테이너가 메모리 상한에 도달해 OOMKilled로 종료됐다.",
+      "source_id": "docker_resources",
+      "synthetic": true,
+      "text": "ContainerMemoryLimit | Memory cgroup out of memory: container process killed | 컨테이너가 메모리 상한에 도달해 OOMKilled로 종료됐다."
+    },
+    {
+      "id": "resolution-cpu_quota",
+      "type": "resolution",
+      "family": "cpu_quota",
+      "alertName": "ContainerCpuThrottled",
+      "alertSummary": "호스트 CPU에는 여유가 있지만 컨테이너의 CPU 할당량 제한으로 지연이 생겼다.",
+      "resolutionSteps": "호스트 사용률과 컨테이너 throttling을 구분했다. CPU quota가 부하에 비해 낮은지 확인하고 할당량을 조정해 지연을 재확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "docker_resources",
+      "synthetic": true,
+      "text": "ContainerCpuThrottled | 호스트 CPU에는 여유가 있지만 컨테이너의 CPU 할당량 제한으로 지연이 생겼다. | 호스트 사용률과 컨테이너 throttling을 구분했다. CPU quota가 부하에 비해 낮은지 확인하고 할당량을 조정해 지연을 재확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-cpu_quota",
+      "type": "alert",
+      "family": "cpu_quota",
+      "alertName": "ContainerCpuThrottled",
+      "message": "CFS quota throttling while host CPU is idle",
+      "annotationSummary": "호스트 CPU에는 여유가 있지만 컨테이너의 CPU 할당량 제한으로 지연이 생겼다.",
+      "source_id": "docker_resources",
+      "synthetic": true,
+      "text": "ContainerCpuThrottled | CFS quota throttling while host CPU is idle | 호스트 CPU에는 여유가 있지만 컨테이너의 CPU 할당량 제한으로 지연이 생겼다."
+    },
+    {
+      "id": "resolution-disk_blocks",
+      "type": "resolution",
+      "family": "disk_blocks",
+      "alertName": "FilesystemSpaceLow",
+      "alertSummary": "파일시스템의 사용 가능한 블록 공간이 부족해 파일 기록이 실패했다.",
+      "resolutionSteps": "df로 해당 마운트의 블록 사용량을 확인했다. 보존 정책에 따라 불필요한 파일을 정리하거나 용량을 늘리고 기록 가능 여부를 확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "df",
+      "synthetic": true,
+      "text": "FilesystemSpaceLow | 파일시스템의 사용 가능한 블록 공간이 부족해 파일 기록이 실패했다. | df로 해당 마운트의 블록 사용량을 확인했다. 보존 정책에 따라 불필요한 파일을 정리하거나 용량을 늘리고 기록 가능 여부를 확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-disk_blocks",
+      "type": "alert",
+      "family": "disk_blocks",
+      "alertName": "FilesystemSpaceLow",
+      "message": "No space left on device: filesystem blocks exhausted",
+      "annotationSummary": "파일시스템의 사용 가능한 블록 공간이 부족해 파일 기록이 실패했다.",
+      "source_id": "df",
+      "synthetic": true,
+      "text": "FilesystemSpaceLow | No space left on device: filesystem blocks exhausted | 파일시스템의 사용 가능한 블록 공간이 부족해 파일 기록이 실패했다."
+    },
+    {
+      "id": "resolution-disk_inodes",
+      "type": "resolution",
+      "family": "disk_inodes",
+      "alertName": "FilesystemInodesLow",
+      "alertSummary": "남은 바이트 용량은 충분하지만 inode가 소진되어 새 파일을 만들지 못했다.",
+      "resolutionSteps": "df -i로 inode 고갈을 확인했다. 작은 임시 파일이 쌓인 경로를 확인하고 보존 정책에 맞게 정리한 뒤 파일 생성을 재확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "df",
+      "synthetic": true,
+      "text": "FilesystemInodesLow | 남은 바이트 용량은 충분하지만 inode가 소진되어 새 파일을 만들지 못했다. | df -i로 inode 고갈을 확인했다. 작은 임시 파일이 쌓인 경로를 확인하고 보존 정책에 맞게 정리한 뒤 파일 생성을 재확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-disk_inodes",
+      "type": "alert",
+      "family": "disk_inodes",
+      "alertName": "FilesystemInodesLow",
+      "message": "No space left on device with free blocks but zero free inodes",
+      "annotationSummary": "남은 바이트 용량은 충분하지만 inode가 소진되어 새 파일을 만들지 못했다.",
+      "source_id": "df",
+      "synthetic": true,
+      "text": "FilesystemInodesLow | No space left on device with free blocks but zero free inodes | 남은 바이트 용량은 충분하지만 inode가 소진되어 새 파일을 만들지 못했다."
+    },
+    {
+      "id": "resolution-disk_saturation",
+      "type": "resolution",
+      "family": "disk_saturation",
+      "alertName": "DiskIOSaturated",
+      "alertSummary": "저장장치 대기열과 I/O 지연이 함께 커져 응답이 느려졌다.",
+      "resolutionSteps": "사용률만으로 판단하지 않고 대기열과 지연을 함께 확인했다. 겹친 백업 작업의 동시성을 줄이고 저장장치 포화가 완화되는지 관찰했다.",
+      "outcome": "RESOLVED",
+      "source_id": "use",
+      "synthetic": true,
+      "text": "DiskIOSaturated | 저장장치 대기열과 I/O 지연이 함께 커져 응답이 느려졌다. | 사용률만으로 판단하지 않고 대기열과 지연을 함께 확인했다. 겹친 백업 작업의 동시성을 줄이고 저장장치 포화가 완화되는지 관찰했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-disk_saturation",
+      "type": "alert",
+      "family": "disk_saturation",
+      "alertName": "DiskIOSaturated",
+      "message": "Disk queue depth and IO latency elevated during concurrent backup",
+      "annotationSummary": "저장장치 대기열과 I/O 지연이 함께 커져 응답이 느려졌다.",
+      "source_id": "use",
+      "synthetic": true,
+      "text": "DiskIOSaturated | Disk queue depth and IO latency elevated during concurrent backup | 저장장치 대기열과 I/O 지연이 함께 커져 응답이 느려졌다."
+    },
+    {
+      "id": "resolution-pg_dump_version",
+      "type": "resolution",
+      "family": "pg_dump_version",
+      "alertName": "PostgresBackupVersionMismatch",
+      "alertSummary": "백업 클라이언트의 주 버전이 서버보다 오래되어 pg_dump가 거부됐다.",
+      "resolutionSteps": "서버와 pg_dump의 주 버전을 비교했다. 서버 버전을 지원하는 클라이언트로 백업을 다시 수행하고 복원 검사를 별도로 확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "pgdump",
+      "synthetic": true,
+      "text": "PostgresBackupVersionMismatch | 백업 클라이언트의 주 버전이 서버보다 오래되어 pg_dump가 거부됐다. | 서버와 pg_dump의 주 버전을 비교했다. 서버 버전을 지원하는 클라이언트로 백업을 다시 수행하고 복원 검사를 별도로 확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-pg_dump_version",
+      "type": "alert",
+      "family": "pg_dump_version",
+      "alertName": "PostgresBackupVersionMismatch",
+      "message": "pg_dump: aborting because of server version mismatch",
+      "annotationSummary": "백업 클라이언트의 주 버전이 서버보다 오래되어 pg_dump가 거부됐다.",
+      "source_id": "pgdump",
+      "synthetic": true,
+      "text": "PostgresBackupVersionMismatch | pg_dump: aborting because of server version mismatch | 백업 클라이언트의 주 버전이 서버보다 오래되어 pg_dump가 거부됐다."
+    },
+    {
+      "id": "resolution-pg_init_permission",
+      "type": "resolution",
+      "family": "pg_init_permission",
+      "alertName": "PostgresInitSqlDenied",
+      "alertSummary": "초기화 SQL 파일을 데이터베이스 실행 사용자로 읽을 수 없어 초기화가 중단됐다.",
+      "resolutionSteps": "초기 SQL의 소유자와 접근 권한을 확인했다. 실행 사용자가 읽을 수 있도록 권한을 수정하고 격리된 새 데이터 디렉터리에서 초기화를 검증했다.",
+      "outcome": "RESOLVED",
+      "source_id": "pginit",
+      "synthetic": true,
+      "text": "PostgresInitSqlDenied | 초기화 SQL 파일을 데이터베이스 실행 사용자로 읽을 수 없어 초기화가 중단됐다. | 초기 SQL의 소유자와 접근 권한을 확인했다. 실행 사용자가 읽을 수 있도록 권한을 수정하고 격리된 새 데이터 디렉터리에서 초기화를 검증했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-pg_init_permission",
+      "type": "alert",
+      "family": "pg_init_permission",
+      "alertName": "PostgresInitSqlDenied",
+      "message": "docker-entrypoint-initdb.d/init.sql: Permission denied",
+      "annotationSummary": "초기화 SQL 파일을 데이터베이스 실행 사용자로 읽을 수 없어 초기화가 중단됐다.",
+      "source_id": "pginit",
+      "synthetic": true,
+      "text": "PostgresInitSqlDenied | docker-entrypoint-initdb.d/init.sql: Permission denied | 초기화 SQL 파일을 데이터베이스 실행 사용자로 읽을 수 없어 초기화가 중단됐다."
+    },
+    {
+      "id": "resolution-pg_vacuum",
+      "type": "resolution",
+      "family": "pg_vacuum",
+      "alertName": "PostgresDeadTuples",
+      "alertSummary": "갱신과 삭제 후 dead tuples가 늘고 정기 vacuum 유지보수가 밀렸다.",
+      "resolutionSteps": "vacuum 진행과 오래 열린 트랜잭션을 점검했다. autovacuum 설정과 방해 요인을 조정하고 dead tuple 추이를 확인했다. 일반 VACUUM은 파일 축소와 구분했다.",
+      "outcome": "RESOLVED",
+      "source_id": "pgvacuum",
+      "synthetic": true,
+      "text": "PostgresDeadTuples | 갱신과 삭제 후 dead tuples가 늘고 정기 vacuum 유지보수가 밀렸다. | vacuum 진행과 오래 열린 트랜잭션을 점검했다. autovacuum 설정과 방해 요인을 조정하고 dead tuple 추이를 확인했다. 일반 VACUUM은 파일 축소와 구분했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-pg_vacuum",
+      "type": "alert",
+      "family": "pg_vacuum",
+      "alertName": "PostgresDeadTuples",
+      "message": "Dead tuples increasing with delayed autovacuum maintenance",
+      "annotationSummary": "갱신과 삭제 후 dead tuples가 늘고 정기 vacuum 유지보수가 밀렸다.",
+      "source_id": "pgvacuum",
+      "synthetic": true,
+      "text": "PostgresDeadTuples | Dead tuples increasing with delayed autovacuum maintenance | 갱신과 삭제 후 dead tuples가 늘고 정기 vacuum 유지보수가 밀렸다."
+    },
+    {
+      "id": "resolution-mysql_slow",
+      "type": "resolution",
+      "family": "mysql_slow",
+      "alertName": "MySQLSlowQueries",
+      "alertSummary": "MySQL에서 오래 실행되는 질의가 늘어 응답 지연이 발생했다.",
+      "resolutionSteps": "slow query log에서 반복되는 느린 SQL을 추렸다. 실행 계획을 점검해 필요한 인덱스와 질의를 조정하고 실행 시간을 다시 측정했다.",
+      "outcome": "RESOLVED",
+      "source_id": "mysqlslow",
+      "synthetic": true,
+      "text": "MySQLSlowQueries | MySQL에서 오래 실행되는 질의가 늘어 응답 지연이 발생했다. | slow query log에서 반복되는 느린 SQL을 추렸다. 실행 계획을 점검해 필요한 인덱스와 질의를 조정하고 실행 시간을 다시 측정했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-mysql_slow",
+      "type": "alert",
+      "family": "mysql_slow",
+      "alertName": "MySQLSlowQueries",
+      "message": "Slow query log entries exceed long_query_time",
+      "annotationSummary": "MySQL에서 오래 실행되는 질의가 늘어 응답 지연이 발생했다.",
+      "source_id": "mysqlslow",
+      "synthetic": true,
+      "text": "MySQLSlowQueries | Slow query log entries exceed long_query_time | MySQL에서 오래 실행되는 질의가 늘어 응답 지연이 발생했다."
+    },
+    {
+      "id": "resolution-tls_expiry",
+      "type": "resolution",
+      "family": "tls_expiry",
+      "alertName": "TlsCertificateExpiring",
+      "alertSummary": "HTTPS 서버 인증서 만료가 임박했고 자동 갱신이 정상 작동하지 않았다.",
+      "resolutionSteps": "certbot renew --dry-run으로 갱신 경로를 검사했다. 자동 갱신 일정과 성공 후 웹서버 reload를 확인하고 실제 제공 인증서의 만료일을 재검증했다.",
+      "outcome": "RESOLVED",
+      "source_id": "certbot",
+      "synthetic": true,
+      "text": "TlsCertificateExpiring | HTTPS 서버 인증서 만료가 임박했고 자동 갱신이 정상 작동하지 않았다. | certbot renew --dry-run으로 갱신 경로를 검사했다. 자동 갱신 일정과 성공 후 웹서버 reload를 확인하고 실제 제공 인증서의 만료일을 재검증했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-tls_expiry",
+      "type": "alert",
+      "family": "tls_expiry",
+      "alertName": "TlsCertificateExpiring",
+      "message": "TLS certificate expiration approaching; renewal timer missed",
+      "annotationSummary": "HTTPS 서버 인증서 만료가 임박했고 자동 갱신이 정상 작동하지 않았다.",
+      "source_id": "certbot",
+      "synthetic": true,
+      "text": "TlsCertificateExpiring | TLS certificate expiration approaching; renewal timer missed | HTTPS 서버 인증서 만료가 임박했고 자동 갱신이 정상 작동하지 않았다."
+    },
+    {
+      "id": "resolution-nginx_rate",
+      "type": "resolution",
+      "family": "nginx_rate",
+      "alertName": "NginxRateLimited",
+      "alertSummary": "한 클라이언트의 짧은 요청 폭주가 NGINX 요청 제한에 걸렸다.",
+      "resolutionSteps": "limit_req의 rate와 burst 설정 및 클라이언트별 요청량을 확인했다. 정상 트래픽 요구에 맞춰 제한 정책을 조정하고 거부율을 재확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "nginxlimit",
+      "synthetic": true,
+      "text": "NginxRateLimited | 한 클라이언트의 짧은 요청 폭주가 NGINX 요청 제한에 걸렸다. | limit_req의 rate와 burst 설정 및 클라이언트별 요청량을 확인했다. 정상 트래픽 요구에 맞춰 제한 정책을 조정하고 거부율을 재확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-nginx_rate",
+      "type": "alert",
+      "family": "nginx_rate",
+      "alertName": "NginxRateLimited",
+      "message": "limiting requests, excess by zone api_limit",
+      "annotationSummary": "한 클라이언트의 짧은 요청 폭주가 NGINX 요청 제한에 걸렸다.",
+      "source_id": "nginxlimit",
+      "synthetic": true,
+      "text": "NginxRateLimited | limiting requests, excess by zone api_limit | 한 클라이언트의 짧은 요청 폭주가 NGINX 요청 제한에 걸렸다."
+    },
+    {
+      "id": "resolution-websocket_idle",
+      "type": "resolution",
+      "family": "websocket_idle",
+      "alertName": "WebSocketIdleDisconnect",
+      "alertSummary": "역방향 프록시를 통과한 WebSocket 연결이 유휴 상태에서 반복적으로 끊겼다.",
+      "resolutionSteps": "Upgrade와 Connection 전달 설정을 점검했다. 유휴 연결에는 upstream ping 또는 적절한 proxy_read_timeout을 적용해 연결 유지 여부를 확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "websocket",
+      "synthetic": true,
+      "text": "WebSocketIdleDisconnect | 역방향 프록시를 통과한 WebSocket 연결이 유휴 상태에서 반복적으로 끊겼다. | Upgrade와 Connection 전달 설정을 점검했다. 유휴 연결에는 upstream ping 또는 적절한 proxy_read_timeout을 적용해 연결 유지 여부를 확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-websocket_idle",
+      "type": "alert",
+      "family": "websocket_idle",
+      "alertName": "WebSocketIdleDisconnect",
+      "message": "WebSocket upstream idle connection closed after read timeout",
+      "annotationSummary": "역방향 프록시를 통과한 WebSocket 연결이 유휴 상태에서 반복적으로 끊겼다.",
+      "source_id": "websocket",
+      "synthetic": true,
+      "text": "WebSocketIdleDisconnect | WebSocket upstream idle connection closed after read timeout | 역방향 프록시를 통과한 WebSocket 연결이 유휴 상태에서 반복적으로 끊겼다."
+    },
+    {
+      "id": "resolution-port_conflict",
+      "type": "resolution",
+      "family": "port_conflict",
+      "alertName": "DockerHostPortConflict",
+      "alertSummary": "컨테이너 시작 시 공개하려는 호스트 포트를 다른 프로세스가 사용 중이었다.",
+      "resolutionSteps": "호스트의 포트 점유 프로세스를 확인했다. 의도한 서비스 배치를 유지하면서 충돌하는 공개 포트를 변경하고 컨테이너 시작을 재확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "dockerports",
+      "synthetic": true,
+      "text": "DockerHostPortConflict | 컨테이너 시작 시 공개하려는 호스트 포트를 다른 프로세스가 사용 중이었다. | 호스트의 포트 점유 프로세스를 확인했다. 의도한 서비스 배치를 유지하면서 충돌하는 공개 포트를 변경하고 컨테이너 시작을 재확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-port_conflict",
+      "type": "alert",
+      "family": "port_conflict",
+      "alertName": "DockerHostPortConflict",
+      "message": "Bind for host port failed: address already in use",
+      "annotationSummary": "컨테이너 시작 시 공개하려는 호스트 포트를 다른 프로세스가 사용 중이었다.",
+      "source_id": "dockerports",
+      "synthetic": true,
+      "text": "DockerHostPortConflict | Bind for host port failed: address already in use | 컨테이너 시작 시 공개하려는 호스트 포트를 다른 프로세스가 사용 중이었다."
+    },
+    {
+      "id": "resolution-port_target",
+      "type": "resolution",
+      "family": "port_target",
+      "alertName": "DockerTargetPortMismatch",
+      "alertSummary": "호스트 포트 공개 규칙이 컨테이너 애플리케이션의 실제 수신 포트와 달랐다.",
+      "resolutionSteps": "컨테이너 내부의 실제 listening port와 HOST_PORT:CONTAINER_PORT 매핑을 비교했다. 대상 포트를 수정하고 외부 접근을 다시 확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "dockerports",
+      "synthetic": true,
+      "text": "DockerTargetPortMismatch | 호스트 포트 공개 규칙이 컨테이너 애플리케이션의 실제 수신 포트와 달랐다. | 컨테이너 내부의 실제 listening port와 HOST_PORT:CONTAINER_PORT 매핑을 비교했다. 대상 포트를 수정하고 외부 접근을 다시 확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-port_target",
+      "type": "alert",
+      "family": "port_target",
+      "alertName": "DockerTargetPortMismatch",
+      "message": "Published host port forwards to wrong container listener port",
+      "annotationSummary": "호스트 포트 공개 규칙이 컨테이너 애플리케이션의 실제 수신 포트와 달랐다.",
+      "source_id": "dockerports",
+      "synthetic": true,
+      "text": "DockerTargetPortMismatch | Published host port forwards to wrong container listener port | 호스트 포트 공개 규칙이 컨테이너 애플리케이션의 실제 수신 포트와 달랐다."
+    },
+    {
+      "id": "resolution-dns_upstream",
+      "type": "resolution",
+      "family": "dns_upstream",
+      "alertName": "DnsResolverUnavailable",
+      "alertSummary": "IP 주소로는 통신되지만 설정된 DNS 서버가 응답하지 않아 이름 조회가 실패했다.",
+      "resolutionSteps": "현재 링크의 DNS 서버와 resolver 상태를 확인했다. 도달 가능한 올바른 DNS 설정을 적용하고 도메인 조회를 재검증했다.",
+      "outcome": "RESOLVED",
+      "source_id": "resolved",
+      "synthetic": true,
+      "text": "DnsResolverUnavailable | IP 주소로는 통신되지만 설정된 DNS 서버가 응답하지 않아 이름 조회가 실패했다. | 현재 링크의 DNS 서버와 resolver 상태를 확인했다. 도달 가능한 올바른 DNS 설정을 적용하고 도메인 조회를 재검증했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-dns_upstream",
+      "type": "alert",
+      "family": "dns_upstream",
+      "alertName": "DnsResolverUnavailable",
+      "message": "DNS lookup timeout while direct IP connection succeeds",
+      "annotationSummary": "IP 주소로는 통신되지만 설정된 DNS 서버가 응답하지 않아 이름 조회가 실패했다.",
+      "source_id": "resolved",
+      "synthetic": true,
+      "text": "DnsResolverUnavailable | DNS lookup timeout while direct IP connection succeeds | IP 주소로는 통신되지만 설정된 DNS 서버가 응답하지 않아 이름 조회가 실패했다."
+    },
+    {
+      "id": "resolution-service_exec",
+      "type": "resolution",
+      "family": "service_exec",
+      "alertName": "SystemdExecStartInvalid",
+      "alertSummary": "systemd 서비스의 ExecStart 실행 경로가 잘못되어 서비스가 시작되지 않았다.",
+      "resolutionSteps": "unit의 ExecStart 경로와 실행 파일을 확인했다. 잘못된 경로를 수정하고 daemon-reload 후 서비스를 시작해 상태와 로그를 재검증했다.",
+      "outcome": "RESOLVED",
+      "source_id": "systemd",
+      "synthetic": true,
+      "text": "SystemdExecStartInvalid | systemd 서비스의 ExecStart 실행 경로가 잘못되어 서비스가 시작되지 않았다. | unit의 ExecStart 경로와 실행 파일을 확인했다. 잘못된 경로를 수정하고 daemon-reload 후 서비스를 시작해 상태와 로그를 재검증했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-service_exec",
+      "type": "alert",
+      "family": "service_exec",
+      "alertName": "SystemdExecStartInvalid",
+      "message": "Service failed at step EXEC: executable path does not exist",
+      "annotationSummary": "systemd 서비스의 ExecStart 실행 경로가 잘못되어 서비스가 시작되지 않았다.",
+      "source_id": "systemd",
+      "synthetic": true,
+      "text": "SystemdExecStartInvalid | Service failed at step EXEC: executable path does not exist | systemd 서비스의 ExecStart 실행 경로가 잘못되어 서비스가 시작되지 않았다."
+    },
+    {
+      "id": "resolution-ntp_sync",
+      "type": "resolution",
+      "family": "ntp_sync",
+      "alertName": "HostClockUnsynchronized",
+      "alertSummary": "선택 가능한 시간 동기화 원본이 없어 호스트 시계가 기준 시각에서 벗어났다.",
+      "resolutionSteps": "chronyc tracking과 sources로 동기화 상태를 확인했다. 시간 서버 도달성과 설정을 복구하고 시계 오차가 줄어드는지 관찰했다.",
+      "outcome": "RESOLVED",
+      "source_id": "chrony",
+      "synthetic": true,
+      "text": "HostClockUnsynchronized | 선택 가능한 시간 동기화 원본이 없어 호스트 시계가 기준 시각에서 벗어났다. | chronyc tracking과 sources로 동기화 상태를 확인했다. 시간 서버 도달성과 설정을 복구하고 시계 오차가 줄어드는지 관찰했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-ntp_sync",
+      "type": "alert",
+      "family": "ntp_sync",
+      "alertName": "HostClockUnsynchronized",
+      "message": "chrony has no selectable time source; host clock offset increasing",
+      "annotationSummary": "선택 가능한 시간 동기화 원본이 없어 호스트 시계가 기준 시각에서 벗어났다.",
+      "source_id": "chrony",
+      "synthetic": true,
+      "text": "HostClockUnsynchronized | chrony has no selectable time source; host clock offset increasing | 선택 가능한 시간 동기화 원본이 없어 호스트 시계가 기준 시각에서 벗어났다."
+    },
+    {
+      "id": "resolution-am_reload",
+      "type": "resolution",
+      "family": "am_reload",
+      "alertName": "AlertmanagerConfigReloadFailed",
+      "alertSummary": "Alertmanager 설정 파일의 YAML 오류로 새 설정 로드가 실패했다.",
+      "resolutionSteps": "설정 구문과 오류 위치를 확인하고 YAML을 수정했다. 설정 검증 후 reload를 수행하고 성공 여부를 확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "alertmanager",
+      "synthetic": true,
+      "text": "AlertmanagerConfigReloadFailed | Alertmanager 설정 파일의 YAML 오류로 새 설정 로드가 실패했다. | 설정 구문과 오류 위치를 확인하고 YAML을 수정했다. 설정 검증 후 reload를 수행하고 성공 여부를 확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-am_reload",
+      "type": "alert",
+      "family": "am_reload",
+      "alertName": "AlertmanagerConfigReloadFailed",
+      "message": "Loading configuration file failed: yaml parse error",
+      "annotationSummary": "Alertmanager 설정 파일의 YAML 오류로 새 설정 로드가 실패했다.",
+      "source_id": "alertmanager",
+      "synthetic": true,
+      "text": "AlertmanagerConfigReloadFailed | Loading configuration file failed: yaml parse error | Alertmanager 설정 파일의 YAML 오류로 새 설정 로드가 실패했다."
+    },
+    {
+      "id": "resolution-am_receiver",
+      "type": "resolution",
+      "family": "am_receiver",
+      "alertName": "AlertmanagerReceiverFailed",
+      "alertSummary": "알람은 발생했지만 webhook 수신처로 알림을 보내는 단계가 실패했다.",
+      "resolutionSteps": "route가 선택한 receiver와 webhook 목적지를 확인했다. 도달성 또는 인증 설정을 수정하고 실제 알림 수신 여부를 점검했다.",
+      "outcome": "RESOLVED",
+      "source_id": "alertmanager",
+      "synthetic": true,
+      "text": "AlertmanagerReceiverFailed | 알람은 발생했지만 webhook 수신처로 알림을 보내는 단계가 실패했다. | route가 선택한 receiver와 webhook 목적지를 확인했다. 도달성 또는 인증 설정을 수정하고 실제 알림 수신 여부를 점검했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-am_receiver",
+      "type": "alert",
+      "family": "am_receiver",
+      "alertName": "AlertmanagerReceiverFailed",
+      "message": "Notify attempt failed: webhook receiver request rejected",
+      "annotationSummary": "알람은 발생했지만 webhook 수신처로 알림을 보내는 단계가 실패했다.",
+      "source_id": "alertmanager",
+      "synthetic": true,
+      "text": "AlertmanagerReceiverFailed | Notify attempt failed: webhook receiver request rejected | 알람은 발생했지만 webhook 수신처로 알림을 보내는 단계가 실패했다."
+    },
+    {
+      "id": "resolution-jellyfin_transcode",
+      "type": "resolution",
+      "family": "jellyfin_transcode",
+      "alertName": "JellyfinSoftwareTranscoding",
+      "alertSummary": "영상 변환이 CPU 소프트웨어 경로로 실행되어 CPU 부하가 높아졌다.",
+      "resolutionSteps": "변환 로그에서 사용한 디코더와 인코더를 확인했다. 장치 접근 권한과 드라이버 및 하드웨어 가속 설정을 맞춘 뒤 변환 경로와 CPU 부하를 재확인했다.",
+      "outcome": "RESOLVED",
+      "source_id": "jellyfin",
+      "synthetic": true,
+      "text": "JellyfinSoftwareTranscoding | 영상 변환이 CPU 소프트웨어 경로로 실행되어 CPU 부하가 높아졌다. | 변환 로그에서 사용한 디코더와 인코더를 확인했다. 장치 접근 권한과 드라이버 및 하드웨어 가속 설정을 맞춘 뒤 변환 경로와 CPU 부하를 재확인했다. | outcome=RESOLVED"
+    },
+    {
+      "id": "alert-jellyfin_transcode",
+      "type": "alert",
+      "family": "jellyfin_transcode",
+      "alertName": "JellyfinSoftwareTranscoding",
+      "message": "Jellyfin transcoding uses software encoder instead of available GPU",
+      "annotationSummary": "영상 변환이 CPU 소프트웨어 경로로 실행되어 CPU 부하가 높아졌다.",
+      "source_id": "jellyfin",
+      "synthetic": true,
+      "text": "JellyfinSoftwareTranscoding | Jellyfin transcoding uses software encoder instead of available GPU | 영상 변환이 CPU 소프트웨어 경로로 실행되어 CPU 부하가 높아졌다."
+    }
+  ],
+  "queries": [
+    {
+      "id": "container_oom--ko_direct",
+      "family": "container_oom",
+      "variant": "ko_direct",
+      "text": "ContainerMemoryLimit 알람에서 OOMKilled가 확인됐을 때 예전에 어떻게 처리했어?",
+      "answerable": true
+    },
+    {
+      "id": "container_oom--ko_paraphrase",
+      "family": "container_oom",
+      "variant": "ko_paraphrase",
+      "text": "도커 안의 프로그램만 메모리를 다 쓰고 강제 종료됐어. 이전에 해결한 방법을 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "container_oom--en_paraphrase",
+      "family": "container_oom",
+      "variant": "en_paraphrase",
+      "text": "Find the previous fix for a container killed after reaching its memory limit.",
+      "answerable": true
+    },
+    {
+      "id": "cpu_quota--ko_direct",
+      "family": "cpu_quota",
+      "variant": "ko_direct",
+      "text": "ContainerCpuThrottled에서 CPU quota 조정으로 해결한 기록을 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "cpu_quota--ko_paraphrase",
+      "family": "cpu_quota",
+      "variant": "ko_paraphrase",
+      "text": "서버 전체는 한가한데 도커 서비스만 연산 시간이 막혀 느려. 이런 제한을 풀었던 사례가 있어?",
+      "answerable": true
+    },
+    {
+      "id": "cpu_quota--en_paraphrase",
+      "family": "cpu_quota",
+      "variant": "en_paraphrase",
+      "text": "How was container CPU quota throttling fixed when the host still had spare capacity?",
+      "answerable": true
+    },
+    {
+      "id": "disk_blocks--ko_direct",
+      "family": "disk_blocks",
+      "variant": "ko_direct",
+      "text": "FilesystemSpaceLow 블록 공간 부족을 해결했던 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "disk_blocks--ko_paraphrase",
+      "family": "disk_blocks",
+      "variant": "ko_paraphrase",
+      "text": "저장장치의 남은 용량이 거의 없어 새 데이터를 못 써. 과거에 어떻게 공간을 확보했지?",
+      "answerable": true
+    },
+    {
+      "id": "disk_blocks--en_paraphrase",
+      "family": "disk_blocks",
+      "variant": "en_paraphrase",
+      "text": "Find the resolution for writes failing because the filesystem ran out of disk space.",
+      "answerable": true
+    },
+    {
+      "id": "disk_inodes--ko_direct",
+      "family": "disk_inodes",
+      "variant": "ko_direct",
+      "text": "FilesystemInodesLow에서 df -i로 확인한 inode 부족 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "disk_inodes--ko_paraphrase",
+      "family": "disk_inodes",
+      "variant": "ko_paraphrase",
+      "text": "용량은 남아 있는데 작은 파일이 너무 많아 새 파일을 못 만들어. 전에 어떻게 해결했어?",
+      "answerable": true
+    },
+    {
+      "id": "disk_inodes--en_paraphrase",
+      "family": "disk_inodes",
+      "variant": "en_paraphrase",
+      "text": "How did we fix file creation failures caused by inode exhaustion despite free disk bytes?",
+      "answerable": true
+    },
+    {
+      "id": "disk_saturation--ko_direct",
+      "family": "disk_saturation",
+      "variant": "ko_direct",
+      "text": "DiskIOSaturated I/O 대기열 증가를 완화한 해결 사례를 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "disk_saturation--ko_paraphrase",
+      "family": "disk_saturation",
+      "variant": "ko_paraphrase",
+      "text": "백업들이 동시에 돌 때 디스크 요청이 줄 서고 응답이 늦어져. 이전에 어떻게 조절했지?",
+      "answerable": true
+    },
+    {
+      "id": "disk_saturation--en_paraphrase",
+      "family": "disk_saturation",
+      "variant": "en_paraphrase",
+      "text": "Retrieve the past fix for disk queue saturation caused by overlapping backup jobs.",
+      "answerable": true
+    },
+    {
+      "id": "pg_dump_version--ko_direct",
+      "family": "pg_dump_version",
+      "variant": "ko_direct",
+      "text": "PostgresBackupVersionMismatch pg_dump 버전 불일치 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "pg_dump_version--ko_paraphrase",
+      "family": "pg_dump_version",
+      "variant": "ko_paraphrase",
+      "text": "데이터베이스를 올린 뒤 예전 덤프 프로그램이 백업을 거부해. 호환 문제를 고친 사례를 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "pg_dump_version--en_paraphrase",
+      "family": "pg_dump_version",
+      "variant": "en_paraphrase",
+      "text": "Find how an older pg_dump client was replaced after it refused to back up a newer PostgreSQL server.",
+      "answerable": true
+    },
+    {
+      "id": "pg_init_permission--ko_direct",
+      "family": "pg_init_permission",
+      "variant": "ko_direct",
+      "text": "PostgresInitSqlDenied init.sql Permission denied를 해결한 사례는?",
+      "answerable": true
+    },
+    {
+      "id": "pg_init_permission--ko_paraphrase",
+      "family": "pg_init_permission",
+      "variant": "ko_paraphrase",
+      "text": "새 DB 컨테이너가 시작할 때 준비한 SQL 파일을 읽지 못해 멈췄어. 접근 권한을 고친 기록이 있어?",
+      "answerable": true
+    },
+    {
+      "id": "pg_init_permission--en_paraphrase",
+      "family": "pg_init_permission",
+      "variant": "en_paraphrase",
+      "text": "What fixed permission denied while the PostgreSQL container was reading its initialization SQL?",
+      "answerable": true
+    },
+    {
+      "id": "pg_vacuum--ko_direct",
+      "family": "pg_vacuum",
+      "variant": "ko_direct",
+      "text": "PostgresDeadTuples autovacuum 지연을 해결한 기록을 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "pg_vacuum--ko_paraphrase",
+      "family": "pg_vacuum",
+      "variant": "ko_paraphrase",
+      "text": "DB에서 지운 행의 흔적이 계속 쌓여. 자동 청소가 밀렸던 문제를 전에 어떻게 풀었어?",
+      "answerable": true
+    },
+    {
+      "id": "pg_vacuum--en_paraphrase",
+      "family": "pg_vacuum",
+      "variant": "en_paraphrase",
+      "text": "Find the previous resolution for accumulating PostgreSQL dead tuples and delayed autovacuum.",
+      "answerable": true
+    },
+    {
+      "id": "mysql_slow--ko_direct",
+      "family": "mysql_slow",
+      "variant": "ko_direct",
+      "text": "MySQLSlowQueries slow query log로 찾은 느린 SQL 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "mysql_slow--ko_paraphrase",
+      "family": "mysql_slow",
+      "variant": "ko_paraphrase",
+      "text": "특정 데이터베이스 조회가 오래 걸려. 느린 질의를 찾아 최적화했던 방법을 보여줘.",
+      "answerable": true
+    },
+    {
+      "id": "mysql_slow--en_paraphrase",
+      "family": "mysql_slow",
+      "variant": "en_paraphrase",
+      "text": "How were repeated slow MySQL queries identified and optimized using the slow query log?",
+      "answerable": true
+    },
+    {
+      "id": "tls_expiry--ko_direct",
+      "family": "tls_expiry",
+      "variant": "ko_direct",
+      "text": "TlsCertificateExpiring certbot 인증서 갱신 문제 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "tls_expiry--ko_paraphrase",
+      "family": "tls_expiry",
+      "variant": "ko_paraphrase",
+      "text": "웹사이트 자물쇠 인증서 유효기간이 곧 끝나는데 자동 연장이 안 돼. 전에 어떻게 고쳤어?",
+      "answerable": true
+    },
+    {
+      "id": "tls_expiry--en_paraphrase",
+      "family": "tls_expiry",
+      "variant": "en_paraphrase",
+      "text": "Find the fix for an HTTPS certificate nearing expiry because automated renewal stopped working.",
+      "answerable": true
+    },
+    {
+      "id": "nginx_rate--ko_direct",
+      "family": "nginx_rate",
+      "variant": "ko_direct",
+      "text": "NginxRateLimited limit_req burst 때문에 거절된 요청 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "nginx_rate--ko_paraphrase",
+      "family": "nginx_rate",
+      "variant": "ko_paraphrase",
+      "text": "한 사용자가 빠르게 여러 번 호출할 때만 웹 요청이 거부돼. 과거 요청 속도 제한을 어떻게 조정했어?",
+      "answerable": true
+    },
+    {
+      "id": "nginx_rate--en_paraphrase",
+      "family": "nginx_rate",
+      "variant": "en_paraphrase",
+      "text": "How was NGINX request rate limiting adjusted for legitimate bursts from one client?",
+      "answerable": true
+    },
+    {
+      "id": "websocket_idle--ko_direct",
+      "family": "websocket_idle",
+      "variant": "ko_direct",
+      "text": "WebSocketIdleDisconnect proxy_read_timeout 유휴 연결 끊김 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "websocket_idle--ko_paraphrase",
+      "family": "websocket_idle",
+      "variant": "ko_paraphrase",
+      "text": "실시간 소켓이 접속은 되는데 한동안 메시지가 없으면 프록시에서 끊겨. 전에 연결을 어떻게 유지했어?",
+      "answerable": true
+    },
+    {
+      "id": "websocket_idle--en_paraphrase",
+      "family": "websocket_idle",
+      "variant": "en_paraphrase",
+      "text": "Find the past remedy for idle WebSocket connections repeatedly closed by the reverse proxy.",
+      "answerable": true
+    },
+    {
+      "id": "port_conflict--ko_direct",
+      "family": "port_conflict",
+      "variant": "ko_direct",
+      "text": "DockerHostPortConflict address already in use 포트 충돌 해결 사례는?",
+      "answerable": true
+    },
+    {
+      "id": "port_conflict--ko_paraphrase",
+      "family": "port_conflict",
+      "variant": "ko_paraphrase",
+      "text": "새 도커 앱을 띄우려는데 서버 쪽 접속 번호를 다른 프로그램이 이미 쓰고 있어. 이전 해결법은?",
+      "answerable": true
+    },
+    {
+      "id": "port_conflict--en_paraphrase",
+      "family": "port_conflict",
+      "variant": "en_paraphrase",
+      "text": "How was a Docker startup failure fixed when another process already occupied the published host port?",
+      "answerable": true
+    },
+    {
+      "id": "port_target--ko_direct",
+      "family": "port_target",
+      "variant": "ko_direct",
+      "text": "DockerTargetPortMismatch 컨테이너 대상 포트 매핑 수정 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "port_target--ko_paraphrase",
+      "family": "port_target",
+      "variant": "ko_paraphrase",
+      "text": "앱은 도커 안에서 열리는데 서버 바깥에서 접속이 안 돼. 연결 전달의 내부 번호를 고친 사례가 있어?",
+      "answerable": true
+    },
+    {
+      "id": "port_target--en_paraphrase",
+      "family": "port_target",
+      "variant": "en_paraphrase",
+      "text": "Find the fix for a published Docker port forwarding to a different port than the application listens on.",
+      "answerable": true
+    },
+    {
+      "id": "dns_upstream--ko_direct",
+      "family": "dns_upstream",
+      "variant": "ko_direct",
+      "text": "DnsResolverUnavailable DNS lookup timeout 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "dns_upstream--ko_paraphrase",
+      "family": "dns_upstream",
+      "variant": "ko_paraphrase",
+      "text": "숫자 주소로는 접속되는데 도메인 이름으로만 연결이 안 돼. 이전에 이름 조회를 어떻게 복구했어?",
+      "answerable": true
+    },
+    {
+      "id": "dns_upstream--en_paraphrase",
+      "family": "dns_upstream",
+      "variant": "en_paraphrase",
+      "text": "How was name resolution restored when IP connectivity worked but the configured DNS server did not respond?",
+      "answerable": true
+    },
+    {
+      "id": "service_exec--ko_direct",
+      "family": "service_exec",
+      "variant": "ko_direct",
+      "text": "SystemdExecStartInvalid ExecStart 경로 오류 해결 기록을 찾아줘.",
+      "answerable": true
+    },
+    {
+      "id": "service_exec--ko_paraphrase",
+      "family": "service_exec",
+      "variant": "ko_paraphrase",
+      "text": "서비스 관리자가 실행 파일을 못 찾아 프로그램을 시작하지 못해. 예전에 실행 경로를 어떻게 고쳤어?",
+      "answerable": true
+    },
+    {
+      "id": "service_exec--en_paraphrase",
+      "family": "service_exec",
+      "variant": "en_paraphrase",
+      "text": "Retrieve the solution for a systemd service failing because ExecStart pointed to a missing executable.",
+      "answerable": true
+    },
+    {
+      "id": "ntp_sync--ko_direct",
+      "family": "ntp_sync",
+      "variant": "ko_direct",
+      "text": "HostClockUnsynchronized chrony 시간 동기화 복구 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "ntp_sync--ko_paraphrase",
+      "family": "ntp_sync",
+      "variant": "ko_paraphrase",
+      "text": "서버 시간이 계속 어긋나는데 기준 시간을 받아오지 못하는 것 같아. 전에 어떻게 맞췄어?",
+      "answerable": true
+    },
+    {
+      "id": "ntp_sync--en_paraphrase",
+      "family": "ntp_sync",
+      "variant": "en_paraphrase",
+      "text": "Find the previous fix for host clock drift when chrony had no reachable synchronization source.",
+      "answerable": true
+    },
+    {
+      "id": "am_reload--ko_direct",
+      "family": "am_reload",
+      "variant": "ko_direct",
+      "text": "AlertmanagerConfigReloadFailed YAML 설정 reload 실패 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "am_reload--ko_paraphrase",
+      "family": "am_reload",
+      "variant": "ko_paraphrase",
+      "text": "알림 서버의 설정 파일을 바꿨는데 문법 오류 때문에 새 내용이 적용되지 않아. 전에 어떻게 바로잡았어?",
+      "answerable": true
+    },
+    {
+      "id": "am_reload--en_paraphrase",
+      "family": "am_reload",
+      "variant": "en_paraphrase",
+      "text": "What fixed Alertmanager rejecting a configuration reload because the YAML was invalid?",
+      "answerable": true
+    },
+    {
+      "id": "am_receiver--ko_direct",
+      "family": "am_receiver",
+      "variant": "ko_direct",
+      "text": "AlertmanagerReceiverFailed webhook 알림 전송 실패 해결 기록은?",
+      "answerable": true
+    },
+    {
+      "id": "am_receiver--ko_paraphrase",
+      "family": "am_receiver",
+      "variant": "ko_paraphrase",
+      "text": "장애는 감지됐는데 채팅방으로 보내는 알림만 도착하지 않아. 수신처 연결을 고친 과거 사례는?",
+      "answerable": true
+    },
+    {
+      "id": "am_receiver--en_paraphrase",
+      "family": "am_receiver",
+      "variant": "en_paraphrase",
+      "text": "Find how failed Alertmanager webhook delivery was repaired when alerts were firing normally.",
+      "answerable": true
+    },
+    {
+      "id": "jellyfin_transcode--ko_direct",
+      "family": "jellyfin_transcode",
+      "variant": "ko_direct",
+      "text": "JellyfinSoftwareTranscoding 하드웨어 가속 설정 해결 사례는?",
+      "answerable": true
+    },
+    {
+      "id": "jellyfin_transcode--ko_paraphrase",
+      "family": "jellyfin_transcode",
+      "variant": "ko_paraphrase",
+      "text": "미디어 서버가 영상을 바꿀 때 그래픽 장치를 안 쓰고 CPU만 바쁘게 돌아. 전에 어떻게 해결했어?",
+      "answerable": true
+    },
+    {
+      "id": "jellyfin_transcode--en_paraphrase",
+      "family": "jellyfin_transcode",
+      "variant": "en_paraphrase",
+      "text": "How was Jellyfin hardware transcoding enabled when video conversion was using the CPU software encoder?",
+      "answerable": true
+    },
+    {
+      "id": "absent--zfs_checksum",
+      "family": "zfs_checksum",
+      "variant": "no_answer",
+      "text": "ZFS scrub에서 checksum 오류가 발생한 풀을 복구했던 사례를 찾아줘.",
+      "answerable": false
+    },
+    {
+      "id": "absent--gpu_ecc",
+      "family": "gpu_ecc",
+      "variant": "no_answer",
+      "text": "GPU ECC uncorrectable memory error를 해결했던 기록이 있어?",
+      "answerable": false
+    },
+    {
+      "id": "absent--pg_deadlock",
+      "family": "pg_deadlock",
+      "variant": "no_answer",
+      "text": "PostgreSQL deadlock detected 오류를 해결한 과거 사례를 찾아줘.",
+      "answerable": false
+    },
+    {
+      "id": "absent--mysql_duplicate",
+      "family": "mysql_duplicate",
+      "variant": "no_answer",
+      "text": "MySQL duplicate key 삽입 충돌을 해결한 기록은?",
+      "answerable": false
+    },
+    {
+      "id": "absent--tls_client",
+      "family": "tls_client",
+      "variant": "no_answer",
+      "text": "mTLS 클라이언트 인증서 신뢰 체인 오류를 고친 사례는?",
+      "answerable": false
+    },
+    {
+      "id": "absent--raid_degraded",
+      "family": "raid_degraded",
+      "variant": "no_answer",
+      "text": "RAID degraded 상태에서 고장 디스크를 교체한 기록을 찾아줘.",
+      "answerable": false
+    },
+    {
+      "id": "absent--printer",
+      "family": "printer",
+      "variant": "no_answer",
+      "text": "레이저 프린터 토너 인식 오류를 해결한 기록이 있어?",
+      "answerable": false
+    },
+    {
+      "id": "absent--phone_battery",
+      "family": "phone_battery",
+      "variant": "no_answer",
+      "text": "휴대폰 배터리가 부풀었을 때 처리한 사례를 찾아줘.",
+      "answerable": false
+    }
+  ],
+  "qrels": {
+    "container_oom--ko_direct": {
+      "resolution-container_oom": 1
+    },
+    "container_oom--ko_paraphrase": {
+      "resolution-container_oom": 1
+    },
+    "container_oom--en_paraphrase": {
+      "resolution-container_oom": 1
+    },
+    "cpu_quota--ko_direct": {
+      "resolution-cpu_quota": 1
+    },
+    "cpu_quota--ko_paraphrase": {
+      "resolution-cpu_quota": 1
+    },
+    "cpu_quota--en_paraphrase": {
+      "resolution-cpu_quota": 1
+    },
+    "disk_blocks--ko_direct": {
+      "resolution-disk_blocks": 1
+    },
+    "disk_blocks--ko_paraphrase": {
+      "resolution-disk_blocks": 1
+    },
+    "disk_blocks--en_paraphrase": {
+      "resolution-disk_blocks": 1
+    },
+    "disk_inodes--ko_direct": {
+      "resolution-disk_inodes": 1
+    },
+    "disk_inodes--ko_paraphrase": {
+      "resolution-disk_inodes": 1
+    },
+    "disk_inodes--en_paraphrase": {
+      "resolution-disk_inodes": 1
+    },
+    "disk_saturation--ko_direct": {
+      "resolution-disk_saturation": 1
+    },
+    "disk_saturation--ko_paraphrase": {
+      "resolution-disk_saturation": 1
+    },
+    "disk_saturation--en_paraphrase": {
+      "resolution-disk_saturation": 1
+    },
+    "pg_dump_version--ko_direct": {
+      "resolution-pg_dump_version": 1
+    },
+    "pg_dump_version--ko_paraphrase": {
+      "resolution-pg_dump_version": 1
+    },
+    "pg_dump_version--en_paraphrase": {
+      "resolution-pg_dump_version": 1
+    },
+    "pg_init_permission--ko_direct": {
+      "resolution-pg_init_permission": 1
+    },
+    "pg_init_permission--ko_paraphrase": {
+      "resolution-pg_init_permission": 1
+    },
+    "pg_init_permission--en_paraphrase": {
+      "resolution-pg_init_permission": 1
+    },
+    "pg_vacuum--ko_direct": {
+      "resolution-pg_vacuum": 1
+    },
+    "pg_vacuum--ko_paraphrase": {
+      "resolution-pg_vacuum": 1
+    },
+    "pg_vacuum--en_paraphrase": {
+      "resolution-pg_vacuum": 1
+    },
+    "mysql_slow--ko_direct": {
+      "resolution-mysql_slow": 1
+    },
+    "mysql_slow--ko_paraphrase": {
+      "resolution-mysql_slow": 1
+    },
+    "mysql_slow--en_paraphrase": {
+      "resolution-mysql_slow": 1
+    },
+    "tls_expiry--ko_direct": {
+      "resolution-tls_expiry": 1
+    },
+    "tls_expiry--ko_paraphrase": {
+      "resolution-tls_expiry": 1
+    },
+    "tls_expiry--en_paraphrase": {
+      "resolution-tls_expiry": 1
+    },
+    "nginx_rate--ko_direct": {
+      "resolution-nginx_rate": 1
+    },
+    "nginx_rate--ko_paraphrase": {
+      "resolution-nginx_rate": 1
+    },
+    "nginx_rate--en_paraphrase": {
+      "resolution-nginx_rate": 1
+    },
+    "websocket_idle--ko_direct": {
+      "resolution-websocket_idle": 1
+    },
+    "websocket_idle--ko_paraphrase": {
+      "resolution-websocket_idle": 1
+    },
+    "websocket_idle--en_paraphrase": {
+      "resolution-websocket_idle": 1
+    },
+    "port_conflict--ko_direct": {
+      "resolution-port_conflict": 1
+    },
+    "port_conflict--ko_paraphrase": {
+      "resolution-port_conflict": 1
+    },
+    "port_conflict--en_paraphrase": {
+      "resolution-port_conflict": 1
+    },
+    "port_target--ko_direct": {
+      "resolution-port_target": 1
+    },
+    "port_target--ko_paraphrase": {
+      "resolution-port_target": 1
+    },
+    "port_target--en_paraphrase": {
+      "resolution-port_target": 1
+    },
+    "dns_upstream--ko_direct": {
+      "resolution-dns_upstream": 1
+    },
+    "dns_upstream--ko_paraphrase": {
+      "resolution-dns_upstream": 1
+    },
+    "dns_upstream--en_paraphrase": {
+      "resolution-dns_upstream": 1
+    },
+    "service_exec--ko_direct": {
+      "resolution-service_exec": 1
+    },
+    "service_exec--ko_paraphrase": {
+      "resolution-service_exec": 1
+    },
+    "service_exec--en_paraphrase": {
+      "resolution-service_exec": 1
+    },
+    "ntp_sync--ko_direct": {
+      "resolution-ntp_sync": 1
+    },
+    "ntp_sync--ko_paraphrase": {
+      "resolution-ntp_sync": 1
+    },
+    "ntp_sync--en_paraphrase": {
+      "resolution-ntp_sync": 1
+    },
+    "am_reload--ko_direct": {
+      "resolution-am_reload": 1
+    },
+    "am_reload--ko_paraphrase": {
+      "resolution-am_reload": 1
+    },
+    "am_reload--en_paraphrase": {
+      "resolution-am_reload": 1
+    },
+    "am_receiver--ko_direct": {
+      "resolution-am_receiver": 1
+    },
+    "am_receiver--ko_paraphrase": {
+      "resolution-am_receiver": 1
+    },
+    "am_receiver--en_paraphrase": {
+      "resolution-am_receiver": 1
+    },
+    "jellyfin_transcode--ko_direct": {
+      "resolution-jellyfin_transcode": 1
+    },
+    "jellyfin_transcode--ko_paraphrase": {
+      "resolution-jellyfin_transcode": 1
+    },
+    "jellyfin_transcode--en_paraphrase": {
+      "resolution-jellyfin_transcode": 1
+    },
+    "absent--zfs_checksum": {},
+    "absent--gpu_ecc": {},
+    "absent--pg_deadlock": {},
+    "absent--mysql_duplicate": {},
+    "absent--tls_client": {},
+    "absent--raid_degraded": {},
+    "absent--printer": {},
+    "absent--phone_battery": {}
+  },
+  "case_rationale": [
+    {
+      "family": "container_oom",
+      "source_id": "docker_resources",
+      "relevant_document": "resolution-container_oom",
+      "distractor": "alert-container_oom",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "cpu_quota",
+      "source_id": "docker_resources",
+      "relevant_document": "resolution-cpu_quota",
+      "distractor": "alert-cpu_quota",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "disk_blocks",
+      "source_id": "df",
+      "relevant_document": "resolution-disk_blocks",
+      "distractor": "alert-disk_blocks",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "disk_inodes",
+      "source_id": "df",
+      "relevant_document": "resolution-disk_inodes",
+      "distractor": "alert-disk_inodes",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "disk_saturation",
+      "source_id": "use",
+      "relevant_document": "resolution-disk_saturation",
+      "distractor": "alert-disk_saturation",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "pg_dump_version",
+      "source_id": "pgdump",
+      "relevant_document": "resolution-pg_dump_version",
+      "distractor": "alert-pg_dump_version",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "pg_init_permission",
+      "source_id": "pginit",
+      "relevant_document": "resolution-pg_init_permission",
+      "distractor": "alert-pg_init_permission",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "pg_vacuum",
+      "source_id": "pgvacuum",
+      "relevant_document": "resolution-pg_vacuum",
+      "distractor": "alert-pg_vacuum",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "mysql_slow",
+      "source_id": "mysqlslow",
+      "relevant_document": "resolution-mysql_slow",
+      "distractor": "alert-mysql_slow",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "tls_expiry",
+      "source_id": "certbot",
+      "relevant_document": "resolution-tls_expiry",
+      "distractor": "alert-tls_expiry",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "nginx_rate",
+      "source_id": "nginxlimit",
+      "relevant_document": "resolution-nginx_rate",
+      "distractor": "alert-nginx_rate",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "websocket_idle",
+      "source_id": "websocket",
+      "relevant_document": "resolution-websocket_idle",
+      "distractor": "alert-websocket_idle",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "port_conflict",
+      "source_id": "dockerports",
+      "relevant_document": "resolution-port_conflict",
+      "distractor": "alert-port_conflict",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "port_target",
+      "source_id": "dockerports",
+      "relevant_document": "resolution-port_target",
+      "distractor": "alert-port_target",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "dns_upstream",
+      "source_id": "resolved",
+      "relevant_document": "resolution-dns_upstream",
+      "distractor": "alert-dns_upstream",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "service_exec",
+      "source_id": "systemd",
+      "relevant_document": "resolution-service_exec",
+      "distractor": "alert-service_exec",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "ntp_sync",
+      "source_id": "chrony",
+      "relevant_document": "resolution-ntp_sync",
+      "distractor": "alert-ntp_sync",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "am_reload",
+      "source_id": "alertmanager",
+      "relevant_document": "resolution-am_reload",
+      "distractor": "alert-am_reload",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "am_receiver",
+      "source_id": "alertmanager",
+      "relevant_document": "resolution-am_receiver",
+      "distractor": "alert-am_receiver",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    },
+    {
+      "family": "jellyfin_transcode",
+      "source_id": "jellyfin",
+      "relevant_document": "resolution-jellyfin_transcode",
+      "distractor": "alert-jellyfin_transcode",
+      "relevance_reason": "The query explicitly asks for a prior remedy. The resolution card contains the matching corrective procedure; the alert-only card lacks that procedure.",
+      "fidelity": "Manual-authored controlled adaptation, not an observed production incident."
+    }
+  ]
+}

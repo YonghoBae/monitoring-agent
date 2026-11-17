@@ -23,6 +23,13 @@ Alertmanager 웹훅을 수신해 AI 분석 → 자동 조치까지 처리하는 
 - [전체 평가 결과](docs/EVAL-V5-VERIFIED-RESULTS-2026-11-17.md)
 - [점수의 한계와 신뢰성 검증 상태](docs/EVAL-V5-RELIABILITY-CONCLUSION-2026-11-17.md)
 
+## 벡터 검색 평가 — 별도 통제 시험
+
+매뉴얼·공개 이슈 16개를 근거로 합성 문서 40개와 질문 68개를 구성하고, 실제 all-minilm/pgvector 검색을 측정했습니다. 정답 있는 60개 질문의 Recall@5는 현재 방식 재현 **46/60**, 해결 기록 필터 **48/60**, BM25 **56/60**, RRF 혼합 **53/60**입니다. 에이전트 답변 정확도나 운영 개선 배포 결과와는 구분합니다.
+
+- [근거·측정 결과·포트폴리오 답변](docs/VECTOR-EVAL-RESULTS-2026-11-17.md)
+- [공개 데이터와 API 없이 점수 재검증](eval/vector-v1/README.md)
+
 ## 주요 기능
 
 - **4단계 자동화 파이프라인**: Verify → Investigate → Resolve → Authorize

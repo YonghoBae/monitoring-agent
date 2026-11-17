@@ -68,3 +68,23 @@ __pycache__/
 !/eval/v5/legacy-migration/measurement-definitions.json
 /docs/EVAL-OVERNIGHT-STATE-*.md
 TODO.md
+
+# Public, fully synthetic vector retrieval fixture and reproducible run.
+!/eval/vector-v1/
+/eval/vector-v1/*
+!/eval/vector-v1/README.md
+!/eval/vector-v1/dataset.json
+!/eval/vector-v1/sources.json
+!/eval/vector-v1/protocol.json
+!/eval/vector-v1/offline-verification.json
+!/eval/vector-v1/runs/
+/eval/vector-v1/runs/*
+!/eval/vector-v1/runs/initial/
+/eval/vector-v1/runs/initial/*
+!/eval/vector-v1/runs/initial/manifest.json
+!/eval/vector-v1/runs/initial/embeddings.json
+!/eval/vector-v1/runs/initial/embedding-batches.json
+!/eval/vector-v1/runs/initial/pgvector-rankings.json
+!/eval/vector-v1/runs/initial/results.json
+!/eval/vector-v1/runs/initial/summary.json
+!/eval/vector-v1/runs/initial/artifact-sha256.json

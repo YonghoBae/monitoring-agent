@@ -1,0 +1,51 @@
+{
+  "version": "vector-retrieval-v1",
+  "status": "frozen_before_embeddings",
+  "model": "all-minilm:latest",
+  "embedding_dimensions": 384,
+  "embedding_truncation": false,
+  "top_k": [
+    1,
+    3,
+    5
+  ],
+  "corpus_documents": 40,
+  "families": 20,
+  "answerable_queries": 60,
+  "no_answer_queries": 8,
+  "methods": [
+    "dense_current_all",
+    "dense_resolution_only",
+    "bm25_resolution_only",
+    "rrf_resolution_only"
+  ],
+  "dense_metric": "cosine similarity; candidates with similarity >= 0, top 5; exact pgvector SQL verification",
+  "bm25": {
+    "k1": 1.2,
+    "b": 0.75,
+    "tokenizer": "Unicode lowercase Latin/digit words plus Hangul character bigrams per Hangul run; no stemming or tuned dictionary",
+    "zero_score_policy": "Return fixed top 5 including zero scores, like an unthresholded ranker; abstention not calibrated"
+  },
+  "rrf": {
+    "rank_constant": 60,
+    "weights": [
+      1,
+      1
+    ],
+    "candidate_scope": "all 20 resolution documents; fuse full dense and BM25 ranks before taking top 5"
+  },
+  "primary": "Recall@5 on answerable queries (equals Hit@5 with exactly one relevant document)",
+  "secondary": [
+    "MRR@5",
+    "nDCG@5",
+    "Hit@1",
+    "Recall@3",
+    "wrong_type_fraction_at_5"
+  ],
+  "aggregation": "Macro average queries; separately report three variants. Families have equal 3-query weight; 60 queries are not 60 independent incidents.",
+  "negative_queries": "Separate diagnostic: no relevant document in corpus; report nonempty-return rate, no threshold tuning and no blending into positive-query scores.",
+  "split": "Single frozen diagnostic evaluation set, no training or parameter search; not an independent held-out test after tuning.",
+  "timing": "Local embedding batch elapsed time and retrieval timings are descriptive; not production latency benchmarks.",
+  "production_scope": "Serialization, model and top-5 retrieval policy reproduced; production data untouched; no full Spring AI/agent end-to-end claim.",
+  "source_policy": "Source snapshots remain local; public manifest holds URLs, fetched hashes and author-written grounding claims."
+}
