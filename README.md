@@ -18,6 +18,7 @@ Alertmanager 웹훅을 수신해 AI 분석 → 자동 조치까지 처리하는 
 35문항 통제 시험의 잠정 자동 주 점수는 간소화 하네스 **61.8점**, Pi **53.6점**입니다. 반복별 우열과 채점 불확실성 때문에 **최종 순위와 확정 정확도는 입증하지 못했습니다**. 실제 장애 원리 2종의 재현 시험은 별도로 보고합니다.
 
 - [밤중 결정 기록·면접 답변 가이드](docs/EVAL-INTERVIEW-GUIDE-2026-11-17.md)
+- [출력 한도 진단: 실패한 33개 요청 재시험](docs/EVAL-JUDGE-TOKEN-DIAGNOSTIC-2026-11-17.md)
 - [데이터·코드·결과 안내](eval/README.md)
 - [전체 평가 결과](docs/EVAL-V5-VERIFIED-RESULTS-2026-11-17.md)
 - [점수의 한계와 신뢰성 검증 상태](docs/EVAL-V5-RELIABILITY-CONCLUSION-2026-11-17.md)
