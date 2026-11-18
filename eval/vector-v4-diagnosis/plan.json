@@ -1,0 +1,485 @@
+{
+  "frozen_at": "2026-11-18T00:30:22.394486+00:00",
+  "purpose": "Post-test diagnosis of competing causes, not a new unbiased model ranking or production recommendation.",
+  "hypotheses": {
+    "implementation": "Check full vector SHA, shape/norm, stored ranking replay; independently re-encode frozen query texts and sampled documents.",
+    "query_information": "Same full corpus and Qwen document vectors: title256 vs title+source-body256 vs same body512. Remove all site-question URLs, report residual gold-ID mentions. No target answer text is added.",
+    "instruction": "Same frozen title and document vectors; Qwen with original query instruction vs no query instruction. Diagnostic only.",
+    "lexical_fields": "Full corpus BM25 2x2: title-only vs title+body query, title-only vs title+body documents. No stemming or query generation added.",
+    "document_truncation": "32 English query IDs selected by hash, gold + top3 from each of four original methods, identical candidate sets. Compare cached head256, recomputed head256, title256, head512 and all overlapping token chunks. Gold injection makes this a representation discrimination probe, NOT full retrieval.",
+    "label_and_task": "Review four hash-selected cases in each original failure class, including successes; preserve gold labels and scores. Review is by the same agent and is not independent adjudication.",
+    "candidate_competition": "For each query describe best gold rank and source of candidates above it; source labels are analysis metadata, not a validated production filter."
+  },
+  "controls": {
+    "document_probe_queries": [
+      "au-en:1566498",
+      "sf-en:1199492",
+      "su-en:1917926",
+      "au-en:1564020",
+      "sf-en:1195670",
+      "au-en:1562295",
+      "au-en:1568131",
+      "su-en:1930784",
+      "au-en:1568626",
+      "au-en:1565637",
+      "au-en:1563594",
+      "au-en:1570652",
+      "su-en:1933700",
+      "au-en:1565703",
+      "au-en:1567916",
+      "au-en:1562517",
+      "su-en:1936482",
+      "su-en:1938245",
+      "au-en:1564564",
+      "au-en:1565334",
+      "au-en:1564707",
+      "au-en:1565073",
+      "au-en:1564806",
+      "au-en:1561905",
+      "sf-en:1199746",
+      "sf-en:1199826",
+      "au-en:1564547",
+      "au-en:1566419",
+      "au-en:1566306",
+      "su-en:1938246",
+      "au-en:1563393",
+      "su-en:1936877"
+    ],
+    "document_probe_candidates": {
+      "au-en:1566498": [
+        "110389",
+        "11519",
+        "13347",
+        "83874",
+        "89152",
+        "au:974"
+      ],
+      "sf-en:1199492": [
+        "104750",
+        "111935",
+        "117240",
+        "121515",
+        "132736",
+        "sf:218005"
+      ],
+      "su-en:1917926": [
+        "120218",
+        "67490",
+        "69249",
+        "su:1682695",
+        "su:1769083",
+        "su:1911641"
+      ],
+      "au-en:1564020": [
+        "109349",
+        "119261",
+        "148362",
+        "19425",
+        "34140",
+        "47318",
+        "52215",
+        "6953",
+        "96656",
+        "au:1269493"
+      ],
+      "sf-en:1195670": [
+        "11877",
+        "132202",
+        "137070",
+        "143825",
+        "55318",
+        "5852",
+        "72476",
+        "9880",
+        "sf:449651"
+      ],
+      "au-en:1562295": [
+        "124551",
+        "126384",
+        "131478",
+        "145793",
+        "27970",
+        "61354",
+        "85674",
+        "88105",
+        "92393",
+        "97554",
+        "au:162075",
+        "su:1938041"
+      ],
+      "au-en:1568131": [
+        "104898",
+        "135031",
+        "137251",
+        "25759",
+        "42106",
+        "6186",
+        "62639",
+        "90537",
+        "91525",
+        "92410",
+        "au:1567055",
+        "au:741410",
+        "au:958014"
+      ],
+      "su-en:1930784": [
+        "109051",
+        "134905",
+        "140817",
+        "145716",
+        "149427",
+        "37367",
+        "44103",
+        "66121",
+        "81112",
+        "su:1759403",
+        "su:1917019"
+      ],
+      "au-en:1568626": [
+        "114373",
+        "128238",
+        "129367",
+        "17439",
+        "1750",
+        "2162",
+        "33786",
+        "5395",
+        "74704",
+        "au:1570566",
+        "au:2007"
+      ],
+      "au-en:1565637": [
+        "145415",
+        "152398",
+        "au:1566272",
+        "au:1569031",
+        "au:1570856",
+        "au:1570880",
+        "au:337953"
+      ],
+      "au-en:1563594": [
+        "100831",
+        "103299",
+        "105524",
+        "63054",
+        "64818",
+        "75807",
+        "7878",
+        "au:1260939",
+        "au:1560453",
+        "au:1562899",
+        "au:1570652"
+      ],
+      "au-en:1570652": [
+        "105524",
+        "113861",
+        "116851",
+        "154266",
+        "19318",
+        "55042",
+        "63054",
+        "72577",
+        "75236",
+        "7878",
+        "79752",
+        "96094",
+        "au:866901"
+      ],
+      "su-en:1933700": [
+        "120199",
+        "139980",
+        "34713",
+        "39852",
+        "88269",
+        "89538",
+        "au:1570239",
+        "su:248517"
+      ],
+      "au-en:1565703": [
+        "105089",
+        "105153",
+        "14425",
+        "25558",
+        "4027",
+        "66946",
+        "93765",
+        "96881",
+        "au:248"
+      ],
+      "au-en:1567916": [
+        "118987",
+        "40631",
+        "45885",
+        "78866",
+        "98184",
+        "au:1278057",
+        "au:1564671",
+        "au:1565980",
+        "au:1566029",
+        "au:1567097",
+        "au:1570869"
+      ],
+      "au-en:1562517": [
+        "118155",
+        "74387",
+        "94011",
+        "96282",
+        "au:1029198",
+        "au:741410"
+      ],
+      "su-en:1936482": [
+        "63047",
+        "65217",
+        "au:1568915",
+        "su:1358570",
+        "su:1682695",
+        "su:1936374",
+        "su:1938245",
+        "su:947232",
+        "su:980204"
+      ],
+      "su-en:1938245": [
+        "105053",
+        "110691",
+        "116600",
+        "22299",
+        "37670",
+        "49775",
+        "50782",
+        "69233",
+        "su:1594349",
+        "su:947232"
+      ],
+      "au-en:1564564": [
+        "au:1029198",
+        "au:1562322",
+        "au:1562661",
+        "au:1562899",
+        "au:1565073",
+        "au:1567814",
+        "au:1568332",
+        "au:1568369",
+        "au:1569290",
+        "au:1569608",
+        "au:1570820",
+        "au:1570878"
+      ],
+      "au-en:1565334": [
+        "107603",
+        "109840",
+        "147345",
+        "148681",
+        "32453",
+        "7815",
+        "81371",
+        "90697",
+        "au:1565058",
+        "au:1570183",
+        "au:1570624"
+      ],
+      "au-en:1564707": [
+        "119025",
+        "120232",
+        "14457",
+        "145138",
+        "145243",
+        "25685",
+        "36755",
+        "63047",
+        "au:162075",
+        "au:34430",
+        "su:1941209"
+      ],
+      "au-en:1565073": [
+        "136561",
+        "22031",
+        "46892",
+        "74699",
+        "9074",
+        "au:1565036",
+        "au:1565041",
+        "au:1565058"
+      ],
+      "au-en:1564806": [
+        "107888",
+        "116095",
+        "67187",
+        "au:124017",
+        "au:145165",
+        "au:223237"
+      ],
+      "au-en:1561905": [
+        "11519",
+        "115792",
+        "116808",
+        "129188",
+        "59509",
+        "75385",
+        "7722",
+        "au:1570782",
+        "au:674441",
+        "au:811299"
+      ],
+      "sf-en:1199746": [
+        "105128",
+        "128363",
+        "145306",
+        "44975",
+        "61171",
+        "sf:1193076",
+        "sf:384686"
+      ],
+      "sf-en:1199826": [
+        "105128",
+        "121001",
+        "127475",
+        "14548",
+        "30497",
+        "57730",
+        "71615",
+        "82440",
+        "sf:384686"
+      ],
+      "au-en:1564547": [
+        "110208",
+        "115798",
+        "134092",
+        "21357",
+        "37553",
+        "52638",
+        "au:1561826",
+        "au:1561841",
+        "au:1564103",
+        "su:1934289"
+      ],
+      "au-en:1566419": [
+        "123212",
+        "62090",
+        "78708",
+        "au:1560535",
+        "au:1565246",
+        "au:1566282",
+        "au:1567055",
+        "au:1568724",
+        "au:1570484",
+        "su:1921809"
+      ],
+      "au-en:1566306": [
+        "117315",
+        "118155",
+        "150401",
+        "71249",
+        "73252",
+        "80983",
+        "au:1566282",
+        "au:1566318",
+        "au:1569063",
+        "au:1570473"
+      ],
+      "su-en:1938246": [
+        "107749",
+        "138656",
+        "29835",
+        "48730",
+        "48775",
+        "60750",
+        "80131",
+        "90450",
+        "su:1754642"
+      ],
+      "au-en:1563393": [
+        "107224",
+        "129566",
+        "145561",
+        "15404",
+        "19214",
+        "29519",
+        "33302",
+        "666",
+        "71900",
+        "89152",
+        "au:1568085",
+        "au:96967",
+        "su:1930399"
+      ],
+      "su-en:1936877": [
+        "125608",
+        "77229",
+        "96497",
+        "su:101127",
+        "su:1285268",
+        "su:1563992",
+        "su:1925512",
+        "su:1932594",
+        "su:1938041"
+      ]
+    },
+    "review_sample": [
+      {
+        "id": "au-en:1570652",
+        "category": "candidate_miss"
+      },
+      {
+        "id": "sf-en:1195688",
+        "category": "candidate_miss"
+      },
+      {
+        "id": "au-en:1562656",
+        "category": "candidate_miss"
+      },
+      {
+        "id": "au-en:1567916",
+        "category": "candidate_miss"
+      },
+      {
+        "id": "au-en:1565041",
+        "category": "ranking_miss"
+      },
+      {
+        "id": "su-en:1933700",
+        "category": "ranking_miss"
+      },
+      {
+        "id": "au-en:1564577",
+        "category": "ranking_miss"
+      },
+      {
+        "id": "au-en:1566498",
+        "category": "ranking_miss"
+      },
+      {
+        "id": "sf-en:1199746",
+        "category": "correct_first"
+      },
+      {
+        "id": "su-en:1935243",
+        "category": "correct_first"
+      },
+      {
+        "id": "sf-en:1198662",
+        "category": "correct_first"
+      },
+      {
+        "id": "su-en:1932594",
+        "category": "correct_first"
+      }
+    ],
+    "chunk_tokens": 256,
+    "chunk_overlap": 64,
+    "query_max_length": 256,
+    "document_long_length": 512,
+    "no_paid_apis": true,
+    "no_production_changes": true,
+    "no_v3_relabeling_or_retuning": true
+  },
+  "input_sha256": {
+    "eval/vector-v3-improvement/holdout-extension/cache/documents.json": "ac332b276e6675bdbc5888bd3d2289c0ba41fd313be9bfede6230451019db7bb",
+    "eval/vector-v3-improvement/holdout-extension/cache/queries.json": "373908d163dd7a67e781c4851d45b834499156c81e7f08731b41f5387611eee3",
+    "eval/vector-v3-improvement/final/summary.json": "7d4c230ec2347822ff5d0ff5c0d2ea1d8874f0b51d952c766d357ca398ae6ade",
+    "eval/vector-v3-improvement/final-selection-lock.json": "a3a610b6671dcf998fc3a6c7d3824099cdb6a1a91837c06cc0def87d54a18afb",
+    "eval/vector-v3-improvement/cache/full/qwen-head.npy": "214864cc3d7fa4c0346a126063c150cd015443c9758e96608c2ce6991dfa5b93",
+    "eval/vector-v3-improvement/cache/full/baseline-head.npy": "c1638e1b0645e49ea245c55392f0ef1030baf6fc53f8ea5a6e8c3422d8059805",
+    "scripts/vector_model_candidates.py": "6a3c7b6e592a7227d1b7a4ea8508ad0c7be5a88089826142b4fd3087cbc8eb87",
+    "scripts/diagnose_vector_retrieval.py": "75257cb2f36ed24d01df73cf37afae541f4e9c494a8a659da3d390198eae1ff1"
+  }
+}

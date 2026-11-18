@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "full_corpus_and_pool_methods": 13,
+  "queries": 91,
+  "fixed_document_probe_queries": 32,
+  "independent_metrics": 4029,
+  "gpu_required": false,
+  "api_calls": 0,
+  "scope": "Numeric replay and artifact integrity; not independent label adjudication or inference replay."
+}

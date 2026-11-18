@@ -1,0 +1,551 @@
+{
+  "scope": "Source question body can include edits or answer hints; not proven contemporaneous incident input.",
+  "queries": [
+    {
+      "query_id": "au-en:1560453",
+      "source_body_characters": 746,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1560492",
+      "source_body_characters": 524,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1560781",
+      "source_body_characters": 696,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1561905",
+      "source_body_characters": 657,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1561971",
+      "source_body_characters": 1571,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562295",
+      "source_body_characters": 246,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562382",
+      "source_body_characters": 644,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562517",
+      "source_body_characters": 532,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562625",
+      "source_body_characters": 1060,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562656",
+      "source_body_characters": 251,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562850",
+      "source_body_characters": 924,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1562899",
+      "source_body_characters": 2884,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563062",
+      "source_body_characters": 1946,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563231",
+      "source_body_characters": 676,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563393",
+      "source_body_characters": 616,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563594",
+      "source_body_characters": 2341,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563601",
+      "source_body_characters": 559,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1563926",
+      "source_body_characters": 2242,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564020",
+      "source_body_characters": 2441,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564338",
+      "source_body_characters": 660,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564382",
+      "source_body_characters": 1445,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564547",
+      "source_body_characters": 1339,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564564",
+      "source_body_characters": 1109,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564577",
+      "source_body_characters": 5507,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564707",
+      "source_body_characters": 210,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564806",
+      "source_body_characters": 2052,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1564824",
+      "source_body_characters": 357,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565006",
+      "source_body_characters": 903,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565036",
+      "source_body_characters": 2183,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565041",
+      "source_body_characters": 785,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565062",
+      "source_body_characters": 858,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565073",
+      "source_body_characters": 354,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565334",
+      "source_body_characters": 598,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565467",
+      "source_body_characters": 747,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565637",
+      "source_body_characters": 125,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565703",
+      "source_body_characters": 419,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1565772",
+      "source_body_characters": 1390,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566186",
+      "source_body_characters": 2100,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566225",
+      "source_body_characters": 122,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566306",
+      "source_body_characters": 831,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566419",
+      "source_body_characters": 464,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566498",
+      "source_body_characters": 307,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1566963",
+      "source_body_characters": 619,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1567040",
+      "source_body_characters": 1739,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1567191",
+      "source_body_characters": 959,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1567431",
+      "source_body_characters": 1890,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1567707",
+      "source_body_characters": 941,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1567916",
+      "source_body_characters": 846,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1568131",
+      "source_body_characters": 445,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1568170",
+      "source_body_characters": 1663,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1568383",
+      "source_body_characters": 1549,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1568626",
+      "source_body_characters": 188,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1569279",
+      "source_body_characters": 547,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1569506",
+      "source_body_characters": 260,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1569629",
+      "source_body_characters": 543,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1569868",
+      "source_body_characters": 214,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1569882",
+      "source_body_characters": 2022,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1570183",
+      "source_body_characters": 262,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "au-en:1570652",
+      "source_body_characters": 952,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1192974",
+      "source_body_characters": 331,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1195670",
+      "source_body_characters": 1184,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1195688",
+      "source_body_characters": 269,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1195774",
+      "source_body_characters": 2444,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1196226",
+      "source_body_characters": 949,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1198662",
+      "source_body_characters": 1504,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1199492",
+      "source_body_characters": 226,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1199746",
+      "source_body_characters": 1647,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "sf-en:1199826",
+      "source_body_characters": 695,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1917926",
+      "source_body_characters": 2382,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1919112",
+      "source_body_characters": 778,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1922641",
+      "source_body_characters": 126,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1924147",
+      "source_body_characters": 302,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1924475",
+      "source_body_characters": 694,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1930784",
+      "source_body_characters": 4904,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1930948",
+      "source_body_characters": 971,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1931126",
+      "source_body_characters": 1902,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1932594",
+      "source_body_characters": 1713,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1933055",
+      "source_body_characters": 365,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1933700",
+      "source_body_characters": 1175,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1933998",
+      "source_body_characters": 836,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1935197",
+      "source_body_characters": 148,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1935243",
+      "source_body_characters": 344,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1936232",
+      "source_body_characters": 606,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1936374",
+      "source_body_characters": 1541,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1936482",
+      "source_body_characters": 599,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1936877",
+      "source_body_characters": 911,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1937336",
+      "source_body_characters": 511,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1938245",
+      "source_body_characters": 382,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1938246",
+      "source_body_characters": 1806,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1939303",
+      "source_body_characters": 1070,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    },
+    {
+      "query_id": "su-en:1939453",
+      "source_body_characters": 465,
+      "question_links_removed": false,
+      "gold_numeric_id_mentions": []
+    }
+  ]
+}

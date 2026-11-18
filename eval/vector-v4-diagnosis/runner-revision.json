@@ -1,0 +1,6 @@
+{
+  "recorded_at": "2026-11-18T00:36:44.208979+00:00",
+  "initial_sha256": "75257cb2f36ed24d01df73cf37afae541f4e9c494a8a659da3d390198eae1ff1",
+  "current_sha256": "e7e09d1bb193840bd40cdd2fd120acf338067062a4901b7822998912b5d55b89",
+  "changes": "CPU replay now matches frozen normalized matvec arithmetic; add pre-recorded fixed-query pool-size control. GPU code and frozen v3 source files unchanged. GPU results were produced by runner-initial.py; original plan is preserved."
+}

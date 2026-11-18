@@ -1,0 +1,748 @@
+[
+  {
+    "query_id": "au-en:1560453",
+    "title_query_tokens": 44,
+    "body_query_tokens": 236,
+    "gold_document_tokens": {
+      "au:1129025": 195,
+      "au:1133199": 1501
+    }
+  },
+  {
+    "query_id": "au-en:1560492",
+    "title_query_tokens": 32,
+    "body_query_tokens": 185,
+    "gold_document_tokens": {
+      "au:1348780": 742
+    }
+  },
+  {
+    "query_id": "au-en:1560781",
+    "title_query_tokens": 36,
+    "body_query_tokens": 291,
+    "gold_document_tokens": {
+      "au:1508263": 85
+    }
+  },
+  {
+    "query_id": "au-en:1561905",
+    "title_query_tokens": 27,
+    "body_query_tokens": 213,
+    "gold_document_tokens": {
+      "au:674441": 172,
+      "au:811299": 235
+    }
+  },
+  {
+    "query_id": "au-en:1561971",
+    "title_query_tokens": 36,
+    "body_query_tokens": 441,
+    "gold_document_tokens": {
+      "au:42436": 51,
+      "au:852562": 1132
+    }
+  },
+  {
+    "query_id": "au-en:1562295",
+    "title_query_tokens": 25,
+    "body_query_tokens": 87,
+    "gold_document_tokens": {
+      "au:162075": 77
+    }
+  },
+  {
+    "query_id": "au-en:1562382",
+    "title_query_tokens": 27,
+    "body_query_tokens": 173,
+    "gold_document_tokens": {
+      "au:1156409": 350
+    }
+  },
+  {
+    "query_id": "au-en:1562517",
+    "title_query_tokens": 38,
+    "body_query_tokens": 155,
+    "gold_document_tokens": {
+      "au:741410": 558
+    }
+  },
+  {
+    "query_id": "au-en:1562625",
+    "title_query_tokens": 34,
+    "body_query_tokens": 294,
+    "gold_document_tokens": {
+      "au:13065": 134
+    }
+  },
+  {
+    "query_id": "au-en:1562656",
+    "title_query_tokens": 29,
+    "body_query_tokens": 98,
+    "gold_document_tokens": {
+      "au:1527119": 178,
+      "au:78951": 348
+    }
+  },
+  {
+    "query_id": "au-en:1562850",
+    "title_query_tokens": 32,
+    "body_query_tokens": 308,
+    "gold_document_tokens": {
+      "au:1049411": 2001
+    }
+  },
+  {
+    "query_id": "au-en:1562899",
+    "title_query_tokens": 60,
+    "body_query_tokens": 818,
+    "gold_document_tokens": {
+      "au:91815": 78
+    }
+  },
+  {
+    "query_id": "au-en:1563062",
+    "title_query_tokens": 42,
+    "body_query_tokens": 489,
+    "gold_document_tokens": {
+      "au:1420641": 1538
+    }
+  },
+  {
+    "query_id": "au-en:1563231",
+    "title_query_tokens": 32,
+    "body_query_tokens": 188,
+    "gold_document_tokens": {
+      "au:1208449": 130
+    }
+  },
+  {
+    "query_id": "au-en:1563393",
+    "title_query_tokens": 25,
+    "body_query_tokens": 181,
+    "gold_document_tokens": {
+      "au:96967": 97
+    }
+  },
+  {
+    "query_id": "au-en:1563594",
+    "title_query_tokens": 27,
+    "body_query_tokens": 629,
+    "gold_document_tokens": {
+      "au:1260939": 658
+    }
+  },
+  {
+    "query_id": "au-en:1563601",
+    "title_query_tokens": 36,
+    "body_query_tokens": 158,
+    "gold_document_tokens": {
+      "au:986878": 33
+    }
+  },
+  {
+    "query_id": "au-en:1563926",
+    "title_query_tokens": 48,
+    "body_query_tokens": 733,
+    "gold_document_tokens": {
+      "au:55868": 157
+    }
+  },
+  {
+    "query_id": "au-en:1564020",
+    "title_query_tokens": 33,
+    "body_query_tokens": 1083,
+    "gold_document_tokens": {
+      "au:1269493": 1187
+    }
+  },
+  {
+    "query_id": "au-en:1564338",
+    "title_query_tokens": 31,
+    "body_query_tokens": 174,
+    "gold_document_tokens": {
+      "au:1469713": 489,
+      "au:223237": 181
+    }
+  },
+  {
+    "query_id": "au-en:1564382",
+    "title_query_tokens": 43,
+    "body_query_tokens": 476,
+    "gold_document_tokens": {
+      "au:176121": 639
+    }
+  },
+  {
+    "query_id": "au-en:1564547",
+    "title_query_tokens": 34,
+    "body_query_tokens": 381,
+    "gold_document_tokens": {
+      "au:1564103": 8154
+    }
+  },
+  {
+    "query_id": "au-en:1564564",
+    "title_query_tokens": 34,
+    "body_query_tokens": 321,
+    "gold_document_tokens": {
+      "au:1029198": 324
+    }
+  },
+  {
+    "query_id": "au-en:1564577",
+    "title_query_tokens": 38,
+    "body_query_tokens": 1745,
+    "gold_document_tokens": {
+      "au:124017": 65,
+      "au:65911": 71,
+      "au:866901": 130
+    }
+  },
+  {
+    "query_id": "au-en:1564707",
+    "title_query_tokens": 29,
+    "body_query_tokens": 90,
+    "gold_document_tokens": {
+      "au:34430": 56
+    }
+  },
+  {
+    "query_id": "au-en:1564806",
+    "title_query_tokens": 26,
+    "body_query_tokens": 540,
+    "gold_document_tokens": {
+      "au:124017": 65,
+      "au:145165": 35,
+      "au:223237": 181
+    }
+  },
+  {
+    "query_id": "au-en:1564824",
+    "title_query_tokens": 59,
+    "body_query_tokens": 161,
+    "gold_document_tokens": {
+      "au:1528443": 352
+    }
+  },
+  {
+    "query_id": "au-en:1565006",
+    "title_query_tokens": 62,
+    "body_query_tokens": 271,
+    "gold_document_tokens": {
+      "au:1538841": 88,
+      "au:307": 70,
+      "au:443036": 87
+    }
+  },
+  {
+    "query_id": "au-en:1565036",
+    "title_query_tokens": 27,
+    "body_query_tokens": 857,
+    "gold_document_tokens": {
+      "au:1565058": 140
+    }
+  },
+  {
+    "query_id": "au-en:1565041",
+    "title_query_tokens": 39,
+    "body_query_tokens": 204,
+    "gold_document_tokens": {
+      "au:1565058": 140
+    }
+  },
+  {
+    "query_id": "au-en:1565062",
+    "title_query_tokens": 34,
+    "body_query_tokens": 232,
+    "gold_document_tokens": {
+      "au:1565058": 140
+    }
+  },
+  {
+    "query_id": "au-en:1565073",
+    "title_query_tokens": 27,
+    "body_query_tokens": 105,
+    "gold_document_tokens": {
+      "au:1565058": 140
+    }
+  },
+  {
+    "query_id": "au-en:1565334",
+    "title_query_tokens": 24,
+    "body_query_tokens": 165,
+    "gold_document_tokens": {
+      "au:1565058": 140
+    }
+  },
+  {
+    "query_id": "au-en:1565467",
+    "title_query_tokens": 31,
+    "body_query_tokens": 188,
+    "gold_document_tokens": {
+      "au:930593": 65
+    }
+  },
+  {
+    "query_id": "au-en:1565637",
+    "title_query_tokens": 32,
+    "body_query_tokens": 74,
+    "gold_document_tokens": {
+      "au:337953": 330
+    }
+  },
+  {
+    "query_id": "au-en:1565703",
+    "title_query_tokens": 28,
+    "body_query_tokens": 136,
+    "gold_document_tokens": {
+      "au:248": 53
+    }
+  },
+  {
+    "query_id": "au-en:1565772",
+    "title_query_tokens": 39,
+    "body_query_tokens": 401,
+    "gold_document_tokens": {
+      "au:1198621": 761
+    }
+  },
+  {
+    "query_id": "au-en:1566186",
+    "title_query_tokens": 44,
+    "body_query_tokens": 545,
+    "gold_document_tokens": {
+      "au:1514281": 477
+    }
+  },
+  {
+    "query_id": "au-en:1566225",
+    "title_query_tokens": 26,
+    "body_query_tokens": 56,
+    "gold_document_tokens": {
+      "au:308237": 122,
+      "au:672892": 51
+    }
+  },
+  {
+    "query_id": "au-en:1566306",
+    "title_query_tokens": 30,
+    "body_query_tokens": 263,
+    "gold_document_tokens": {
+      "au:1566282": 105
+    }
+  },
+  {
+    "query_id": "au-en:1566419",
+    "title_query_tokens": 39,
+    "body_query_tokens": 191,
+    "gold_document_tokens": {
+      "au:1566282": 105
+    }
+  },
+  {
+    "query_id": "au-en:1566498",
+    "title_query_tokens": 43,
+    "body_query_tokens": 112,
+    "gold_document_tokens": {
+      "au:974": 40
+    }
+  },
+  {
+    "query_id": "au-en:1566963",
+    "title_query_tokens": 34,
+    "body_query_tokens": 215,
+    "gold_document_tokens": {
+      "au:563408": 135
+    }
+  },
+  {
+    "query_id": "au-en:1567040",
+    "title_query_tokens": 31,
+    "body_query_tokens": 557,
+    "gold_document_tokens": {
+      "au:394067": 115
+    }
+  },
+  {
+    "query_id": "au-en:1567191",
+    "title_query_tokens": 30,
+    "body_query_tokens": 284,
+    "gold_document_tokens": {
+      "au:1109982": 105
+    }
+  },
+  {
+    "query_id": "au-en:1567431",
+    "title_query_tokens": 61,
+    "body_query_tokens": 497,
+    "gold_document_tokens": {
+      "au:1337580": 466
+    }
+  },
+  {
+    "query_id": "au-en:1567707",
+    "title_query_tokens": 33,
+    "body_query_tokens": 242,
+    "gold_document_tokens": {
+      "au:162075": 77
+    }
+  },
+  {
+    "query_id": "au-en:1567916",
+    "title_query_tokens": 38,
+    "body_query_tokens": 204,
+    "gold_document_tokens": {
+      "au:1278057": 123
+    }
+  },
+  {
+    "query_id": "au-en:1568131",
+    "title_query_tokens": 34,
+    "body_query_tokens": 159,
+    "gold_document_tokens": {
+      "au:958014": 336
+    }
+  },
+  {
+    "query_id": "au-en:1568170",
+    "title_query_tokens": 45,
+    "body_query_tokens": 395,
+    "gold_document_tokens": {
+      "au:290630": 294
+    }
+  },
+  {
+    "query_id": "au-en:1568383",
+    "title_query_tokens": 36,
+    "body_query_tokens": 534,
+    "gold_document_tokens": {
+      "au:182248": 66
+    }
+  },
+  {
+    "query_id": "au-en:1568626",
+    "title_query_tokens": 34,
+    "body_query_tokens": 85,
+    "gold_document_tokens": {
+      "au:2007": 35
+    }
+  },
+  {
+    "query_id": "au-en:1569279",
+    "title_query_tokens": 41,
+    "body_query_tokens": 165,
+    "gold_document_tokens": {
+      "au:923691": 292
+    }
+  },
+  {
+    "query_id": "au-en:1569506",
+    "title_query_tokens": 27,
+    "body_query_tokens": 82,
+    "gold_document_tokens": {
+      "au:43621": 90
+    }
+  },
+  {
+    "query_id": "au-en:1569629",
+    "title_query_tokens": 31,
+    "body_query_tokens": 142,
+    "gold_document_tokens": {
+      "au:223237": 181
+    }
+  },
+  {
+    "query_id": "au-en:1569868",
+    "title_query_tokens": 40,
+    "body_query_tokens": 99,
+    "gold_document_tokens": {
+      "au:1566029": 184,
+      "au:1569290": 74
+    }
+  },
+  {
+    "query_id": "au-en:1569882",
+    "title_query_tokens": 32,
+    "body_query_tokens": 708,
+    "gold_document_tokens": {
+      "au:954966": 382
+    }
+  },
+  {
+    "query_id": "au-en:1570183",
+    "title_query_tokens": 29,
+    "body_query_tokens": 105,
+    "gold_document_tokens": {
+      "au:1566114": 617
+    }
+  },
+  {
+    "query_id": "au-en:1570652",
+    "title_query_tokens": 24,
+    "body_query_tokens": 279,
+    "gold_document_tokens": {
+      "au:866901": 130
+    }
+  },
+  {
+    "query_id": "sf-en:1192974",
+    "title_query_tokens": 29,
+    "body_query_tokens": 137,
+    "gold_document_tokens": {
+      "sf:1109191": 260
+    }
+  },
+  {
+    "query_id": "sf-en:1195670",
+    "title_query_tokens": 42,
+    "body_query_tokens": 554,
+    "gold_document_tokens": {
+      "sf:449651": 125
+    }
+  },
+  {
+    "query_id": "sf-en:1195688",
+    "title_query_tokens": 27,
+    "body_query_tokens": 79,
+    "gold_document_tokens": {
+      "sf:214242": 87
+    }
+  },
+  {
+    "query_id": "sf-en:1195774",
+    "title_query_tokens": 40,
+    "body_query_tokens": 514,
+    "gold_document_tokens": {
+      "sf:1082399": 215
+    }
+  },
+  {
+    "query_id": "sf-en:1196226",
+    "title_query_tokens": 30,
+    "body_query_tokens": 321,
+    "gold_document_tokens": {
+      "sf:853430": 472
+    }
+  },
+  {
+    "query_id": "sf-en:1198662",
+    "title_query_tokens": 42,
+    "body_query_tokens": 424,
+    "gold_document_tokens": {
+      "sf:932628": 271
+    }
+  },
+  {
+    "query_id": "sf-en:1199492",
+    "title_query_tokens": 33,
+    "body_query_tokens": 85,
+    "gold_document_tokens": {
+      "sf:218005": 839
+    }
+  },
+  {
+    "query_id": "sf-en:1199746",
+    "title_query_tokens": 35,
+    "body_query_tokens": 353,
+    "gold_document_tokens": {
+      "sf:384686": 142
+    }
+  },
+  {
+    "query_id": "sf-en:1199826",
+    "title_query_tokens": 35,
+    "body_query_tokens": 156,
+    "gold_document_tokens": {
+      "sf:384686": 142
+    }
+  },
+  {
+    "query_id": "su-en:1917926",
+    "title_query_tokens": 39,
+    "body_query_tokens": 595,
+    "gold_document_tokens": {
+      "su:1769083": 72
+    }
+  },
+  {
+    "query_id": "su-en:1919112",
+    "title_query_tokens": 35,
+    "body_query_tokens": 259,
+    "gold_document_tokens": {
+      "su:1805221": 185
+    }
+  },
+  {
+    "query_id": "su-en:1922641",
+    "title_query_tokens": 30,
+    "body_query_tokens": 59,
+    "gold_document_tokens": {
+      "su:925847": 572
+    }
+  },
+  {
+    "query_id": "su-en:1924147",
+    "title_query_tokens": 38,
+    "body_query_tokens": 102,
+    "gold_document_tokens": {
+      "su:1097210": 67
+    }
+  },
+  {
+    "query_id": "su-en:1924475",
+    "title_query_tokens": 32,
+    "body_query_tokens": 183,
+    "gold_document_tokens": {
+      "su:211966": 67,
+      "su:555310": 121
+    }
+  },
+  {
+    "query_id": "su-en:1930784",
+    "title_query_tokens": 31,
+    "body_query_tokens": 1606,
+    "gold_document_tokens": {
+      "su:1759403": 172,
+      "su:1917019": 161
+    }
+  },
+  {
+    "query_id": "su-en:1930948",
+    "title_query_tokens": 34,
+    "body_query_tokens": 244,
+    "gold_document_tokens": {
+      "su:1563992": 177
+    }
+  },
+  {
+    "query_id": "su-en:1931126",
+    "title_query_tokens": 47,
+    "body_query_tokens": 455,
+    "gold_document_tokens": {
+      "su:241817": 183
+    }
+  },
+  {
+    "query_id": "su-en:1932594",
+    "title_query_tokens": 55,
+    "body_query_tokens": 493,
+    "gold_document_tokens": {
+      "su:1285268": 269
+    }
+  },
+  {
+    "query_id": "su-en:1933055",
+    "title_query_tokens": 34,
+    "body_query_tokens": 119,
+    "gold_document_tokens": {
+      "su:1058592": 251
+    }
+  },
+  {
+    "query_id": "su-en:1933700",
+    "title_query_tokens": 47,
+    "body_query_tokens": 294,
+    "gold_document_tokens": {
+      "su:248517": 36
+    }
+  },
+  {
+    "query_id": "su-en:1933998",
+    "title_query_tokens": 31,
+    "body_query_tokens": 437,
+    "gold_document_tokens": {
+      "su:1584668": 106
+    }
+  },
+  {
+    "query_id": "su-en:1935197",
+    "title_query_tokens": 39,
+    "body_query_tokens": 77,
+    "gold_document_tokens": {
+      "su:949421": 168
+    }
+  },
+  {
+    "query_id": "su-en:1935243",
+    "title_query_tokens": 31,
+    "body_query_tokens": 116,
+    "gold_document_tokens": {
+      "su:29704": 88
+    }
+  },
+  {
+    "query_id": "su-en:1936232",
+    "title_query_tokens": 39,
+    "body_query_tokens": 179,
+    "gold_document_tokens": {
+      "su:26842": 243
+    }
+  },
+  {
+    "query_id": "su-en:1936374",
+    "title_query_tokens": 40,
+    "body_query_tokens": 366,
+    "gold_document_tokens": {
+      "su:738705": 138
+    }
+  },
+  {
+    "query_id": "su-en:1936482",
+    "title_query_tokens": 37,
+    "body_query_tokens": 181,
+    "gold_document_tokens": {
+      "su:1358570": 208,
+      "su:1682695": 216,
+      "su:947232": 148,
+      "su:980204": 281
+    }
+  },
+  {
+    "query_id": "su-en:1936877",
+    "title_query_tokens": 50,
+    "body_query_tokens": 299,
+    "gold_document_tokens": {
+      "su:101127": 233
+    }
+  },
+  {
+    "query_id": "su-en:1937336",
+    "title_query_tokens": 33,
+    "body_query_tokens": 137,
+    "gold_document_tokens": {
+      "su:1182472": 111
+    }
+  },
+  {
+    "query_id": "su-en:1938245",
+    "title_query_tokens": 29,
+    "body_query_tokens": 103,
+    "gold_document_tokens": {
+      "su:1594349": 153
+    }
+  },
+  {
+    "query_id": "su-en:1938246",
+    "title_query_tokens": 40,
+    "body_query_tokens": 620,
+    "gold_document_tokens": {
+      "su:1754642": 301
+    }
+  },
+  {
+    "query_id": "su-en:1939303",
+    "title_query_tokens": 44,
+    "body_query_tokens": 258,
+    "gold_document_tokens": {
+      "su:845191": 344
+    }
+  },
+  {
+    "query_id": "su-en:1939453",
+    "title_query_tokens": 29,
+    "body_query_tokens": 132,
+    "gold_document_tokens": {
+      "su:1684416": 60
+    }
+  }
+]

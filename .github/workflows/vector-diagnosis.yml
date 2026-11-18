@@ -1,0 +1,37 @@
+name: Vector diagnosis (CPU)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/vector-diagnosis.yml'
+      - 'scripts/diagnose_vector*.py'
+      - 'scripts/summarize_vector_diagnosis.py'
+      - 'scripts/verify_vector_diagnosis.py'
+      - 'eval/vector-v4-diagnosis/**'
+  pull_request:
+    paths:
+      - '.github/workflows/vector-diagnosis.yml'
+      - 'scripts/diagnose_vector*.py'
+      - 'scripts/summarize_vector_diagnosis.py'
+      - 'scripts/verify_vector_diagnosis.py'
+      - 'eval/vector-v4-diagnosis/**'
+permissions:
+  contents: read
+jobs:
+  replay-diagnosis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements-vector-verify.txt
+      - run: python -m pip install -r scripts/requirements-vector-verify.txt
+      - name: Replay post-test diagnostic evidence
+        run: python scripts/verify_vector_diagnosis.py

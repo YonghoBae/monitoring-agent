@@ -1,0 +1,129 @@
+{
+  "reviewed_at": "2026-11-18T00:34:38.973102+00:00",
+  "scope": "Same-agent qualitative reading of frozen source question bodies, known target questions and returned first records; four hash-selected original candidate misses, ranking misses and successes each. Some long bodies were read in excerpts. No independent adjudication, no answer verification, no relabeling, no estimate of population failure proportions.",
+  "cases": [
+    {
+      "query_id": "au-en:1570652",
+      "original_category": "candidate_miss",
+      "observation": "제목은 업데이트 문제라는 사실만 담고 있다. 본문에는 PPA의 Release 파일 부재와 404 오류가 있어 정답 문서의 구체적 증상과 연결된다.",
+      "hypothesis": "query_information",
+      "source_url": "https://askubuntu.com/questions/1570652",
+      "gold_ids": [
+        "au:866901"
+      ]
+    },
+    {
+      "query_id": "sf-en:1195688",
+      "original_category": "candidate_miss",
+      "observation": "제목에는 Nginx 헤더와 버전만 있고 숨기려는 목적은 빠져 있다. 본문은 버전 제거 후 제품명도 감추려는 질문이다. 반환 문서는 upstream 오류여서 목적이 다르다.",
+      "hypothesis": "query_information",
+      "source_url": "https://serverfault.com/questions/1195688",
+      "gold_ids": [
+        "sf:214242"
+      ]
+    },
+    {
+      "query_id": "au-en:1562656",
+      "original_category": "candidate_miss",
+      "observation": "제목은 deb 설치 문제이고 본문은 apt 저장소 목록의 malformed entry 오류를 명시한다. 반환 문서는 서비스 등록 의존성 오류로 구체적 오류가 다르다.",
+      "hypothesis": "query_information",
+      "source_url": "https://askubuntu.com/questions/1562656",
+      "gold_ids": [
+        "au:1527119",
+        "au:78951"
+      ]
+    },
+    {
+      "query_id": "au-en:1567916",
+      "original_category": "candidate_miss",
+      "observation": "제목은 데스크톱 설치 방법이지만 본문은 여러 환경 공존과 기존 환경 손상 위험을 묻는다. 정답은 공존 안전성이고 반환 문서는 기본 설치 방법이다.",
+      "hypothesis": "query_intent",
+      "source_url": "https://askubuntu.com/questions/1567916",
+      "gold_ids": [
+        "au:1278057"
+      ]
+    },
+    {
+      "query_id": "au-en:1565041",
+      "original_category": "ranking_miss",
+      "observation": "반환 문서도 인터넷은 되지만 연결 확인 표시는 실패하는 Ubuntu 증상을 기술한다. 정답 ID와 다르지만 내용상 관련성이 있어 보인다. 답변·원인·해결 성공을 검증한 것은 아니다.",
+      "hypothesis": "possible_label_gap",
+      "source_url": "https://askubuntu.com/questions/1565041",
+      "gold_ids": [
+        "au:1565058"
+      ]
+    },
+    {
+      "query_id": "su-en:1933700",
+      "original_category": "ranking_miss",
+      "observation": "본문에서 키 입력 코드 확인 도구를 원하는 목적이 명확해진다. 반환 문서는 외부 키보드 사용 시 키 매핑 전환 문제로 일부 소재만 겹친다.",
+      "hypothesis": "query_intent",
+      "source_url": "https://superuser.com/questions/1933700",
+      "gold_ids": [
+        "su:248517"
+      ]
+    },
+    {
+      "query_id": "au-en:1564577",
+      "original_category": "ranking_miss",
+      "observation": "본문은 Ubuntu 패키지 미러에서 발생하는 404를 보여 준다. 반환 문서는 FreeBSD fetch 도구 교체로 운영체제와 문제 유형이 다르다.",
+      "hypothesis": "semantic_mismatch",
+      "source_url": "https://askubuntu.com/questions/1564577",
+      "gold_ids": [
+        "au:124017",
+        "au:65911",
+        "au:866901"
+      ]
+    },
+    {
+      "query_id": "au-en:1566498",
+      "original_category": "ranking_miss",
+      "observation": "반환 문서도 Ubuntu를 오프라인으로 업데이트하는 문제를 다루며 관련성이 있어 보인다. 온라인 측 OS와 도구 유지 상태는 다르므로 실제 해결책 적합성은 미판정이다.",
+      "hypothesis": "possible_label_gap",
+      "source_url": "https://askubuntu.com/questions/1566498",
+      "gold_ids": [
+        "au:974"
+      ]
+    },
+    {
+      "query_id": "sf-en:1199746",
+      "original_category": "correct_first",
+      "observation": "네트워크 스위치 용량 계획 질문이 일반적인 용량 계획 안내 문서와 연결된다. 검색 정답에 맞지만 장애 복구 성공을 측정하는 문항은 아니다.",
+      "hypothesis": "task_scope",
+      "source_url": "https://serverfault.com/questions/1199746",
+      "gold_ids": [
+        "sf:384686"
+      ]
+    },
+    {
+      "query_id": "su-en:1935243",
+      "original_category": "correct_first",
+      "observation": "질문과 정답은 Windows 드라이버 백업 목적이 일치한다. 세부 조건인 모든 드라이버의 완전한 내보내기 충족 여부는 이 검색 점수가 판단하지 않는다.",
+      "hypothesis": "success_control",
+      "source_url": "https://superuser.com/questions/1935243",
+      "gold_ids": [
+        "su:29704"
+      ]
+    },
+    {
+      "query_id": "sf-en:1198662",
+      "original_category": "correct_first",
+      "observation": "본문의 프록시 상대 경로와 자산 로딩 문제가 정답과 연결된다. 제목만 사용해도 정답을 찾았으므로 본문 누락이 모든 실패의 원인이라고 할 수는 없다.",
+      "hypothesis": "success_control",
+      "source_url": "https://serverfault.com/questions/1198662",
+      "gold_ids": [
+        "sf:932628"
+      ]
+    },
+    {
+      "query_id": "su-en:1932594",
+      "original_category": "correct_first",
+      "observation": "본문에는 bootrec fixboot의 접근 거부가 있고 정답은 이를 다룬다. 제목의 일반 부팅 오류만으로도 이번에는 정답을 찾았다.",
+      "hypothesis": "success_control",
+      "source_url": "https://superuser.com/questions/1932594",
+      "gold_ids": [
+        "su:1285268"
+      ]
+    }
+  ]
+}

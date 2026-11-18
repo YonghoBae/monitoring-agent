@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-11-18T00:33:02.115891+00:00",
+  "changes": [
+    {
+      "name": "Reference arithmetic in cache replay",
+      "observed": "Initial audit used batched matrix multiplication; one Qwen query differed only at ranks 81/82 by about 1e-7. Original normalized matrix-vector arithmetic reproduces all 91 queries for both models. Main metrics are unchanged.",
+      "action": "Correct CPU diagnostic to match reference arithmetic; preserve initial runner hash and log. No change to original evaluation."
+    },
+    {
+      "name": "Same-input MiniLM body control",
+      "observed": "Qwen query-body results now visible: Hit5 28 to43 at256,47 at512.",
+      "reason": "A body improvement must not be presented as Qwen model superiority without giving the baseline the same information.",
+      "action": "Add existing MiniLM title+body control with frozen full corpus and native context256. No model selection or production change."
+    },
+    {
+      "name": "Fixed-query corpus-size control",
+      "recorded_at": "2026-11-18T00:35:20.234801+00:00",
+      "reason": "Original development vs final changed both queries and corpus size. Measure distractor-count effect using the same 91 final questions and cached vectors.",
+      "action": "Compare full48235 with a deterministic5000 pool containing all known gold IDs plus SHA256(v4-distractors:ID)-ordered background; both MiniLM and Qwen title inputs. This gold-preserving diagnostic is not production accuracy or a new test set."
+    }
+  ]
+}

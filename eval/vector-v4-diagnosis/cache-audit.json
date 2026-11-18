@@ -1,0 +1,1423 @@
+{
+  "baseline": {
+    "shape": [
+      48510,
+      384
+    ],
+    "norm_range": [
+      0.9999995231628418,
+      1.0000005960464478
+    ],
+    "stored_top100_matches": 91,
+    "queries": 91,
+    "competition": [
+      {
+        "query_id": "au-en:1560453",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1560492",
+        "best_gold_rank": 286,
+        "above_gold_by_source": {
+          "unix": 277,
+          "au": 3,
+          "su": 5
+        }
+      },
+      {
+        "query_id": "au-en:1560781",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1561905",
+        "best_gold_rank": 134,
+        "above_gold_by_source": {
+          "unix": 127,
+          "au": 6
+        }
+      },
+      {
+        "query_id": "au-en:1561971",
+        "best_gold_rank": 12,
+        "above_gold_by_source": {
+          "unix": 11
+        }
+      },
+      {
+        "query_id": "au-en:1562295",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "au-en:1562382",
+        "best_gold_rank": 123,
+        "above_gold_by_source": {
+          "unix": 115,
+          "au": 7
+        }
+      },
+      {
+        "query_id": "au-en:1562517",
+        "best_gold_rank": 7,
+        "above_gold_by_source": {
+          "unix": 5,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1562625",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1562656",
+        "best_gold_rank": 7,
+        "above_gold_by_source": {
+          "unix": 6
+        }
+      },
+      {
+        "query_id": "au-en:1562850",
+        "best_gold_rank": 30,
+        "above_gold_by_source": {
+          "au": 11,
+          "unix": 18
+        }
+      },
+      {
+        "query_id": "au-en:1562899",
+        "best_gold_rank": 66,
+        "above_gold_by_source": {
+          "au": 21,
+          "unix": 44
+        }
+      },
+      {
+        "query_id": "au-en:1563062",
+        "best_gold_rank": 258,
+        "above_gold_by_source": {
+          "unix": 245,
+          "sf": 2,
+          "au": 10
+        }
+      },
+      {
+        "query_id": "au-en:1563231",
+        "best_gold_rank": 495,
+        "above_gold_by_source": {
+          "unix": 489,
+          "au": 5
+        }
+      },
+      {
+        "query_id": "au-en:1563393",
+        "best_gold_rank": 1598,
+        "above_gold_by_source": {
+          "au": 42,
+          "unix": 1508,
+          "su": 36,
+          "sf": 11
+        }
+      },
+      {
+        "query_id": "au-en:1563594",
+        "best_gold_rank": 71,
+        "above_gold_by_source": {
+          "au": 18,
+          "unix": 52
+        }
+      },
+      {
+        "query_id": "au-en:1563601",
+        "best_gold_rank": 15,
+        "above_gold_by_source": {
+          "unix": 12,
+          "sf": 1,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1563926",
+        "best_gold_rank": 4,
+        "above_gold_by_source": {
+          "au": 3
+        }
+      },
+      {
+        "query_id": "au-en:1564020",
+        "best_gold_rank": 21,
+        "above_gold_by_source": {
+          "unix": 20
+        }
+      },
+      {
+        "query_id": "au-en:1564338",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1564382",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1564547",
+        "best_gold_rank": 66,
+        "above_gold_by_source": {
+          "su": 1,
+          "unix": 60,
+          "au": 4
+        }
+      },
+      {
+        "query_id": "au-en:1564564",
+        "best_gold_rank": 2392,
+        "above_gold_by_source": {
+          "au": 171,
+          "su": 29,
+          "unix": 2183,
+          "sf": 8
+        }
+      },
+      {
+        "query_id": "au-en:1564577",
+        "best_gold_rank": 276,
+        "above_gold_by_source": {
+          "unix": 259,
+          "au": 13,
+          "su": 1,
+          "sf": 2
+        }
+      },
+      {
+        "query_id": "au-en:1564707",
+        "best_gold_rank": 1780,
+        "above_gold_by_source": {
+          "unix": 1694,
+          "su": 22,
+          "au": 58,
+          "sf": 5
+        }
+      },
+      {
+        "query_id": "au-en:1564806",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1564824",
+        "best_gold_rank": 8179,
+        "above_gold_by_source": {
+          "unix": 7937,
+          "au": 187,
+          "su": 42,
+          "sf": 12
+        }
+      },
+      {
+        "query_id": "au-en:1565006",
+        "best_gold_rank": 29,
+        "above_gold_by_source": {
+          "unix": 19,
+          "au": 9
+        }
+      },
+      {
+        "query_id": "au-en:1565036",
+        "best_gold_rank": 53,
+        "above_gold_by_source": {
+          "au": 7,
+          "unix": 44,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565041",
+        "best_gold_rank": 7,
+        "above_gold_by_source": {
+          "au": 2,
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "au-en:1565062",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1565073",
+        "best_gold_rank": 376,
+        "above_gold_by_source": {
+          "unix": 358,
+          "au": 14,
+          "su": 2,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565334",
+        "best_gold_rank": 92,
+        "above_gold_by_source": {
+          "au": 5,
+          "unix": 85,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565467",
+        "best_gold_rank": 76,
+        "above_gold_by_source": {
+          "unix": 72,
+          "au": 3
+        }
+      },
+      {
+        "query_id": "au-en:1565637",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565703",
+        "best_gold_rank": 40,
+        "above_gold_by_source": {
+          "unix": 38,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565772",
+        "best_gold_rank": 291,
+        "above_gold_by_source": {
+          "au": 61,
+          "unix": 225,
+          "su": 4
+        }
+      },
+      {
+        "query_id": "au-en:1566186",
+        "best_gold_rank": 75,
+        "above_gold_by_source": {
+          "unix": 58,
+          "au": 15,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1566225",
+        "best_gold_rank": 14,
+        "above_gold_by_source": {
+          "unix": 13
+        }
+      },
+      {
+        "query_id": "au-en:1566306",
+        "best_gold_rank": 1415,
+        "above_gold_by_source": {
+          "au": 51,
+          "unix": 1328,
+          "su": 21,
+          "sf": 14
+        }
+      },
+      {
+        "query_id": "au-en:1566419",
+        "best_gold_rank": 13363,
+        "above_gold_by_source": {
+          "su": 59,
+          "au": 240,
+          "unix": 13037,
+          "sf": 26
+        }
+      },
+      {
+        "query_id": "au-en:1566498",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "au-en:1566963",
+        "best_gold_rank": 1545,
+        "above_gold_by_source": {
+          "unix": 1510,
+          "au": 24,
+          "su": 7,
+          "sf": 3
+        }
+      },
+      {
+        "query_id": "au-en:1567040",
+        "best_gold_rank": 345,
+        "above_gold_by_source": {
+          "unix": 343,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1567191",
+        "best_gold_rank": 522,
+        "above_gold_by_source": {
+          "unix": 508,
+          "au": 12,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1567431",
+        "best_gold_rank": 6,
+        "above_gold_by_source": {
+          "au": 1,
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "au-en:1567707",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      },
+      {
+        "query_id": "au-en:1567916",
+        "best_gold_rank": 186,
+        "above_gold_by_source": {
+          "unix": 168,
+          "au": 17
+        }
+      },
+      {
+        "query_id": "au-en:1568131",
+        "best_gold_rank": 11765,
+        "above_gold_by_source": {
+          "unix": 11582,
+          "au": 141,
+          "su": 31,
+          "sf": 10
+        }
+      },
+      {
+        "query_id": "au-en:1568170",
+        "best_gold_rank": 71,
+        "above_gold_by_source": {
+          "unix": 66,
+          "su": 4
+        }
+      },
+      {
+        "query_id": "au-en:1568383",
+        "best_gold_rank": 25,
+        "above_gold_by_source": {
+          "unix": 23,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1568626",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      },
+      {
+        "query_id": "au-en:1569279",
+        "best_gold_rank": 22,
+        "above_gold_by_source": {
+          "unix": 21
+        }
+      },
+      {
+        "query_id": "au-en:1569506",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "au-en:1569629",
+        "best_gold_rank": 111,
+        "above_gold_by_source": {
+          "unix": 106,
+          "au": 2,
+          "su": 2
+        }
+      },
+      {
+        "query_id": "au-en:1569868",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1569882",
+        "best_gold_rank": 64,
+        "above_gold_by_source": {
+          "unix": 62,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1570183",
+        "best_gold_rank": 301,
+        "above_gold_by_source": {
+          "unix": 281,
+          "au": 12,
+          "su": 7
+        }
+      },
+      {
+        "query_id": "au-en:1570652",
+        "best_gold_rank": 41,
+        "above_gold_by_source": {
+          "unix": 29,
+          "au": 11
+        }
+      },
+      {
+        "query_id": "sf-en:1192974",
+        "best_gold_rank": 152,
+        "above_gold_by_source": {
+          "unix": 151
+        }
+      },
+      {
+        "query_id": "sf-en:1195670",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "sf-en:1195688",
+        "best_gold_rank": 663,
+        "above_gold_by_source": {
+          "au": 4,
+          "unix": 646,
+          "sf": 9,
+          "su": 3
+        }
+      },
+      {
+        "query_id": "sf-en:1195774",
+        "best_gold_rank": 8,
+        "above_gold_by_source": {
+          "unix": 7
+        }
+      },
+      {
+        "query_id": "sf-en:1196226",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "sf-en:1198662",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "sf-en:1199492",
+        "best_gold_rank": 11,
+        "above_gold_by_source": {
+          "unix": 10
+        }
+      },
+      {
+        "query_id": "sf-en:1199746",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "sf-en:1199826",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1917926",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1919112",
+        "best_gold_rank": 827,
+        "above_gold_by_source": {
+          "unix": 816,
+          "su": 2,
+          "sf": 1,
+          "au": 7
+        }
+      },
+      {
+        "query_id": "su-en:1922641",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1924147",
+        "best_gold_rank": 251,
+        "above_gold_by_source": {
+          "unix": 247,
+          "sf": 1,
+          "au": 1,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "su-en:1924475",
+        "best_gold_rank": 32,
+        "above_gold_by_source": {
+          "unix": 31
+        }
+      },
+      {
+        "query_id": "su-en:1930784",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "su-en:1930948",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "su-en:1931126",
+        "best_gold_rank": 10,
+        "above_gold_by_source": {
+          "unix": 7,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "su-en:1932594",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "su": 1
+        }
+      },
+      {
+        "query_id": "su-en:1933055",
+        "best_gold_rank": 67,
+        "above_gold_by_source": {
+          "unix": 62,
+          "su": 2,
+          "sf": 1,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "su-en:1933700",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "su-en:1933998",
+        "best_gold_rank": 191,
+        "above_gold_by_source": {
+          "unix": 189,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "su-en:1935197",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1935243",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1936232",
+        "best_gold_rank": 8,
+        "above_gold_by_source": {
+          "su": 1,
+          "unix": 6
+        }
+      },
+      {
+        "query_id": "su-en:1936374",
+        "best_gold_rank": 12,
+        "above_gold_by_source": {
+          "unix": 9,
+          "su": 2
+        }
+      },
+      {
+        "query_id": "su-en:1936482",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1936877",
+        "best_gold_rank": 25,
+        "above_gold_by_source": {
+          "su": 6,
+          "unix": 17,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "su-en:1937336",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1938245",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1938246",
+        "best_gold_rank": 10,
+        "above_gold_by_source": {
+          "unix": 9
+        }
+      },
+      {
+        "query_id": "su-en:1939303",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1939453",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      }
+    ]
+  },
+  "qwen": {
+    "shape": [
+      48510,
+      1024
+    ],
+    "norm_range": [
+      0.9999998807907104,
+      1.0000001192092896
+    ],
+    "stored_top100_matches": 91,
+    "queries": 91,
+    "competition": [
+      {
+        "query_id": "au-en:1560453",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1560492",
+        "best_gold_rank": 261,
+        "above_gold_by_source": {
+          "unix": 256,
+          "sf": 1,
+          "au": 3
+        }
+      },
+      {
+        "query_id": "au-en:1560781",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1561905",
+        "best_gold_rank": 65,
+        "above_gold_by_source": {
+          "unix": 58,
+          "au": 6
+        }
+      },
+      {
+        "query_id": "au-en:1561971",
+        "best_gold_rank": 69,
+        "above_gold_by_source": {
+          "unix": 64,
+          "au": 4
+        }
+      },
+      {
+        "query_id": "au-en:1562295",
+        "best_gold_rank": 69,
+        "above_gold_by_source": {
+          "unix": 64,
+          "su": 2,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "au-en:1562382",
+        "best_gold_rank": 430,
+        "above_gold_by_source": {
+          "unix": 406,
+          "au": 23
+        }
+      },
+      {
+        "query_id": "au-en:1562517",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1562625",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1562656",
+        "best_gold_rank": 79,
+        "above_gold_by_source": {
+          "unix": 74,
+          "au": 4
+        }
+      },
+      {
+        "query_id": "au-en:1562850",
+        "best_gold_rank": 25,
+        "above_gold_by_source": {
+          "unix": 13,
+          "au": 11
+        }
+      },
+      {
+        "query_id": "au-en:1562899",
+        "best_gold_rank": 199,
+        "above_gold_by_source": {
+          "unix": 153,
+          "au": 45
+        }
+      },
+      {
+        "query_id": "au-en:1563062",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "au-en:1563231",
+        "best_gold_rank": 167,
+        "above_gold_by_source": {
+          "unix": 160,
+          "au": 6
+        }
+      },
+      {
+        "query_id": "au-en:1563393",
+        "best_gold_rank": 6087,
+        "above_gold_by_source": {
+          "unix": 5893,
+          "su": 61,
+          "au": 106,
+          "sf": 26
+        }
+      },
+      {
+        "query_id": "au-en:1563594",
+        "best_gold_rank": 191,
+        "above_gold_by_source": {
+          "au": 30,
+          "unix": 159,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1563601",
+        "best_gold_rank": 554,
+        "above_gold_by_source": {
+          "unix": 480,
+          "au": 67,
+          "sf": 5,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1563926",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "au": 3,
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "au-en:1564020",
+        "best_gold_rank": 69,
+        "above_gold_by_source": {
+          "unix": 68
+        }
+      },
+      {
+        "query_id": "au-en:1564338",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1564382",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "au-en:1564547",
+        "best_gold_rank": 16,
+        "above_gold_by_source": {
+          "unix": 13,
+          "su": 1,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1564564",
+        "best_gold_rank": 721,
+        "above_gold_by_source": {
+          "au": 161,
+          "unix": 552,
+          "su": 3,
+          "sf": 4
+        }
+      },
+      {
+        "query_id": "au-en:1564577",
+        "best_gold_rank": 8,
+        "above_gold_by_source": {
+          "au": 3,
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "au-en:1564707",
+        "best_gold_rank": 13328,
+        "above_gold_by_source": {
+          "unix": 12969,
+          "su": 107,
+          "au": 220,
+          "sf": 31
+        }
+      },
+      {
+        "query_id": "au-en:1564806",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1564824",
+        "best_gold_rank": 7262,
+        "above_gold_by_source": {
+          "au": 262,
+          "unix": 6972,
+          "su": 19,
+          "sf": 8
+        }
+      },
+      {
+        "query_id": "au-en:1565006",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "au-en:1565036",
+        "best_gold_rank": 76,
+        "above_gold_by_source": {
+          "au": 17,
+          "unix": 58
+        }
+      },
+      {
+        "query_id": "au-en:1565041",
+        "best_gold_rank": 13,
+        "above_gold_by_source": {
+          "unix": 6,
+          "au": 6
+        }
+      },
+      {
+        "query_id": "au-en:1565062",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 1,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565073",
+        "best_gold_rank": 25,
+        "above_gold_by_source": {
+          "au": 8,
+          "unix": 16
+        }
+      },
+      {
+        "query_id": "au-en:1565334",
+        "best_gold_rank": 143,
+        "above_gold_by_source": {
+          "unix": 133,
+          "au": 8,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565467",
+        "best_gold_rank": 102,
+        "above_gold_by_source": {
+          "au": 16,
+          "unix": 85
+        }
+      },
+      {
+        "query_id": "au-en:1565637",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 1,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1565703",
+        "best_gold_rank": 109,
+        "above_gold_by_source": {
+          "unix": 105,
+          "au": 3
+        }
+      },
+      {
+        "query_id": "au-en:1565772",
+        "best_gold_rank": 313,
+        "above_gold_by_source": {
+          "au": 71,
+          "unix": 239,
+          "su": 1,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1566186",
+        "best_gold_rank": 39,
+        "above_gold_by_source": {
+          "unix": 27,
+          "au": 11
+        }
+      },
+      {
+        "query_id": "au-en:1566225",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      },
+      {
+        "query_id": "au-en:1566306",
+        "best_gold_rank": 19,
+        "above_gold_by_source": {
+          "au": 4,
+          "unix": 13,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1566419",
+        "best_gold_rank": 1214,
+        "above_gold_by_source": {
+          "su": 6,
+          "unix": 1053,
+          "au": 151,
+          "sf": 3
+        }
+      },
+      {
+        "query_id": "au-en:1566498",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      },
+      {
+        "query_id": "au-en:1566963",
+        "best_gold_rank": 236,
+        "above_gold_by_source": {
+          "unix": 224,
+          "au": 11
+        }
+      },
+      {
+        "query_id": "au-en:1567040",
+        "best_gold_rank": 1006,
+        "above_gold_by_source": {
+          "unix": 1000,
+          "su": 1,
+          "au": 3,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "au-en:1567191",
+        "best_gold_rank": 149,
+        "above_gold_by_source": {
+          "au": 17,
+          "unix": 130,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1567431",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1567707",
+        "best_gold_rank": 9,
+        "above_gold_by_source": {
+          "unix": 8
+        }
+      },
+      {
+        "query_id": "au-en:1567916",
+        "best_gold_rank": 85,
+        "above_gold_by_source": {
+          "au": 22,
+          "unix": 62
+        }
+      },
+      {
+        "query_id": "au-en:1568131",
+        "best_gold_rank": 2860,
+        "above_gold_by_source": {
+          "unix": 2764,
+          "au": 92,
+          "su": 3
+        }
+      },
+      {
+        "query_id": "au-en:1568170",
+        "best_gold_rank": 11,
+        "above_gold_by_source": {
+          "unix": 10
+        }
+      },
+      {
+        "query_id": "au-en:1568383",
+        "best_gold_rank": 53,
+        "above_gold_by_source": {
+          "au": 1,
+          "unix": 51
+        }
+      },
+      {
+        "query_id": "au-en:1568626",
+        "best_gold_rank": 101,
+        "above_gold_by_source": {
+          "unix": 95,
+          "au": 3,
+          "su": 2
+        }
+      },
+      {
+        "query_id": "au-en:1569279",
+        "best_gold_rank": 127,
+        "above_gold_by_source": {
+          "unix": 123,
+          "su": 1,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "au-en:1569506",
+        "best_gold_rank": 25,
+        "above_gold_by_source": {
+          "unix": 24
+        }
+      },
+      {
+        "query_id": "au-en:1569629",
+        "best_gold_rank": 17,
+        "above_gold_by_source": {
+          "au": 2,
+          "unix": 14
+        }
+      },
+      {
+        "query_id": "au-en:1569868",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "au": 1
+        }
+      },
+      {
+        "query_id": "au-en:1569882",
+        "best_gold_rank": 211,
+        "above_gold_by_source": {
+          "unix": 208,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "au-en:1570183",
+        "best_gold_rank": 61,
+        "above_gold_by_source": {
+          "au": 4,
+          "unix": 55,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "au-en:1570652",
+        "best_gold_rank": 226,
+        "above_gold_by_source": {
+          "unix": 202,
+          "au": 22,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "sf-en:1192974",
+        "best_gold_rank": 33,
+        "above_gold_by_source": {
+          "unix": 32
+        }
+      },
+      {
+        "query_id": "sf-en:1195670",
+        "best_gold_rank": 18,
+        "above_gold_by_source": {
+          "unix": 17
+        }
+      },
+      {
+        "query_id": "sf-en:1195688",
+        "best_gold_rank": 65,
+        "above_gold_by_source": {
+          "au": 1,
+          "unix": 59,
+          "su": 1,
+          "sf": 3
+        }
+      },
+      {
+        "query_id": "sf-en:1195774",
+        "best_gold_rank": 32,
+        "above_gold_by_source": {
+          "unix": 31
+        }
+      },
+      {
+        "query_id": "sf-en:1196226",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "sf-en:1198662",
+        "best_gold_rank": 3,
+        "above_gold_by_source": {
+          "unix": 2
+        }
+      },
+      {
+        "query_id": "sf-en:1199492",
+        "best_gold_rank": 334,
+        "above_gold_by_source": {
+          "unix": 325,
+          "sf": 3,
+          "su": 4,
+          "au": 1
+        }
+      },
+      {
+        "query_id": "sf-en:1199746",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "sf-en:1199826",
+        "best_gold_rank": 6,
+        "above_gold_by_source": {
+          "unix": 5
+        }
+      },
+      {
+        "query_id": "su-en:1917926",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1919112",
+        "best_gold_rank": 254,
+        "above_gold_by_source": {
+          "sf": 1,
+          "unix": 248,
+          "su": 2,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "su-en:1922641",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1924147",
+        "best_gold_rank": 543,
+        "above_gold_by_source": {
+          "unix": 532,
+          "au": 8,
+          "su": 1,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "su-en:1924475",
+        "best_gold_rank": 8,
+        "above_gold_by_source": {
+          "unix": 7
+        }
+      },
+      {
+        "query_id": "su-en:1930784",
+        "best_gold_rank": 18,
+        "above_gold_by_source": {
+          "unix": 16,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "su-en:1930948",
+        "best_gold_rank": 6,
+        "above_gold_by_source": {
+          "unix": 5
+        }
+      },
+      {
+        "query_id": "su-en:1931126",
+        "best_gold_rank": 131,
+        "above_gold_by_source": {
+          "unix": 123,
+          "au": 2,
+          "su": 5
+        }
+      },
+      {
+        "query_id": "su-en:1932594",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1933055",
+        "best_gold_rank": 40,
+        "above_gold_by_source": {
+          "unix": 35,
+          "sf": 1,
+          "su": 1,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "su-en:1933700",
+        "best_gold_rank": 8,
+        "above_gold_by_source": {
+          "au": 1,
+          "unix": 6
+        }
+      },
+      {
+        "query_id": "su-en:1933998",
+        "best_gold_rank": 339,
+        "above_gold_by_source": {
+          "unix": 336,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "su-en:1935197",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1935243",
+        "best_gold_rank": 1,
+        "above_gold_by_source": {}
+      },
+      {
+        "query_id": "su-en:1936232",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "su": 1,
+          "unix": 3
+        }
+      },
+      {
+        "query_id": "su-en:1936374",
+        "best_gold_rank": 29,
+        "above_gold_by_source": {
+          "unix": 23,
+          "au": 3,
+          "su": 2
+        }
+      },
+      {
+        "query_id": "su-en:1936482",
+        "best_gold_rank": 2,
+        "above_gold_by_source": {
+          "unix": 1
+        }
+      },
+      {
+        "query_id": "su-en:1936877",
+        "best_gold_rank": 58,
+        "above_gold_by_source": {
+          "unix": 48,
+          "su": 7,
+          "au": 2
+        }
+      },
+      {
+        "query_id": "su-en:1937336",
+        "best_gold_rank": 9,
+        "above_gold_by_source": {
+          "unix": 8
+        }
+      },
+      {
+        "query_id": "su-en:1938245",
+        "best_gold_rank": 10,
+        "above_gold_by_source": {
+          "unix": 8,
+          "su": 1
+        }
+      },
+      {
+        "query_id": "su-en:1938246",
+        "best_gold_rank": 36,
+        "above_gold_by_source": {
+          "unix": 34,
+          "sf": 1
+        }
+      },
+      {
+        "query_id": "su-en:1939303",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "unix": 4
+        }
+      },
+      {
+        "query_id": "su-en:1939453",
+        "best_gold_rank": 5,
+        "above_gold_by_source": {
+          "unix": 4
+        }
+      }
+    ]
+  }
+}
